@@ -1638,6 +1638,7 @@ function slotUndoApply() {
 function slotApplySetup(interviewOk) {
   if (typeof slotSetStep === 'function') slotSetStep(30, true);   /* the seeded events run 30-minute slots */
   var vzc = interviewOk && window.VZCAP && VZCAP[(typeof getEventKey === 'function') ? getEventKey() : ''];
+  window.VZBOOK = vzc ? vzc.b.slice() : null;   /* the booked interviews, by 30-minute start time */
   if (vzc) {
     SLOT_BOOKED = vzc.b.slice();
     SLOT_VALS   = vzc.b.map(function () { return vzc.v; });
@@ -3411,12 +3412,18 @@ document.addEventListener('click', function (e) {
 });
 /* 15 or 30 minutes. Before publishing nothing is booked, so the table simply starts again at the new length. */
 function slotSetStep(step, quiet) {
+  if (step === SLOT_STEP && !quiet) return;   /* the length already chosen: nothing changes */
   SLOT_STEP = step;
   SLOT_TIMES = [];
   for (var t = SLOT_START; t < SLOT_END; t += SLOT_STEP) SLOT_TIMES.push(t);
   var el = document.getElementById('slotBulkVal'), bulk = el ? (parseInt(el.value, 10) || 0) : 0;
-  SLOT_VALS = SLOT_TIMES.map(function () { return bulk; });
-  SLOT_BOOKED = SLOT_TIMES.map(function () { return 0; });
+  var vzb = window.VZBOOK;   /* booked interviews stay, each at its start time */
+  SLOT_BOOKED = SLOT_TIMES.map(function (t) {
+    var n = 0;
+    if (vzb) vzb.forEach(function (b, h) { var s = SLOT_START + 30 * h; if (s >= t && s < t + SLOT_STEP) n += b; });
+    return n;
+  });
+  SLOT_VALS = SLOT_TIMES.map(function (_, i) { return Math.max(bulk, SLOT_BOOKED[i]); });
   var lab = document.getElementById('slotDurLabel'); if (lab) lab.textContent = step + ' minutes';
   document.querySelectorAll('#slotDurSelect .pay-custom-option').forEach(function (o) {
     var on = o.getAttribute('data-value') === String(step);
