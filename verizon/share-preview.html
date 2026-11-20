@@ -1010,6 +1010,10 @@ function vzListHref(withJob) {
     if (a) a.setAttribute('href', vzListHref(true));
   }, true);
 });
+/* a job picked in the Job title menu on the right opens on the left (the others close), as a click on it does */
+function vzOpenRow(jobId) {
+  document.querySelectorAll('.job-row').forEach(function (r) { r.classList.toggle('expanded', r.dataset.jobId === jobId); });
+}
 function vzTop(key) {
   var e = currentEvent;
   if (!e) return;
@@ -1125,6 +1129,7 @@ function renderJobPicker() {
     document.getElementById('schJobSelect').addEventListener('change', function(e) {
       if (e.target.value) {
         selectJob(e.target.value);
+        vzOpenRow(e.target.value);
       } else {
         clearJobSelection();
       }
