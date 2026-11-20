@@ -617,6 +617,8 @@ body.collapsed .main { margin-left: 60px; }
 <style id="verizon-demo-no-candidates-page">#iarow-candidates,#nav-candidates,a.nav-item[href="dashboard.html?view=candidates"]{display:none!important}</style>
 
 <style id="verizon-demo-edit-live">
+/* Scott, November 19, 2026: the Edit page opens right away, no "Loading your event..." screen */
+#pageLoader{display:none!important}
 /* red, as in the live app */
 .incomplete-banner-icon{background:#991b1b!important;color:#fff!important}
 .section-incomplete-badge{background:#fdecec!important;color:#991b1b!important;border-color:#f6d3d3!important}
@@ -653,8 +655,8 @@ body.vz-settings-incomplete .vz-settings-badge{display:inline-flex!important}
 setTimeout(function() {
   var loader = document.getElementById('pageLoader');
   loader.classList.add('fade-out');
-  setTimeout(function() { loader.style.display = 'none'; }, 300);
-}, 3000);
+  loader.style.display = 'none';
+}, 0);
 </script>
 
 <!-- ═══ SIDEBAR ═══ -->
