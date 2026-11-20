@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account & Billing - JobFairX</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #f3f2ef; color: #2d2d2d; min-height: 100vh; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #2d2d2d; display: flex; flex-direction: column; z-index: 300; transition: width 0.2s ease; overflow: hidden; }
+.sidebar.collapsed { width: 60px; }
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .badge,
+.sidebar.collapsed .collapse-text { display: none; }
+.sidebar.collapsed .nav-item { justify-content: center; padding: 10px 0; }
+.sidebar.collapsed .nav-item svg { margin: 0; }
+.sidebar.collapsed .collapse-btn { justify-content: center; }
+
+.sidebar-collapse { padding: 18px 16px 12px; }
+.collapse-btn { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; border: none; background: transparent; cursor: pointer; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); font-family: inherit; transition: all 0.15s; width: 100%; }
+.collapse-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.collapse-btn svg { width: 20px; height: 20px; flex-shrink: 0; color: rgba(255,255,255,0.9); }
+
+.sidebar-nav { flex: 1; padding: 8px 12px; overflow-y: auto; }
+.nav-group { margin-bottom: 6px; }
+.nav-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 10px; font-size: 17px; font-weight: 500; color: rgba(255,255,255,0.85); cursor: pointer; transition: all 0.12s; text-decoration: none; letter-spacing: -0.1px; }
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.18); color: #fff; font-weight: 700; }
+.nav-item svg { width: 24px; height: 24px; flex-shrink: 0; color: rgba(255,255,255,0.7); }
+.nav-item.active svg { color: #fff; }
+
+/* ═══ TOP HEADER ═══ */
+.topbar { position: fixed; top: 0; left: 220px; right: 0; height: 56px; background: #fff; border-bottom: 1px solid #d4d2d0; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 200; transition: left 0.2s ease; }
+body.collapsed .topbar { left: 60px; }
+.topbar-logo { font-size: 22px; font-weight: 800; color: #0044B3; letter-spacing: -0.5px; text-decoration: none; cursor: pointer; }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-right { display: flex; align-items: center; gap: 4px; }
+
+.user-trigger { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border-radius: 8px; transition: background 0.15s; position: relative; }
+.user-trigger:hover { background: #f3f2ef; }
+.user-trigger span { font-size: 14px; font-weight: 400; color: #2d2d2d; }
+.user-trigger svg { width: 14px; height: 14px; color: #767676; }
+.user-menu { position: absolute; top: 42px; right: 0; background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); border: 1px solid #d4d2d0; min-width: 220px; z-index: 500; display: none; padding: 6px 0; }
+.user-menu.open { display: block; }
+.user-menu-item { display: flex; align-items: center; width: 100%; padding: 12px 18px; font-size: 14px; font-weight: 500; color: #2d2d2d; background: none; border: none; text-align: left; cursor: pointer; font-family: inherit; transition: background 0.1s; text-decoration: none; }
+.user-menu-item:hover { background: #f3f2ef; }
+.user-menu-item.muted { color: #767676; }
+.user-menu-divider { height: 1px; background: #ebebeb; margin: 4px 0; }
+
+/* ═══ MAIN ═══ */
+.main { margin-left: 220px; margin-top: 56px; min-height: calc(100vh - 56px); transition: margin-left 0.2s ease; }
+body.collapsed .main { margin-left: 60px; }
+
+.container { max-width: 820px; margin: 0 auto; padding: 32px 32px 60px; }
+
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #0044B3; text-decoration: none; font-weight: 600; margin-bottom: 28px; cursor: pointer; }
+.back-link:hover { text-decoration: underline; }
+.back-link svg { width: 16px; height: 16px; }
+
+.page-title { font-size: 32px; font-weight: 700; color: #2d2d2d; margin-bottom: 24px; }
+
+/* ═══ TABS ═══ */
+.tabs { display: flex; gap: 8px; border-bottom: 1px solid #d4d2d0; margin-bottom: 28px; }
+.tab { display: flex; align-items: center; gap: 8px; padding: 12px 18px; background: none; border: none; font-size: 15px; font-weight: 600; color: #595959; cursor: pointer; font-family: inherit; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
+.tab:hover { color: #2d2d2d; }
+.tab.active { color: #0044B3; border-bottom-color: #0044B3; }
+.tab svg { width: 18px; height: 18px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ═══ SECTION CARDS ═══ */
+.section { background: #fff; border-radius: 12px; border: 1px solid #d4d2d0; margin-bottom: 22px; overflow: hidden; }
+.section-header { display: flex; align-items: center; justify-content: space-between; padding: 28px 36px 0; }
+.section-header h2 { font-size: 22px; font-weight: 700; color: #2d2d2d; }
+.section-divider { height: 1px; background: #e0e0e0; margin: 18px 36px 0; }
+.section-body { padding: 26px 36px 32px; }
+
+.section-pencil { width: 42px; height: 42px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #0044B3; border-radius: 8px; transition: background 0.15s; }
+.section-pencil:hover { background: #f0f5ff; }
+.section-pencil svg { width: 24px; height: 24px; fill: #0044B3; stroke: none; }
+
+/* ═══ FIELD GRID ═══ */
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+.field-grid .full { grid-column: 1 / -1; }
+
+.field-label { display: block; font-size: 14px; font-weight: 600; color: #595959; margin-bottom: 6px; }
+.field-value { font-size: 16px; font-weight: 400; color: #2d2d2d; min-height: 24px; }
+.field-value.muted { color: #767676; }
+
+.field-input { width: 100%; padding: 11px 14px; font-size: 16px; font-family: inherit; color: #2d2d2d; border: 1px solid #d4d2d0; border-radius: 8px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; background: #fff; }
+.field-input:focus { border-color: #0044B3; box-shadow: 0 0 0 2px rgba(0,68,179,0.15); }
+.field-input[readonly] { background: #f6f5f3; color: #767676; cursor: not-allowed; }
+
+/* Hide input by default, show when editing */
+.section.editing .field-value { display: none; }
+.section.editing .field-input { display: block; }
+.section:not(.editing) .field-input { display: none; }
+.section:not(.editing) .section-edit-actions { display: none; }
+.section.editing .section-pencil { display: none; }
+
+.section-edit-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 28px; padding-top: 22px; border-top: 1px solid #ebebeb; }
+.btn-cancel { background: #fff; border: 1px solid #d4d2d0; color: #2d2d2d; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.btn-cancel:hover { background: #f6f5f3; border-color: #2d2d2d; }
+.btn-save { background: #0044B3; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+.btn-save:hover { background: #003399; }
+
+/* Large primary button used in modals */
+.btn-save-lg { background: #0044B3; color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+.btn-save-lg:hover { background: #003399; }
+
+/* ═══ Display row (billing address, payment method) ═══ */
+.display-block { font-size: 16px; font-weight: 400; color: #2d2d2d; line-height: 1.7; }
+.display-block .muted { color: #767676; }
+
+/* Inline edit: swap read-only display with edit form */
+.section.editing .payment-display { display: none; }
+.section:not(.editing) .edit-form { display: none; }
+select.field-input { cursor: pointer; background-color: #fff; }
+
+.payment-row { display: flex; align-items: center; gap: 18px; }
+.card-brand-badge { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; background: #f0f5ff; border-radius: 6px; font-size: 12px; font-weight: 800; color: #0044B3; letter-spacing: 0.5px; }
+.card-brand-badge.mastercard { background: #fff4f0; color: #c4183c; }
+.card-brand-badge.amex { background: #eef4ff; color: #0044B3; }
+.card-brand-badge.discover { background: #fff7e6; color: #b8651c; }
+.card-number { font-size: 16px; font-weight: 500; color: #2d2d2d; letter-spacing: 0.5px; }
+.card-meta { font-size: 13px; color: #767676; margin-top: 3px; }
+
+/* ═══ Modal ═══ */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+
+.modal-card { background: #fff; border-radius: 12px; padding: 32px; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; }
+.modal-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 28px; color: #767676; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; line-height: 1; }
+.modal-close-btn:hover { color: #2d2d2d; }
+
+.modal-title { font-size: 20px; font-weight: 700; color: #2d2d2d; margin-bottom: 4px; }
+.modal-title-sub { font-size: 14px; color: #595959; margin-bottom: 24px; }
+
+.modal-form-group { margin-bottom: 20px; }
+.modal-label { display: block; font-size: 14px; font-weight: 600; color: #2d2d2d; margin-bottom: 8px; }
+
+.modal-input, .modal-select { width: 100%; padding: 12px 16px; font-size: 15px; font-family: inherit; color: #2d2d2d; border: 1px solid #d4d2d0; border-radius: 8px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+.modal-input:focus, .modal-select:focus { border-color: #0044B3; box-shadow: 0 0 0 2px rgba(0,68,179,0.15); }
+.modal-select { background: #fff; cursor: pointer; }
+
+.modal-row { display: flex; gap: 12px; }
+.modal-row .modal-form-group { flex: 1; margin-bottom: 0; }
+.modal-row.triple .modal-form-group:first-child { flex: 2; }
+
+.modal-actions { display: flex; gap: 12px; margin-top: 28px; justify-content: flex-end; }
+
+/* ═══ Toast ═══ */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #2d2d2d; color: #fff; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; z-index: 10000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.toast.show { display: block; }
+
+@media (max-width: 680px) {
+  .field-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-collapse">
+    <button class="collapse-btn" onclick="toggleSidebar()" title="Collapse sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <span class="collapse-text">Collapse</span>
+    </button>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group">
+      <a class="nav-item" href="dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="nav-text">Dashboard</span>
+      </a>
+      <a class="nav-item" href="dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span class="nav-text">Interviews</span>
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span class="nav-text">Messaging</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ TOP BAR ═══ -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a class="topbar-logo" href="dashboard.html">JobFairX</a>
+  </div>
+  <div class="topbar-right">
+    <div class="user-trigger" onclick="toggleDropdown('user-menu')">
+      <span>scott@jobfairx.com</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      <div class="user-menu" id="user-menu">
+        <a class="user-menu-item" href="account-billing.html">Account &amp; Billing</a>
+        <a class="user-menu-item" href="#">Event Credits</a>
+        <button class="user-menu-item" onclick="openFeedbackModal()">Give Feedback</button>
+        <div class="user-menu-divider"></div>
+        <button class="user-menu-item muted">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="main">
+<div class="container">
+
+  <a class="back-link" href="dashboard.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to dashboard
+  </a>
+
+  <h1 class="page-title">Account &amp; Billing</h1>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="account" onclick="switchTab('account')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Account
+    </button>
+    <button class="tab" data-tab="billing" onclick="switchTab('billing')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      Billing
+    </button>
+  </div>
+
+  <!-- ═══ ACCOUNT TAB ═══ -->
+  <div class="tab-panel active" id="panel-account">
+
+    <div class="section" id="section-account">
+      <div class="section-header">
+        <h2>Your information</h2>
+        <button class="section-pencil" title="Edit your information" onclick="startEdit('section-account')"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+      </div>
+      <div class="section-divider"></div>
+      <div class="section-body">
+        <div class="field-grid">
+          <div>
+            <label class="field-label">First Name</label>
+            <div class="field-value" data-field="firstName">Sarah</div>
+            <input class="field-input" data-field-input="firstName" type="text" value="Sarah">
+          </div>
+          <div>
+            <label class="field-label">Last Name</label>
+            <div class="field-value" data-field="lastName">Mitchell</div>
+            <input class="field-input" data-field-input="lastName" type="text" value="Mitchell">
+          </div>
+          <div>
+            <label class="field-label">Company Name</label>
+            <div class="field-value" data-field="companyName">Acme Healthcare</div>
+            <input class="field-input" data-field-input="companyName" type="text" value="Acme Healthcare">
+          </div>
+          <div>
+            <label class="field-label">Job Title</label>
+            <div class="field-value" data-field="jobTitle">Talent Acquisition Manager</div>
+            <input class="field-input" data-field-input="jobTitle" type="text" value="Talent Acquisition Manager">
+          </div>
+          <div>
+            <label class="field-label">Email</label>
+            <div class="field-value" data-field="email">admin@acmehealthcare.com</div>
+            <input class="field-input" data-field-input="email" type="email" value="admin@acmehealthcare.com">
+          </div>
+          <div>
+            <label class="field-label">Phone</label>
+            <div class="field-value" data-field="phone">(555) 123-4567</div>
+            <input class="field-input" data-field-input="phone" type="tel" value="(555) 123-4567">
+          </div>
+        </div>
+        <div class="section-edit-actions">
+          <button class="btn-cancel" onclick="cancelEdit('section-account')">Cancel</button>
+          <button class="btn-save" onclick="saveEdit('section-account', 'Account updated')">Save</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ BILLING TAB ═══ -->
+  <div class="tab-panel" id="panel-billing">
+
+    <!-- Company Info -->
+    <div class="section" id="section-company">
+      <div class="section-header">
+        <h2>Company information</h2>
+        <button class="section-pencil" title="Edit company information" onclick="startEdit('section-company')"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+      </div>
+      <div class="section-divider"></div>
+      <div class="section-body">
+        <div class="field-grid">
+          <div class="full">
+            <label class="field-label">Company Name</label>
+            <div class="field-value" data-field="billingCompany">Acme Healthcare</div>
+            <input class="field-input" data-field-input="billingCompany" type="text" value="Acme Healthcare">
+          </div>
+          <div class="full">
+            <label class="field-label">Billing Email</label>
+            <div class="field-value" data-field="billingEmail">billing@acmehealthcare.com</div>
+            <input class="field-input" data-field-input="billingEmail" type="email" value="billing@acmehealthcare.com">
+          </div>
+        </div>
+        <div class="section-edit-actions">
+          <button class="btn-cancel" onclick="cancelEdit('section-company')">Cancel</button>
+          <button class="btn-save" onclick="saveEdit('section-company', 'Company information updated')">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Billing Address -->
+    <div class="section" id="section-billing-address">
+      <div class="section-header">
+        <h2>Billing address</h2>
+        <button class="section-pencil" title="Edit billing address" onclick="startEdit('section-billing-address')"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+      </div>
+      <div class="section-divider"></div>
+      <div class="section-body">
+        <div class="field-grid">
+          <div class="full">
+            <label class="field-label">Street Address</label>
+            <div class="field-value" data-field="addrStreet">123 Innovation Blvd, Suite 400</div>
+            <input class="field-input" data-field-input="addrStreet" type="text" value="123 Innovation Blvd, Suite 400">
+          </div>
+          <div>
+            <label class="field-label">City</label>
+            <div class="field-value" data-field="addrCity">Chicago</div>
+            <input class="field-input" data-field-input="addrCity" type="text" value="Chicago">
+          </div>
+          <div>
+            <label class="field-label">ZIP Code</label>
+            <div class="field-value" data-field="addrZip">60601</div>
+            <input class="field-input" data-field-input="addrZip" type="text" value="60601">
+          </div>
+          <div>
+            <label class="field-label">Country</label>
+            <div class="field-value" data-field="addrCountry">United States</div>
+            <select class="field-input" id="addrCountrySel" data-field-input="addrCountry" data-display="text" data-linked-state="addrStateSel" onchange="populateStates('addrCountrySel','addrStateSel')">
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">State</label>
+            <div class="field-value" data-field="addrState">IL</div>
+            <select class="field-input" id="addrStateSel" data-field-input="addrState"></select>
+          </div>
+        </div>
+        <div class="section-edit-actions">
+          <button class="btn-cancel" onclick="cancelEdit('section-billing-address')">Cancel</button>
+          <button class="btn-save" onclick="saveEdit('section-billing-address', 'Billing address updated')">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="section" id="section-payment">
+      <div class="section-header">
+        <h2>Payment method</h2>
+        <button class="section-pencil" title="Edit payment method" onclick="startEditPayment()"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
+      </div>
+      <div class="section-divider"></div>
+      <div class="section-body">
+        <div class="payment-display">
+          <div class="payment-row">
+            <span class="card-brand-badge" id="pay-brand-badge">VISA</span>
+            <div>
+              <div class="card-number">•••• •••• •••• <span id="pay-last4">4242</span></div>
+              <div class="card-meta">Expires <span id="pay-expiry">09/2027</span> · <span id="pay-name">Nick Barattini</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-form">
+          <div class="field-grid">
+            <div class="full">
+              <label class="field-label">Card Number</label>
+              <input class="field-input" id="payCardNumberInput" type="text" inputmode="numeric" autocomplete="off" placeholder="1234 5678 9012 3456">
+            </div>
+            <div>
+              <label class="field-label">Expiration</label>
+              <input class="field-input" id="payExpInput" type="text" inputmode="numeric" autocomplete="off" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div>
+              <label class="field-label">Security Code</label>
+              <input class="field-input" id="payCvcInput" type="text" inputmode="numeric" autocomplete="off" placeholder="CVC" maxlength="4">
+            </div>
+            <div class="full">
+              <label class="field-label">Name on Card</label>
+              <input class="field-input" id="payNameInput" type="text" autocomplete="off">
+            </div>
+            <div>
+              <label class="field-label">Country</label>
+              <select class="field-input" id="payCountryInput" onchange="populateStates('payCountryInput','payStateInput')">
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">State</label>
+              <select class="field-input" id="payStateInput"></select>
+            </div>
+            <div class="full">
+              <label class="field-label">ZIP Code</label>
+              <input class="field-input" id="payZipInput" type="text" autocomplete="off">
+            </div>
+          </div>
+          <div class="section-edit-actions">
+            <button class="btn-cancel" onclick="cancelPayment()">Cancel</button>
+            <button class="btn-save" onclick="savePayment()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /.container -->
+</div><!-- /.main -->
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast">Saved</div>
+
+<script>
+// Sidebar
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+  document.body.classList.toggle('collapsed');
+}
+
+// User dropdown
+function toggleDropdown(id) {
+  var menu = document.getElementById(id);
+  var isOpen = menu.classList.contains('open');
+  document.querySelectorAll('.user-menu').forEach(function(m) { m.classList.remove('open'); });
+  if (!isOpen) menu.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.user-trigger')) {
+    document.querySelectorAll('.user-menu').forEach(function(m) { m.classList.remove('open'); });
+  }
+});
+
+// Tabs
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.toggle('active', t.dataset.tab === name); });
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id === 'panel-' + name); });
+  // Exit any in-progress edits when changing tabs
+  document.querySelectorAll('.section.editing').forEach(function(s) { cancelEdit(s.id); });
+}
+
+// Inline edit for Account / Company sections
+function startEdit(sectionId) {
+  var sec = document.getElementById(sectionId);
+  // Snapshot current values in case of cancel
+  sec.querySelectorAll('[data-field-input]').forEach(function(input) {
+    input.dataset.snapshot = input.value;
+  });
+  sec.classList.add('editing');
+  var firstInput = sec.querySelector('.field-input');
+  if (firstInput) firstInput.focus();
+}
+
+function cancelEdit(sectionId) {
+  var sec = document.getElementById(sectionId);
+  sec.querySelectorAll('[data-field-input]').forEach(function(input) {
+    if (input.dataset.snapshot !== undefined) input.value = input.dataset.snapshot;
+  });
+  // If this section has a linked country -> state pair, rebuild state options
+  // after restoring the country snapshot, then re-select the snapshot state.
+  var countrySel = sec.querySelector('[data-linked-state]');
+  if (countrySel) {
+    var stateId = countrySel.dataset.linkedState;
+    var stateEl = document.getElementById(stateId);
+    var stateVal = stateEl && stateEl.dataset.snapshot !== undefined ? stateEl.dataset.snapshot : '';
+    populateStates(countrySel.id, stateId, stateVal);
+  }
+  sec.classList.remove('editing');
+}
+
+function saveEdit(sectionId, message) {
+  var sec = document.getElementById(sectionId);
+  sec.querySelectorAll('[data-field-input]').forEach(function(input) {
+    var key = input.dataset.fieldInput;
+    var display = sec.querySelector('[data-field="' + key + '"]');
+    if (!display) return;
+    if (input.tagName === 'SELECT' && input.dataset.display === 'text') {
+      display.textContent = input.options[input.selectedIndex].text;
+    } else {
+      display.textContent = input.value;
+    }
+  });
+  sec.classList.remove('editing');
+  showToast(message);
+}
+
+// ═══ State data and helpers ═══
+var STATES_BY_COUNTRY = {
+  US: [
+    ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],
+    ['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['DC','District of Columbia'],
+    ['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],
+    ['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],
+    ['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],
+    ['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],
+    ['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+    ['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],
+    ['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],
+    ['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],
+    ['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']
+  ],
+  CA: [
+    ['AB','Alberta'],['BC','British Columbia'],['MB','Manitoba'],['NB','New Brunswick'],
+    ['NL','Newfoundland and Labrador'],['NS','Nova Scotia'],['NT','Northwest Territories'],
+    ['NU','Nunavut'],['ON','Ontario'],['PE','Prince Edward Island'],['QC','Quebec'],
+    ['SK','Saskatchewan'],['YT','Yukon']
+  ]
+};
+
+function populateStates(countrySelectId, stateSelectId, preserveValue) {
+  var country = document.getElementById(countrySelectId).value;
+  var stateSelect = document.getElementById(stateSelectId);
+  var previous = preserveValue || '';
+  stateSelect.innerHTML = '';
+  (STATES_BY_COUNTRY[country] || []).forEach(function(pair) {
+    var opt = document.createElement('option');
+    opt.value = pair[0];
+    opt.textContent = pair[1];
+    stateSelect.appendChild(opt);
+  });
+  if (previous) stateSelect.value = previous;
+}
+
+// Auto-detect card brand from first digit (simplified for prototype)
+function detectBrand(cardNumber) {
+  var n = (cardNumber || '').replace(/\s+/g, '');
+  if (!n) return 'Visa';
+  var first = n.charAt(0);
+  if (first === '4') return 'Visa';
+  if (first === '5' || first === '2') return 'Mastercard';
+  if (first === '3') return 'Amex';
+  if (first === '6') return 'Discover';
+  return 'Visa';
+}
+
+// Stored payment billing (not shown on card, kept in memory)
+var paymentBilling = { country: 'US', state: 'IL', zip: '60601' };
+
+function startEditPayment() {
+  document.getElementById('payCardNumberInput').value = '';
+  document.getElementById('payExpInput').value = document.getElementById('pay-expiry').textContent.replace(/^(\d{2})\/\d{2}(\d{2})$/, '$1/$2');
+  document.getElementById('payCvcInput').value = '';
+  document.getElementById('payNameInput').value = document.getElementById('pay-name').textContent;
+
+  document.getElementById('payCountryInput').value = paymentBilling.country;
+  populateStates('payCountryInput', 'payStateInput', paymentBilling.state);
+  document.getElementById('payZipInput').value = paymentBilling.zip;
+
+  document.getElementById('section-payment').classList.add('editing');
+}
+
+function cancelPayment() {
+  document.getElementById('section-payment').classList.remove('editing');
+}
+
+function savePayment() {
+  var cardNumber = document.getElementById('payCardNumberInput').value.replace(/\s+/g, '');
+  var exp = document.getElementById('payExpInput').value.trim();
+  var name = document.getElementById('payNameInput').value;
+
+  // Parse last 4 from card number (fallback to current if left blank)
+  var last4 = cardNumber.length >= 4 ? cardNumber.slice(-4) : document.getElementById('pay-last4').textContent;
+
+  // Parse MM/YY → MM/20YY for display
+  var expDisplay = document.getElementById('pay-expiry').textContent;
+  var m = exp.match(/^(\d{2})\/(\d{2})$/);
+  if (m) expDisplay = m[1] + '/20' + m[2];
+
+  // Auto-detect brand
+  var brand = cardNumber ? detectBrand(cardNumber) : (document.getElementById('pay-brand-badge').textContent || 'VISA');
+  if (typeof brand === 'string') {
+    brand = brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase();
+  }
+
+  // Update display
+  document.getElementById('pay-name').textContent = name;
+  document.getElementById('pay-last4').textContent = last4;
+  document.getElementById('pay-expiry').textContent = expDisplay;
+
+  var badge = document.getElementById('pay-brand-badge');
+  badge.textContent = brand.toUpperCase();
+  badge.className = 'card-brand-badge ' + brand.toLowerCase();
+
+  // Persist billing silently
+  paymentBilling.country = document.getElementById('payCountryInput').value;
+  paymentBilling.state = document.getElementById('payStateInput').value;
+  paymentBilling.zip = document.getElementById('payZipInput').value;
+
+  document.getElementById('section-payment').classList.remove('editing');
+  showToast('Payment method updated');
+}
+
+// Expiration auto-format MM/YY
+document.addEventListener('DOMContentLoaded', function() {
+  var expInput = document.getElementById('payExpInput');
+  if (expInput) {
+    expInput.addEventListener('input', function(e) {
+      var v = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+      e.target.value = v;
+    });
+  }
+  // Prime the state dropdowns on first load
+  populateStates('payCountryInput', 'payStateInput', paymentBilling.state);
+  populateStates('addrCountrySel', 'addrStateSel', 'IL');
+});
+
+// Toast
+function showToast(message) {
+  var toast = document.getElementById('toast');
+  toast.textContent = message || 'Saved';
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2400);
+}
+
+</script>
+
+<!-- ═══ FEEDBACK MODAL ═══ -->
+<style>
+.fb-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; align-items: flex-start; justify-content: center; padding: 5vh 20px; overflow-y: auto; }
+.fb-overlay.open { display: flex; }
+.fb-card { background: #fff; border-radius: 12px; padding: 36px 40px; max-width: 680px; width: 100%; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.25); font-family: inherit; }
+.fb-close { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 28px; color: #767676; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0; border-radius: 6px; transition: background 0.15s; }
+.fb-close:hover { background: #f6f5f3; color: #2d2d2d; }
+.fb-title { font-size: 24px; font-weight: 700; color: #2d2d2d; margin-bottom: 6px; letter-spacing: -0.01em; }
+.fb-sub { font-size: 15px; color: #767676; margin-bottom: 28px; }
+.fb-section { margin-bottom: 28px; }
+.fb-label { font-size: 16px; font-weight: 700; color: #2d2d2d; margin-bottom: 14px; }
+.fb-required { color: #dc2626; }
+.fb-optional { color: #9ca3af; font-weight: 400; }
+.fb-emoji-row { display: flex; gap: 10px; justify-content: space-between; }
+.fb-emoji { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 8px; background: #fff; border: 2px solid #e5e7eb; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.fb-emoji:hover { border-color: #0044B3; background: #f5f9ff; }
+.fb-emoji.selected { border-color: #0044B3; background: #f0f5ff; }
+.fb-emoji-icon { font-size: 32px; line-height: 1; }
+.fb-emoji-label { font-size: 13px; font-weight: 600; color: #595959; }
+.fb-emoji.selected .fb-emoji-label { color: #0044B3; }
+.fb-followups { display: none; margin-bottom: 28px; }
+.fb-card.has-rating .fb-followups { display: block; }
+.fb-followup-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 22px; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 12px; }
+.fb-followup-card:last-child { margin-bottom: 0; }
+.fb-followup-text { flex: 1; min-width: 0; }
+.fb-followup-title { font-size: 15px; font-weight: 700; color: #2d2d2d; margin-bottom: 4px; }
+.fb-followup-desc { font-size: 13px; color: #767676; line-height: 1.4; }
+.fb-chip-row { display: flex; gap: 8px; flex-shrink: 0; }
+.fb-chip { padding: 8px 14px; background: #fff; border: 1px solid #d4d2d0; border-radius: 999px; font-size: 13px; font-weight: 600; color: #2d2d2d; cursor: pointer; font-family: inherit; transition: all 0.15s; white-space: nowrap; }
+.fb-chip:hover { border-color: #0044B3; }
+.fb-chip.selected { border-color: #0044B3; background: #f0f5ff; color: #0044B3; }
+.fb-textarea-wrap { position: relative; }
+.fb-textarea { width: 100%; min-height: 96px; padding: 14px 16px; font-size: 15px; font-family: inherit; color: #2d2d2d; border: 1px solid #d4d2d0; border-radius: 10px; outline: none; resize: vertical; transition: border-color 0.15s, box-shadow 0.15s; box-sizing: border-box; }
+.fb-textarea:focus { border-color: #0044B3; box-shadow: 0 0 0 2px rgba(0,68,179,0.15); }
+.fb-textarea::placeholder { color: #9ca3af; }
+.fb-char-counter { position: absolute; bottom: 12px; right: 16px; font-size: 12px; color: #9ca3af; pointer-events: none; background: #fff; padding: 0 4px; }
+.fb-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 8px; }
+.fb-btn-cancel { background: #fff; border: 1px solid #d4d2d0; color: #2d2d2d; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.fb-btn-cancel:hover { background: #f6f5f3; border-color: #2d2d2d; }
+.fb-btn-submit { background: #0044B3; color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+.fb-btn-submit:hover:not(:disabled) { background: #003399; }
+.fb-btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; }
+@media (max-width: 680px) {
+  .fb-card { padding: 28px 22px; }
+  .fb-emoji-row { gap: 6px; }
+  .fb-emoji { padding: 12px 4px; }
+  .fb-emoji-icon { font-size: 26px; }
+  .fb-emoji-label { font-size: 11px; }
+  .fb-followup-card { flex-direction: column; align-items: stretch; gap: 12px; }
+  .fb-chip-row { justify-content: space-between; }
+}
+</style>
+<div class="fb-overlay" id="feedbackModal" onclick="if(event.target===this)closeFeedbackModal()">
+  <div class="fb-card" id="feedbackCard">
+    <button class="fb-close" onclick="closeFeedbackModal()" aria-label="Close">&times;</button>
+    <div class="fb-title">Give Feedback</div>
+    <div class="fb-sub">Help us make JobFairX better for you</div>
+    <div class="fb-section">
+      <div class="fb-label">How's your experience? <span class="fb-required">*</span></div>
+      <div class="fb-emoji-row">
+        <button type="button" class="fb-emoji" data-value="amazing" onclick="selectExperience(this)"><span class="fb-emoji-icon">&#128525;</span><span class="fb-emoji-label">Amazing</span></button>
+        <button type="button" class="fb-emoji" data-value="good" onclick="selectExperience(this)"><span class="fb-emoji-icon">&#128578;</span><span class="fb-emoji-label">Good</span></button>
+        <button type="button" class="fb-emoji" data-value="okay" onclick="selectExperience(this)"><span class="fb-emoji-icon">&#128528;</span><span class="fb-emoji-label">Okay</span></button>
+        <button type="button" class="fb-emoji" data-value="poor" onclick="selectExperience(this)"><span class="fb-emoji-icon">&#128533;</span><span class="fb-emoji-label">Poor</span></button>
+        <button type="button" class="fb-emoji" data-value="terrible" onclick="selectExperience(this)"><span class="fb-emoji-icon">&#128544;</span><span class="fb-emoji-label">Terrible</span></button>
+      </div>
+    </div>
+    <div class="fb-followups">
+      <div class="fb-label">A few quick follow-ups <span class="fb-optional">(optional)</span></div>
+      <div class="fb-followup-card">
+        <div class="fb-followup-text">
+          <div class="fb-followup-title">How easy was it to get started?</div>
+          <div class="fb-followup-desc">Signing up, adding jobs, going live</div>
+        </div>
+        <div class="fb-chip-row">
+          <button type="button" class="fb-chip" data-group="setup" data-value="great" onclick="selectFollowup(this)">&#128077; Great</button>
+          <button type="button" class="fb-chip" data-group="setup" data-value="okay" onclick="selectFollowup(this)">&#128076; Okay</button>
+          <button type="button" class="fb-chip" data-group="setup" data-value="needs-work" onclick="selectFollowup(this)">&#128078; Needs work</button>
+        </div>
+      </div>
+      <div class="fb-followup-card">
+        <div class="fb-followup-text">
+          <div class="fb-followup-title">Quality of candidates you met?</div>
+          <div class="fb-followup-desc">Fit, relevance, and engagement of the applicants</div>
+        </div>
+        <div class="fb-chip-row">
+          <button type="button" class="fb-chip" data-group="candidates" data-value="great" onclick="selectFollowup(this)">&#128077; Great</button>
+          <button type="button" class="fb-chip" data-group="candidates" data-value="okay" onclick="selectFollowup(this)">&#128076; Okay</button>
+          <button type="button" class="fb-chip" data-group="candidates" data-value="needs-work" onclick="selectFollowup(this)">&#128078; Needs work</button>
+        </div>
+      </div>
+      <div class="fb-followup-card">
+        <div class="fb-followup-text">
+          <div class="fb-followup-title">How was the interview experience?</div>
+          <div class="fb-followup-desc">Video, audio, scheduling, reliability during interviews</div>
+        </div>
+        <div class="fb-chip-row">
+          <button type="button" class="fb-chip" data-group="interview" data-value="great" onclick="selectFollowup(this)">&#128077; Great</button>
+          <button type="button" class="fb-chip" data-group="interview" data-value="okay" onclick="selectFollowup(this)">&#128076; Okay</button>
+          <button type="button" class="fb-chip" data-group="interview" data-value="needs-work" onclick="selectFollowup(this)">&#128078; Needs work</button>
+        </div>
+      </div>
+    </div>
+    <div class="fb-section">
+      <div class="fb-label">Anything else? <span class="fb-optional">(optional)</span></div>
+      <div class="fb-textarea-wrap">
+        <textarea class="fb-textarea" id="fbTextarea" maxlength="500" placeholder="Tell us more about your experience..." oninput="updateFbCount()"></textarea>
+        <div class="fb-char-counter"><span id="fbCharCount">0</span>/500</div>
+      </div>
+    </div>
+    <div class="fb-actions">
+      <button class="fb-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+      <button class="fb-btn-submit" id="fbSubmitBtn" disabled onclick="submitFeedback()">Submit feedback</button>
+    </div>
+  </div>
+</div>
+<script>
+var fbState = { experience: null, followups: {}, text: '' };
+function openFeedbackModal() {
+  document.querySelectorAll('.user-menu').forEach(function(m) { m.classList.remove('open'); });
+  resetFeedback();
+  document.getElementById('feedbackModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFeedbackModal() {
+  document.getElementById('feedbackModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function resetFeedback() {
+  fbState = { experience: null, followups: {}, text: '' };
+  document.querySelectorAll('#feedbackModal .fb-emoji').forEach(function(b) { b.classList.remove('selected'); });
+  document.querySelectorAll('#feedbackModal .fb-chip').forEach(function(b) { b.classList.remove('selected'); });
+  document.getElementById('feedbackCard').classList.remove('has-rating');
+  document.getElementById('fbTextarea').value = '';
+  document.getElementById('fbCharCount').textContent = '0';
+  document.getElementById('fbSubmitBtn').disabled = true;
+}
+function selectExperience(btn) {
+  fbState.experience = btn.dataset.value;
+  document.querySelectorAll('#feedbackModal .fb-emoji').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  document.getElementById('feedbackCard').classList.add('has-rating');
+  document.getElementById('fbSubmitBtn').disabled = false;
+}
+function selectFollowup(btn) {
+  var group = btn.dataset.group, value = btn.dataset.value;
+  if (fbState.followups[group] === value) {
+    delete fbState.followups[group];
+    btn.classList.remove('selected');
+    return;
+  }
+  fbState.followups[group] = value;
+  document.querySelectorAll('#feedbackModal .fb-chip[data-group="' + group + '"]').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+}
+function updateFbCount() {
+  var ta = document.getElementById('fbTextarea');
+  fbState.text = ta.value;
+  document.getElementById('fbCharCount').textContent = ta.value.length;
+}
+function submitFeedback() {
+  if (!fbState.experience) return;
+  console.log('Feedback submitted:', JSON.parse(JSON.stringify(fbState)));
+  closeFeedbackModal();
+  fbToast('Thanks for your feedback!');
+}
+function fbToast(msg) {
+  if (typeof showToast === 'function') { showToast(msg); return; }
+  var t = document.getElementById('fb-toast-el');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'fb-toast-el';
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2d2d2d;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;z-index:10001;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 2400);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var modal = document.getElementById('feedbackModal');
+    if (modal && modal.classList.contains('open')) closeFeedbackModal();
+  }
+});
+</script>
+
+</body>
+</html>
