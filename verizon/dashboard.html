@@ -1139,6 +1139,17 @@ document.addEventListener('DOMContentLoaded', function(){
 .anx-tip .r b{margin-left:auto;padding-left:18px;font-weight:700}
 </style>
 <style>#anxGran{display:none!important}</style>
+
+<style id="verizon-demo-empty-event">
+.vz-complete-btn{display:block;margin-top:10px;width:94px;background:#0044b3;color:#fff;border:0;border-radius:8px;padding:8px 6px;font-family:inherit;font-size:13px;font-weight:700;line-height:1.25;cursor:pointer;text-align:center}
+.vz-complete-btn:hover{background:#003399}
+.vz-setup-tag{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:#fdecec;color:#991b1b;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:600}
+.vz-setup-tag svg,.vz-incomplete svg{width:14px;height:14px;flex:0 0 14px}
+.vz-incomplete{display:flex;align-items:center;gap:7px;color:#991b1b;font-size:14px;font-weight:600;margin-bottom:4px}
+.vz-row-link{display:inline-block;color:#0044b3;font-size:14px;cursor:pointer;text-decoration:none}
+.vz-row-link.u{text-decoration:underline;font-size:13px}
+.cell-candidates .cand-zero{font-size:14px;color:#2d2d2d}
+</style>
 </head>
 <body>
 
@@ -1212,7 +1223,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <!-- Filter row: sits on gray bg -->
     <div class="filter-row">
       <div class="tab-pills">
-        <button class="tab-pill active" onclick="filterEvents('upcoming', this)">Upcoming events <span class="count">3</span></button>
+        <button class="tab-pill active" onclick="filterEvents('upcoming', this)">Upcoming events <span class="count">4</span></button>
         <button class="tab-pill" onclick="filterEvents('complete', this)">Past events <span class="count">1</span></button>
       </div>
       <a class="av-test-link" id="avTestLink" href="lobby.html?avtest=1" target="_blank" rel="noopener" title="Opens in a new window" aria-label="Test your audio and video (opens in a new window)"><svg class="av-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg><span>Test your audio and video before your event<span class="av-it"> — IT may need to allow access</span></span><svg class="av-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
@@ -1279,8 +1290,8 @@ document.addEventListener('DOMContentLoaded', function(){
               <div class="cell-col-count">3 of 3 jobs</div>
             </td>
             <td class="cell-candidates">
-              <div class="cand-pending" onclick="window.open('lobby.html?tab=notyet','_blank')">3 awaiting response</div>
-              <div class="cand-upcoming">16 confirmed interviews</div>
+              <div class="cand-pending" onclick="window.open('lobby.html?tab=notyet','_blank')">3 to review</div>
+              <div class="cand-upcoming">16 upcoming</div>
               <a onclick="window.open('lobby.html?tab=notyet','_blank')" style="cursor:pointer;">Manage candidates</a>
             </td>
           </tr>
@@ -1317,8 +1328,8 @@ document.addEventListener('DOMContentLoaded', function(){
               <div class="cell-col-count">2 of 3 jobs</div>
             </td>
             <td class="cell-candidates">
-              <div class="cand-pending">6 awaiting response</div>
-              <div class="cand-upcoming">11 confirmed interviews</div>
+              <div class="cand-pending">6 to review</div>
+              <div class="cand-upcoming">11 upcoming</div>
               <a onclick="window.open('lobby.html?method=person&amp;tab=notyet','_blank')" style="cursor:pointer;">Manage candidates</a>
             </td>
           </tr>
@@ -1355,9 +1366,45 @@ document.addEventListener('DOMContentLoaded', function(){
               <div class="cell-col-count">2 of 3 jobs</div>
             </td>
             <td class="cell-candidates">
-              <div class="cand-pending">4 awaiting response</div>
-              <div class="cand-upcoming">9 confirmed interviews</div>
+              <div class="cand-pending">4 to review</div>
+              <div class="cand-upcoming">9 upcoming</div>
               <a onclick="window.open('lobby.html?method=phone&amp;tab=notyet','_blank')" style="cursor:pointer;">Manage candidates</a>
+            </td>
+          </tr>
+                  <tr class="ev-row upcoming" data-event="boston" data-dash-event="boston-event">
+            <td>
+              <div class="actions-cell">
+                <button class="action-pencil" title="Edit" onclick="window.open('edit-event.html?event=boston','_blank')"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.293 2.293a2.828 2.828 0 114 4l-11 11a1 1 0 01-.39.242l-4.5 1.5a.75.75 0 01-.942-.942l1.5-4.5a1 1 0 01.242-.39l11.09-11.09z"/></svg></button>
+                <button class="action-dots" onclick="toggleMenu(this)"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg></button>
+                <div class="action-menu">
+                  <button class="action-menu-item" onclick="window.open('edit-event.html?event=boston','_blank')">Edit</button>
+                  <button class="action-menu-item" onclick="window.open('share-preview.html?event=boston','_blank')">Share</button>
+                </div>
+              </div>
+              <button class="vz-complete-btn" onclick="window.open('edit-event.html?event=boston','_blank')">Complete setup</button>
+            </td>
+            <td>
+              <span class="cell-event-name">Boston, MA Hiring Event</span>
+              <div class="cell-event-date"><span class="date-part">January 21, 2027</span> <span class="time-part">&middot; 11:00 AM - 3:00 PM ET</span></div>
+              <span class="vz-setup-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.5" fill="#fff"/></svg>Setup</span>
+            </td>
+            <td>
+              <div class="vz-incomplete"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.5" fill="#fff"/></svg>Incomplete</div>
+              <a class="vz-row-link u" onclick="window.open('edit-event.html?event=boston','_blank')">Go to lobby</a>
+            </td>
+            <td>
+              <div class="vz-incomplete"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="17.3" r="1.5" fill="#fff"/></svg>Incomplete</div>
+              <div class="cell-col-count">0 of 5 interviewers</div>
+              <a class="vz-row-link" onclick="window.open('edit-event.html?event=boston','_blank')">Add</a>
+            </td>
+            <td>
+              <a class="cell-job" onclick="window.open('share-preview.html?event=boston&amp;job=am','_blank')">Account Manager, SMB Business Sales</a>
+              <div class="cell-col-count">1 of 3 jobs</div>
+            </td>
+            <td class="cell-candidates">
+              <div class="cand-zero">0 to review</div>
+              <div class="cand-upcoming">0 upcoming</div>
+              <a onclick="window.open('edit-event.html?event=boston','_blank')" style="cursor:pointer;">Manage candidates</a>
             </td>
           </tr>
         </tbody>

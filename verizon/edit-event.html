@@ -615,6 +615,31 @@ body.collapsed .main { margin-left: 60px; }
 <style>/* Hide dev preview toggles in demo */ .pkg-dev, .state-dev { display: none !important; }</style>
 
 <style id="verizon-demo-no-candidates-page">#iarow-candidates,#nav-candidates,a.nav-item[href="dashboard.html?view=candidates"]{display:none!important}</style>
+
+<style id="verizon-demo-edit-live">
+/* red, as in the live app */
+.incomplete-banner-icon{background:#991b1b!important;color:#fff!important}
+.section-incomplete-badge{background:#fdecec!important;color:#991b1b!important;border-color:#f6d3d3!important}
+/* the live app keeps the interview summary visible while setup isn't finished */
+body.setup-interview-incomplete #interviewDetailsSummary{display:block}
+body.vz-settings-incomplete .vz-settings-badge{display:inline-flex!important}
+/* interview method: blue like the live app */
+.im-seg-btn.on{background:#0044b3!important;color:#fff!important}
+.im-vopt.on .im-dot{border-color:#0044b3!important}
+.im-vopt.on .im-dot:after{background:#0044b3!important}
+/* segmented choices (resume requirement, slot interval) */
+.vz-seg{display:inline-flex;border:1px solid #d4d2d0;border-radius:9999px;padding:4px;gap:4px;background:#fff}
+.vz-seg button{border:0;background:none;border-radius:9999px;padding:9px 20px;font-family:inherit;font-size:14px;color:#2d2d2d;cursor:pointer}
+.vz-seg button.on{background:#0044b3;color:#fff;font-weight:700}
+.vz-seg.box{border:0;padding:0;gap:0;border-radius:0}
+.vz-seg.box button{border:1px solid #a8a8a8;border-radius:0;padding:10px 20px;font-weight:600}
+.vz-seg.box button:first-child{border-radius:8px 0 0 8px}
+.vz-seg.box button:last-child{border-radius:0 8px 8px 0;border-left:0}
+.vz-seg.box button.on{background:#0044b3;border-color:#0044b3;color:#fff}
+#slotDurSelect{display:none!important}
+.vz-resume-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.vz-resume-row .toggle-label{font-size:16px;color:#2d2d2d}
+</style>
 </head>
 <body>
 
@@ -744,7 +769,7 @@ setTimeout(function() {
     </div>
     <div class="section-divider"></div>
     <div class="section-body">
-      <p class="summary-text" id="eventDetailsSummary">Los Angeles, CA Hiring Event<br>January 19, 2027 &middot; 11:00 AM – 3:00 PM</p>
+      <p class="summary-text" id="eventDetailsSummary">Los Angeles, CA Hiring Event<br>January 19, 2027 &middot; 11:00 AM – 3:00 PM PST</p>
     </div>
   </div>
 
@@ -920,6 +945,22 @@ setTimeout(function() {
     </div>
   </div>
 
+  <!-- SECTION: RESUME REQUIREMENT (live app, November 2026: its own section, three choices) -->
+  <div class="section" id="resumeSection">
+    <div class="section-header">
+      <h2>Resume requirement <span class="required">*</span></h2>
+    </div>
+    <div class="section-divider"></div>
+    <div class="section-body">
+      <div class="vz-resume-row">
+        <span class="toggle-label">Require candidate to include resume?</span>
+        <div class="vz-seg" id="vzResumeSeg" role="group" aria-label="Require candidate to include resume?">
+          <button type="button" class="on" onclick="vzResume(this)">Mandatory</button><button type="button" onclick="vzResume(this)">Optional</button><button type="button" onclick="vzResume(this)">Off</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SECTION: INTERVIEW DETAILS -->
   <div class="section interview-details-section" id="interviewDetailsSection">
     <div class="section-header">
@@ -982,8 +1023,8 @@ setTimeout(function() {
   <p class="im-hint">This applies to every interview scheduled for this event.</p>
   <div class="im-seg" id="imSeg">
     <button type="button" class="im-seg-btn on" id="imBtnVideo" onclick="imPickFmt('video')"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2"></rect></svg>Video</button>
-    <button type="button" class="im-seg-btn" id="imBtnPhone" onclick="imPickFmt('phone')"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"></path></svg>Phone</button>
     <button type="button" class="im-seg-btn" id="imBtnPerson" onclick="imPickFmt('person')"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>In-Person</button>
+    <button type="button" class="im-seg-btn" id="imBtnPhone" onclick="imPickFmt('phone')"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"></path></svg>Phone</button>
   </div>
   <div class="im-pane open" id="imPaneVideo">
     <label class="im-vopt on" id="imVoptNative" onclick="imPickVideo('native')">
@@ -1047,7 +1088,7 @@ setTimeout(function() {
   function imSummary(){
     var el=$("interviewDetailsSummary");
     if(!el)return;
-    var name=S.format==="phone"?"Phone interviews":S.format==="person"?"In-person interviews":(S.videoMode==="third"?"Third-party video interviews":"JobFairX Video interviews");
+    var name=S.format==="phone"?"Phone interviews":S.format==="person"?"In-person interviews":(S.videoMode==="third"?"Third-party video interviews":"JobFairX video call");
     window.__imName=name;var parts=el.textContent.split(" | ");
     parts[0]=name;
     el.textContent=parts.join(" | ");
@@ -1096,8 +1137,11 @@ setTimeout(function() {
 
         <!-- Interview time slot duration: 15 or 30 minutes, locked once the jobs are published -->
         <div class="id-field" id="slotDurField">
-          <div class="id-field-label">Interview time slot duration</div>
+          <div class="id-field-label">Interview time slot interval <span class="required">*</span></div>
           <p class="id-field-hint">Choose how often candidates can schedule an interview.</p>
+          <div class="vz-seg box" id="vzSlotSeg" role="group" aria-label="Interview time slot interval">
+            <button type="button" data-v="15" onclick="vzSlot(15)">15 min</button><button type="button" data-v="30" class="on" onclick="vzSlot(30)">30 min</button>
+          </div>
           <div class="pay-custom-select" id="slotDurSelect">
             <div class="pay-custom-trigger" onclick="togglePaySelect('slotDurSelect')">
               <span id="slotDurLabel">30 minutes</span>
@@ -1148,6 +1192,17 @@ setTimeout(function() {
       </div>
       <p style="font-size: 13px; color: #767676; margin-top: 12px; line-height: 1.5;">Candidates are confirmed instantly when they select a time slot. Auto-accept pauses when all interview slots are full.</p>
 
+                <div style="border-top:1px solid #ebebeb;margin:26px 0;"></div>
+        <div class="id-field-label">AI notes</div>
+        <div class="toggle-row">
+          <span class="toggle-label">Record video interviews for AI notes?</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="aiNotesToggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p style="font-size: 13px; color: #767676; margin-top: 12px; line-height: 1.5;">Interviews on JobFairX video call are recorded (audio only) and transcribed. Candidates consent when they schedule. Recordings are deleted after 90 days.</p>
+        <p style="font-size: 13px; color: #767676; margin-top: 8px; line-height: 1.5;">With AI notes on, you confirm your interviewers agree to be recorded.</p>
         <div class="id-actions">
           <button class="ce-btn-cancel" onclick="toggleInterviewDetails(false)">Cancel</button>
           <button class="ce-btn-update" onclick="imValidateDetailsUpdate()">Update</button>
@@ -1167,7 +1222,7 @@ setTimeout(function() {
     <div class="section-body">
       <p class="summary-text" id="screeningSummary">Screening has been added to 0 of 2 jobs within this event.</p>
 
-      <div style="border-top:1px solid #ebebeb;margin:20px 0;"></div>
+      <div hidden><div style="border-top:1px solid #ebebeb;margin:20px 0;"></div>
       <div class="id-field-label">Resume requirement <span class="required">*</span></div>
       <div class="toggle-row">
         <span class="toggle-label">Require candidate to include resume?</span>
@@ -1175,7 +1230,7 @@ setTimeout(function() {
           <input type="checkbox" id="resumeRequiredToggle" checked>
           <span class="toggle-slider"></span>
         </label>
-      </div>
+      </div></div>
 
       <!-- Expandable Screening Edit -->
       <div class="screening-expand" id="screeningExpand">
@@ -1214,7 +1269,7 @@ setTimeout(function() {
   <!-- SECTION: INTERVIEW SETTINGS -->
   <div class="section">
     <div class="section-header">
-      <h2>Interviewers &amp; updates</h2>
+      <div class="section-header-left"><h2>Interview settings</h2><span class="section-incomplete-badge vz-settings-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 17h.01"/></svg> Incomplete</span></div>
       <button class="section-pencil" title="Edit interview settings" onclick="toggleInterviewSettings(true)"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
     </div>
     <div class="section-divider"></div>
@@ -1518,8 +1573,8 @@ function renderSlots() {
   var sum = document.getElementById('interviewDetailsSummary');
   if (sum) {
     sum.textContent = (total === 0)
-      ? (window.__imName||'JobFairX Video interviews')+' | '+SLOT_STEP+'-minute time slots | No interview capacity set | Start Advertising Date: 01/05/2027 | Attendance instructions added'
-      : (window.__imName||'JobFairX Video interviews')+' | '+SLOT_STEP+'-minute time slots | '+total + ' interviews across ' + open + ' time slot' + (open === 1 ? '' : 's') + ' | Start Advertising Date: 01/05/2027 | Attendance instructions added';
+      ? (window.__imName||'JobFairX video call')+' | '+SLOT_STEP+'-minute slots | No interview capacity set'+' | Auto-accept '+((document.getElementById('autoAcceptToggle')||{}).checked?'on':'off')+' | AI notes '+((document.getElementById('aiNotesToggle')||{checked:true}).checked?'on':'off')
+      : (window.__imName||'JobFairX video call')+' | '+SLOT_STEP+'-minute slots | '+total + ' interviews across ' + open + ' time slot' + (open === 1 ? '' : 's')+' | Auto-accept '+((document.getElementById('autoAcceptToggle')||{}).checked?'on':'off')+' | AI notes '+((document.getElementById('aiNotesToggle')||{checked:true}).checked?'on':'off');
   }
 }
 function slotAdj(i, d) {
@@ -2707,10 +2762,10 @@ document.addEventListener('DOMContentLoaded', recomputeEditPackageUsage);
 /* jobs: true = jobs posted, false = jobs missing
    interview: true = interview details set, false = missing */
 var EVENT_META = {
-  losangeles:  { name: 'Los Angeles, CA Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM', jobs: true,  interview: true  },
-  chicago:   { name: 'Chicago, IL Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM', jobs: true,  interview: true  },
-  newyork: { name: 'New York City, NY Hiring Event', date: 'January 20, 2027 &middot; 11:00 AM – 3:00 PM',    jobs: true,  interview: true },
-  boston: { name: 'Boston, MA Hiring Event',  date: 'January 21, 2027 &middot; 11:00 AM – 3:00 PM',  jobs: false, interview: false }
+  losangeles:  { name: 'Los Angeles, CA Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM PST', jobs: true,  interview: true  },
+  chicago:   { name: 'Chicago, IL Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM CST', jobs: true,  interview: true  },
+  newyork: { name: 'New York City, NY Hiring Event', date: 'January 20, 2027 &middot; 11:00 AM – 3:00 PM EST',    jobs: true,  interview: true },
+  boston: { name: 'Boston, MA Hiring Event',  date: 'January 21, 2027 &middot; 11:00 AM – 3:00 PM EST',  jobs: true, interview: false }
 };
 
 function getEventKey() {
@@ -2734,8 +2789,8 @@ function applySetupState(jobsOk, interviewOk) {
       title.textContent = "Your event setup isn't complete";
       sub.textContent = "Add your jobs and set up your interview details so candidates can sign up.";
     } else if (!interviewOk) {
-      title.textContent = "Your interview setup isn't complete";
-      sub.textContent = "Set up your interview details so candidates can sign up for time slots.";
+      title.textContent = "Your interview setup isn't finished";
+      sub.textContent = "Finish your interview details so candidates can sign up for time slots.";
     } else if (!jobsOk) {
       title.textContent = "Your jobs aren't posted yet";
       sub.textContent = "Add your first job so candidates can apply and sign up for interviews.";
@@ -3212,7 +3267,7 @@ if (document.readyState !== 'loading') renderSlots();
   function emails() { return $$('#interviewerEmailBox .is-email-chip').map(function (c) { var t = c.firstChild; while (t && t.nodeType !== 3) t = t.nextSibling; return t ? t.nodeValue.trim() : ''; }).filter(Boolean); }
   function summary() {
     var n = emails().length, el = $('#interviewSettingsSummary');
-    if (el) el.textContent = n + ' interviewer(s) added | Panel interviews ' + (isOn() ? 'on' : 'off') + ' | 1 daily update recipient(s)';
+    var r = n ? 1 : 0; if (el) el.textContent = n + (n === 1 ? ' interviewer added' : ' interviewers added') + ' | Panel interviews ' + (isOn() ? 'on' : 'off') + ' | ' + r + (r === 1 ? ' daily update recipient' : ' daily update recipients'); document.body.classList.toggle('vz-settings-incomplete', n === 0);
   }
   function syncSwitch() { var s = $('#pnPanelAll'); if (s) s.checked = isOn(); }
   function seed() {
@@ -3389,7 +3444,7 @@ function slotPickStep(opt) {
   }
   function render() {
     build();
-    document.body.classList.toggle('jl-on', published());
+    document.body.classList.toggle('jl-on', false);
     var loc = $('jlBoxLoc'), dur = $('jlBoxDur');
     if (loc) loc.innerHTML = locText();
     if (dur) dur.textContent = SLOT_STEP + ' minutes';
@@ -3426,6 +3481,42 @@ document.addEventListener('DOMContentLoaded', function(){
     if (key === 'losangeles') { var c = cards[1].cloneNode(true); setCard(c, 'sae', 'Senior Business Sales Account Executive', 'Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.'); cards[1].parentNode.insertBefore(c, cards[1].nextSibling); }
     if (typeof recomputeEditPackageUsage === 'function') recomputeEditPackageUsage();
   } catch (e) {}
+});
+</script>
+
+<script id="verizon-demo-edit-live-js">
+/* Live app, November 2026: each event opens with its own way of interviewing; the choices stay open. */
+function vzResume(btn){
+  document.querySelectorAll('#vzResumeSeg button').forEach(function(b){ b.classList.toggle('on', b === btn); });
+  var cb = document.getElementById('resumeRequiredToggle'); if (cb) cb.checked = btn.textContent !== 'Off';
+}
+function vzSlot(v){
+  var o = document.querySelector('#slotDurSelect .pay-custom-option[data-value="' + v + '"]');
+  if (o && typeof slotPickStep === 'function') slotPickStep(o);
+  document.querySelectorAll('#vzSlotSeg button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-v') === String(v)); });
+}
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var key = (typeof getEventKey === 'function') ? getEventKey() : 'losangeles';
+    if (key === 'boston') {
+      var cards = document.querySelectorAll('#editJobsWrap .job-card');
+      for (var i = 1; i < cards.length; i++) cards[i].parentNode.removeChild(cards[i]);
+      if (typeof recomputeEditPackageUsage === 'function') recomputeEditPackageUsage();
+    }
+    var how = { losangeles: 'video', chicago: 'person', newyork: 'phone', boston: 'video' }[key] || 'video';
+    if (typeof imPickFmt === 'function') imPickFmt(how);
+    if (how === 'person') {
+      var c = document.getElementById('imAddrCity'), s = document.getElementById('imAddrState');
+      if (c && !c.value) c.value = 'Chicago'; if (s && !s.value) s.value = 'IL';
+    }
+    ['autoAcceptToggle', 'aiNotesToggle'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('change', function(){ if (typeof renderSlots === 'function') renderSlots(); });
+    });
+    if (typeof SLOT_STEP !== 'undefined') document.querySelectorAll('#vzSlotSeg button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-v') === String(SLOT_STEP)); });
+    if (typeof renderSlots === 'function') renderSlots();
+    if (window.JL && JL.render) JL.render();
+  } catch (e) { if (window.console) console.error('verizon edit page', e); }
 });
 </script>
 </body>
