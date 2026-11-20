@@ -1040,6 +1040,7 @@ function vzTop(key) {
 var selectedJobId = null;
 var selectedSlotIdx = null;
 var currentEvent = null;
+var vzBooked = {}; /* jobs this candidate has requested: id -> { time } */
 
 /* ---------- Setup ---------- */
 function getEventKey() {
@@ -1060,6 +1061,7 @@ function loadEvent(key, preSelectJobId) {
   vzTop(key);
   selectedJobId = null;
   selectedSlotIdx = null;
+  vzBooked = {};
   document.getElementById('eventTitle').textContent = currentEvent.title;
   document.getElementById('eventSub').textContent = currentEvent.sub;
   document.getElementById('schDate').textContent = currentEvent.date;
@@ -1221,6 +1223,7 @@ function selectJob(jobId) {
 
   renderSlots();
   updateBtn();
+  if (vzBooked[jobId]) vzShowBooked(jobId);
 }
 
 function renderSlots() {
@@ -1230,14 +1233,15 @@ function renderSlots() {
   job.slots.forEach(function(slot, idx) {
     var row = document.createElement('div');
     row.className = 'sch-slot';
-    if (slot.remaining === 0) row.classList.add('full');
-    var remainingText = slot.remaining + ' spot' + (slot.remaining === 1 ? '' : 's') + ' remaining';
+    var vzClash = vzClashAt(slot.time);
+    if (slot.remaining === 0 || vzClash) row.classList.add('full');
+    var remainingText = vzClash ? 'Your other interview' : slot.remaining + ' spot' + (slot.remaining === 1 ? '' : 's') + ' remaining';
     row.innerHTML =
       '<div class="sch-radio"></div>' +
       '<div class="sch-time">' + slot.time + '<span class="sch-tz-inline">' + currentEvent.tz.split(' ').slice(-1)[0].replace(/[()]/g,'') + '</span></div>' +
       '<div class="sch-remaining">' + remainingText + '</div>';
     row.addEventListener('click', function() {
-      if (slot.remaining === 0) return;
+      if (slot.remaining === 0 || vzClash) return;
       selectedSlotIdx = idx;
       document.querySelectorAll('.sch-slot').forEach(function(s) { s.classList.remove('selected'); });
       row.classList.add('selected');
@@ -1255,11 +1259,29 @@ document.getElementById('schBtn').addEventListener('click', function() {
   if (selectedSlotIdx === null) return;
   var job = currentEvent.jobs.find(function(j) { return j.id === selectedJobId; });
   var slot = job.slots[selectedSlotIdx];
+  vzBooked[job.id] = { time: slot.time };
   document.getElementById('schContent').style.display = 'none';
   document.getElementById('schSuccess').classList.add('active');
   document.getElementById('schSuccessDesc').textContent =
     'Your request for ' + job.title + ' at ' + slot.time + ' has been sent. The recruiter will review and email you a confirmation shortly.';
 });
+
+
+/* Scott, November 20, 2026: a requested job shows its request, not the times; its time is taken
+   in the other jobs' lists. Kept until the page reloads. */
+function vzShowBooked(jobId) {
+  var job = currentEvent.jobs.find(function(j) { return j.id === jobId; });
+  var b = vzBooked[jobId];
+  if (!job || !b) return;
+  document.getElementById('schContent').style.display = 'none';
+  document.getElementById('schSuccess').classList.add('active');
+  document.getElementById('schSuccessDesc').textContent =
+    'Your request for ' + job.title + ' at ' + b.time + ' has been sent. The recruiter will review and email you a confirmation shortly.';
+}
+function vzClashAt(time) {
+  for (var id in vzBooked) { if (id !== selectedJobId && vzBooked[id].time === time) return true; }
+  return false;
+}
 
 init();
 </script>
