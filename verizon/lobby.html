@@ -1182,6 +1182,43 @@ document.addEventListener('DOMContentLoaded', function(){
   for(var i=0;i<all.length;i++) fbpPaint(all[i]);
 });
 </script>
+
+<style id="verizon-demo-ai-notes-css">
+/* Scott, November 20, 2026: the notes box, as the live app draws it */
+.vzn-overlay{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.5);font-family:'Noto Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+.vzn-overlay.open{display:flex}
+.vzn-box{display:flex;flex-direction:column;width:880px;max-width:100%;max-height:90vh;background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+.vzn-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-bottom:1px solid #ebebeb}
+.vzn-head h3{margin:0;font-size:18px;font-weight:700;color:#2d2d2d;line-height:1.3}
+.vzn-tools{display:flex;align-items:center;gap:8px}
+.vzn-dl{position:relative}
+.vzn-dl-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:1px solid #d4d2d0;border-radius:8px;background:#fff;color:#2d2d2d;font:600 13px/1 inherit;font-family:inherit;cursor:pointer}
+.vzn-dl-btn:hover{background:#f6f5f3}
+.vzn-dl-btn:disabled{opacity:.6;cursor:default}
+.vzn-dl-btn svg{width:16px;height:16px}
+.vzn-dl-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:2;min-width:250px;padding:4px 0;background:#fff;border:1px solid #e8e6e3;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.vzn-dl-menu[hidden]{display:none}
+.vzn-dl-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:12px 16px;border:0;background:transparent;text-align:left;font:500 14px/1.3 inherit;font-family:inherit;color:#2d2d2d;cursor:pointer}
+.vzn-dl-menu button:hover{background:#f6f5f3}
+.vzn-x{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:0;border-radius:6px;background:none;color:#595959;font-size:22px;line-height:1;cursor:pointer}
+.vzn-x:hover{background:#f3f2ef}
+.vzn-body{flex:1;overflow-y:auto;padding:20px 24px}
+.vzn-card{border:1px solid #e8e6e3;background:#f9f8f7;border-radius:8px;padding:12px 16px}
+.vzn-card-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.vzn-who{font-size:14px;font-weight:600;color:#2d2d2d}
+.vzn-when{font-size:12px;color:#767676;white-space:nowrap}
+.vzn-warn{margin:2px 0 6px;font-size:12px;color:#767676}
+.vzn-notes{font-size:14px;line-height:1.55;color:#2d2d2d}
+.vzn-notes h4{margin:12px 0 4px;font-size:14px;font-weight:700;color:#2d2d2d}
+.vzn-notes h4:first-child{margin-top:4px}
+.vzn-notes ul{margin:0;padding-left:20px}
+.vzn-notes li{margin:2px 0}
+.vzn-foot{display:flex;justify-content:flex-end;padding:16px 24px}
+.vzn-close{border:0;border-radius:8px;background:#0044b3;color:#fff;font:700 16px/1 inherit;font-family:inherit;padding:12px 24px;cursor:pointer}
+.vzn-close:hover{background:#003399}
+.vzn-msg{margin:10px 0 0;font-size:13px;color:#991b1b}
+.vzn-dash{color:#767676}
+</style>
 </head>
 <body>
 
@@ -8008,6 +8045,349 @@ a.jm-cp-num:hover { color:#0044B3; }
     if (typeof updatePrepStates === 'function') updatePrepStates();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', seed); else seed();
+})();
+</script>
+
+<div class="vzn-overlay" id="vznModal" role="dialog" aria-modal="true" aria-labelledby="vznTitle" onclick="if(event.target===this)VZN.close()">
+  <div class="vzn-box" onclick="VZN.menu(false)">
+    <div class="vzn-head">
+      <h3 id="vznTitle">Notes for <span id="vznName"></span></h3>
+      <div class="vzn-tools">
+        <div class="vzn-dl" id="vznDl">
+          <button type="button" class="vzn-dl-btn" id="vznDlBtn" onclick="event.stopPropagation();VZN.menu()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="vzn-dl-menu" id="vznDlMenu" hidden>
+            <button type="button" onclick="event.stopPropagation();VZN.download('notes')">Notes and transcript (PDF)</button>
+            <button type="button" onclick="event.stopPropagation();VZN.download('resume')">Resume (PDF)</button>
+            <button type="button" onclick="event.stopPropagation();VZN.download('zip')">Resume and notes (ZIP)</button>
+          </div>
+        </div>
+        <button type="button" class="vzn-x" onclick="VZN.close()" aria-label="Close">&times;</button>
+      </div>
+    </div>
+    <div class="vzn-body" id="vznBody"></div>
+    <div class="vzn-foot"><button type="button" class="vzn-close" onclick="VZN.close()">Close</button></div>
+  </div>
+</div>
+
+<script id="verizon-demo-ai-notes">
+/* Scott, November 20, 2026 (Loom "Showing AI Notes Download and Interview Notes", "Yes, video only") */
+(function(){
+  var PAGE = 'lobby';
+  var COS = ['Pacific Office Systems', 'Westside Wireless', 'Brightline Communications', 'Harbor Merchant Services',
+             'Golden State Payroll', 'Summit Security Systems', 'Coastline Mobile'];
+  var SCHOOLS = { la: ['Cal State Long Beach', 'Cal State Fullerton', 'Cal State Northridge', 'UC Irvine'],
+                  chi: ['DePaul University', 'University of Illinois Chicago', 'Loyola University Chicago'],
+                  ny: ['Baruch College', 'Pace University', 'Hofstra University'],
+                  bos: ['UMass Boston', 'Suffolk University', 'Northeastern University'] };
+  var DEGREES = ['B.A. Communication', 'B.S. Business Administration', 'B.S. Marketing', 'B.A. Economics'];
+  var REASONS = ['a bigger territory and a clearer path to promotion', 'selling a wider set of products to the same customers',
+                 'a company with a stronger name in business sales', 'a higher commission ceiling with steadier base pay'];
+  var DEALS = ['a dental group with four offices', 'a property management company with six buildings', 'a home health agency',
+               'a commercial landscaping company', 'a chain of three auto repair shops', 'a regional accounting firm'];
+  var SOURCES = [['LinkedIn', 'local business associations'], ['chamber of commerce events', 'referrals from current customers'],
+                 ['business park walk-ins', 'LinkedIn'], ['industry meetups', 'referral partners such as IT consultants']];
+
+  function hash(s){ var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed){ var a = seed; return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function pick(r, a){ return a[Math.floor(r() * a.length)]; }
+  function num(r, a, b){ return a + Math.floor(r() * (b - a + 1)); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function txt(el){ return el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; }
+
+  /* ---------- the person: made up from name and job, the same every time ---------- */
+  function region(loc){ return /, IL\b/.test(loc) ? 'chi' : /, NY\b|, NJ\b/.test(loc) ? 'ny' : /, MA\b/.test(loc) ? 'bos' : 'la'; }
+  function profile(p){
+    var r = rng(hash(p.name + '|' + p.job));
+    var role = /Senior Account Manager/.test(p.job) ? 'sam' : /Account Manager/.test(p.job) ? 'am' : /Senior/.test(p.job) ? 'sae' : 'ae';
+    var parts = p.name.split(' ');
+    var f = { r: r, role: role, hunter: role === 'ae' || role === 'sae', first: parts[0], last: parts.slice(1).join(' ') };
+    f.yrs = role === 'sam' || role === 'sae' ? num(r, 5, 11) : num(r, 2, 6);
+    f.co = pick(r, COS);
+    f.prev = pick(r, COS.filter(function(c){ return c !== f.co; }));
+    f.title = { am: 'Account Manager', sam: pick(r, ['Account Manager', 'Senior Account Manager']), ae: 'Account Executive', sae: pick(r, ['Account Executive', 'Senior Account Executive']) }[role];
+    f.prevTitle = f.hunter ? 'Sales Representative' : pick(r, ['Account Coordinator', 'Inside Sales Representative']);
+    var rd = (window.resumeData || window.ivResumeData || {})[p.name];
+    if (rd && rd.jobs && rd.jobs[0]) { f.co = rd.jobs[0].company || f.co; f.title = rd.jobs[0].title || f.title; }
+    f.accts = role === 'sam' ? num(r, 70, 140) : num(r, 45, 90);
+    f.quota = p.outcome === 'no' ? num(r, 78, 94) : num(r, 97, 128);
+    f.rank = num(r, 1, 4); f.team = num(r, 9, 18);
+    f.calls = num(r, 40, 90); f.meet = num(r, 6, 15); f.grow = num(r, 8, 22); f.newpct = num(r, 55, 80);
+    f.lines = pick(r, [12, 18, 24, 30, 40]); f.weeks = num(r, 3, 9); f.add = num(r, 4, 15);
+    f.start = num(r, 2, 4); f.reason = pick(r, REASONS); f.deal = pick(r, DEALS); f.src = pick(r, SOURCES);
+    f.story = num(r, 0, 2); f.field = num(r, 2, 4);
+    f.area = (p.loc || '').split(',')[0] || 'the territory';
+    f.school = pick(r, SCHOOLS[region(p.loc || '')]); f.degree = pick(r, DEGREES);
+    f.grad = 2025 - f.yrs - num(r, 0, 3); f.since = 2026 - Math.min(f.yrs, num(r, 2, 4));
+    f.email = (rd && rd.email) || (f.first + '.' + f.last).toLowerCase().replace(/[^a-z.]/g, '') + '@email.com';
+    f.phone = (rd && rd.phone) || '(555) 555-0' + (100 + (hash(p.name) % 900));
+    return f;
+  }
+
+  /* ---------- AI notes: one heading per question, bullet points, and an answer for the transcript ---------- */
+  function sections(p, f){
+    var F = f.first, S = [], o = p.outcome;
+    var held = f.role === 'am' ? 'Manages about ' + f.accts + ' small business accounts: renewals, added lines and billing questions.'
+      : f.role === 'sam' ? 'Owns a book of about ' + f.accts + ' business accounts, several with more than one location.'
+      : 'Finds and closes new business in an assigned territory; about ' + f.newpct + '% of last year’s revenue came from new customers.';
+    S.push({ h: 'Tell me about your current role.', b: [
+      F + ' has been in sales for ' + f.yrs + ' years and is ' + (/^[AEIOU]/.test(f.title) ? 'an ' : 'a ') + f.title + ' at ' + f.co + '.', held,
+      'Said the reason for looking is ' + f.reason + '.'],
+      a: 'I’ve been in sales about ' + f.yrs + ' years, and right now I’m ' + (/^[AEIOU]/.test(f.title) ? 'an ' : 'a ') + f.title + ' at ' + f.co + '. I’m looking for ' + f.reason + '.' });
+    S.push({ h: 'How have you done against your sales targets?', b: o === 'no'
+      ? ['Said last year finished at about ' + f.quota + '% of quota and the team as a whole missed its number.', 'Could not say how the current quarter is tracking.', 'Tracks activity loosely; did not give weekly call or meeting numbers.']
+      : ['Finished last year at ' + f.quota + '% of quota, ranked ' + f.rank + ' of ' + f.team + ' on the team.', 'Makes about ' + f.calls + ' calls and holds ' + f.meet + ' customer meetings in a normal week.', 'Reviews the pipeline every Monday with the sales manager.'],
+      a: o === 'no' ? 'Last year I was around ' + f.quota + '% of quota. It was a tough year for the whole team.' : 'I finished last year at ' + f.quota + '% of quota, number ' + f.rank + ' of ' + f.team + '. In a normal week that’s about ' + f.calls + ' calls and ' + f.meet + ' meetings.' });
+    if (f.hunter) {
+      S.push({ h: 'How do you find new business customers?', b: [
+        'Builds call lists from ' + f.src[0] + ' and ' + f.src[1] + ', then calls and emails in short daily blocks.',
+        'Spends ' + f.field + ' days a week in the field visiting businesses around ' + f.area + '.',
+        'Asks every new customer for two referrals; said referrals close about twice as often as cold leads.'],
+        a: 'Most of my new customers come from ' + f.src[0] + ' and ' + f.src[1] + '. I’m out in the field ' + f.field + ' days a week, and I ask every new customer for two referrals.' });
+    } else {
+      S.push({ h: 'How do you grow the accounts you already have?', b: [
+        'Reviews each account every quarter to find unused lines, older devices and locations without service.',
+        'Grew revenue in the current book by about ' + f.grow + '% last year, mostly from added lines and business internet.',
+        'Brings in a technical specialist for larger network or security conversations.'],
+        a: 'I review every account each quarter. Last year that grew my book about ' + f.grow + '%, mostly added lines and internet.' });
+    }
+    S.push({ h: 'Walk me through a deal you are proud of.', b: [
+      'Won a ' + f.lines + '-line account with ' + f.deal + ' that had been with another provider for years.',
+      'Took about ' + f.weeks + ' weeks from the first call to a signed agreement; a side-by-side cost review was the turning point.',
+      'Kept the customer through the first renewal and added ' + f.add + ' more lines.'],
+      a: 'I won a ' + f.lines + '-line account with ' + f.deal + '. It took about ' + f.weeks + ' weeks, and a side-by-side cost review made the difference.' });
+    var stories = [
+      ['Described a customer whose bill went up when a promotion ended.', 'Called the same day, explained the change and moved them to a plan that brought the bill back down.', 'Followed up a month later; the customer stayed and referred another business.'],
+      ['Described a customer upset about a late equipment delivery before a store opening.', 'Arranged loaner devices for the opening and kept the customer updated every day until the order arrived.', 'The customer signed a two-year renewal soon after.'],
+      ['Described a customer who wanted to cancel after a billing mistake.', 'Took ownership, had the credit applied within a week and set up a monthly check-in.', 'Said the account is now one of the larger ones in the book.']][f.story];
+    S.push({ h: 'Tell me about a time a customer was unhappy.', b: stories,
+      a: 'One customer was ready to leave. I called the same day, fixed the problem and kept checking in until they were happy.' });
+    S.push({ h: f.hunter ? 'How do you plan your week in the territory?' : 'How do you stay on top of a large account list?', b: f.hunter
+      ? ['Blocks mornings for calls and afternoons for in-person visits.', 'Groups visits by neighborhood to cut drive time around ' + f.area + '.', 'Updates Salesforce the same day; has also used HubSpot.']
+      : ['Sorts accounts by renewal date and size, and calls the top accounts every month.', 'Keeps notes in Salesforce after every call so anyone can pick up an account.', 'Sends a short summary to each customer after quarterly reviews.'],
+      a: f.hunter ? 'Mornings are calls, afternoons are visits, and I keep Salesforce up to date the same day.' : 'I sort my accounts by renewal date and size and log every call in Salesforce.' });
+    S.push({ h: 'Schedule, travel and start date', b: [
+      'Comfortable spending ' + f.field + ' days a week in the field and has a reliable car.',
+      'Could start in about ' + f.start + ' weeks after giving notice.',
+      'Asked how training works in the first 90 days.'],
+      a: 'Field days are fine, I have a car, and I could start about ' + f.start + ' weeks after giving notice.' });
+    var next = { yes: ['We will set up a second interview with the area sales manager next week.', F + ' will send two references before then.'],
+                 maybe: ['We will compare ' + F + ' with the other finalists and follow up by Friday.', 'Worth asking for an example of a recent proposal.'],
+                 no: ['Not a fit for this role right now: strong service skills, but limited experience winning new business.', 'We will send a thank-you note and keep ' + F + ' in mind for future openings.'],
+                 review: ['Feedback has not been entered yet.', 'Review these notes and mark ' + F + ' Yes, Maybe or No.'] }[o] || [];
+    S.push({ h: 'Next steps', b: next });
+    return S;
+  }
+
+  /* typed notes for in-person and phone interviews (no recording, so no AI notes) */
+  function typed(p, f){
+    var F = f.first, o = p.outcome;
+    return [
+      o === 'no' ? 'Friendly and polite, but answers stayed general.' : pick(rng(hash(p.name)), ['Strong first impression; clear, confident answers.', 'Prepared and easy to talk to; asked good questions about the team.', 'Calm and organized; gave specific numbers without being asked.']),
+      f.hunter ? F + ' finds new customers through ' + f.src[0] + ' and ' + f.src[1] + '; ' + f.quota + '% of quota last year.' : 'Manages about ' + f.accts + ' small business accounts; ' + f.quota + '% of quota last year.',
+      'Good example of keeping an unhappy customer after a billing problem.',
+      'Could start in about ' + f.start + ' weeks.',
+      { yes: 'Next: second interview with the area sales manager.', maybe: 'Next: compare with the other finalists.', no: 'Next: thank-you note; not moving forward.', review: 'Next: enter feedback.' }[o] || ''];
+  }
+
+  /* ---------- times ---------- */
+  var MONTHS = 'January February March April May June July August September October November December'.split(' ');
+  function parseWhen(s){
+    var m = new RegExp('(' + MONTHS.join('|') + ') (\\d{1,2})').exec(s || ''), t = /(\d{1,2}):(\d{2}) ?([AP]M)/.exec(s || '');
+    return { month: m ? m[1] : '', day: m ? +m[2] : 0, mins: t ? ((+t[1] % 12) + (t[3] === 'PM' ? 12 : 0)) * 60 + (+t[2]) : 11 * 60 };
+  }
+  function stamp(w, add){
+    var x = w.mins + add, h = Math.floor(x / 60), mm = x % 60, ap = h >= 12 ? 'PM' : 'AM', hh = h % 12 || 12;
+    return (w.month ? w.month + ' ' + w.day + ', ' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+  }
+
+  /* ---------- reading a row ---------- */
+  function cells(tr){
+    var table = tr.closest('table'), o = {};
+    if (!table) return o;
+    var heads = [].map.call(table.querySelectorAll('thead th'), function(th){ return txt(th).toLowerCase(); });
+    heads.forEach(function(h, i){ if (h && !(h in o)) o[h] = tr.children[i]; });
+    return o;
+  }
+  function outcomeOf(tr, c){
+    var d = tr.getAttribute('data-disposition');
+    var fbp = c.feedback && c.feedback.querySelector('.fbp');
+    var v = (d || (fbp && fbp.getAttribute('data-v')) || txt(c.feedback)).toLowerCase();
+    return /no-?show/.test(v) ? 'noshow' : /^yes/.test(v) ? 'yes' : /^maybe/.test(v) ? 'maybe' : /^no\b/.test(v) ? 'no' : 'review';
+  }
+  function isVideo(tr, c){
+    if (PAGE === 'lobby') return ((new URLSearchParams(location.search)).get('method') || 'video') === 'video';
+    if (tr.classList.contains('report-row')) {
+      if (window.VZREPORTKEY) return /^(la|bos)-/.test(window.VZREPORTKEY);
+      return /Los Angeles|Boston/.test(txt(document.getElementById('reportEventLabel')));
+    }
+    var where = txt(c['interview location']);
+    if (where) return /video/i.test(where);
+    return /Los Angeles|Boston/.test(tr.getAttribute('data-event') || '');
+  }
+  function rowData(btn){
+    var tr = btn.closest('tr'), c = cells(tr), nc = c.name;
+    var nameEl = nc && (nc.querySelector('.candidate-name, .iv-review-name') || nc.querySelector('div'));
+    var when = c.interviews || c['interview time'];
+    var p = { name: txt(nameEl || nc) || 'Candidate', job: txt(c['desired job'] || c['desired job title']),
+              loc: txt(c['desired location']), when: when ? when.innerText.replace(/\s+/g, ' ').trim() : '',
+              who: txt(c.interviewer || c.interviewers) || 'Interviewer', outcome: outcomeOf(tr, c), video: isVideo(tr, c) };
+    p.past = PAGE === 'dashboard' || /2026/.test(p.when) || /[?&]past=/.test(location.search);
+    return p;
+  }
+
+  /* ---------- the box ---------- */
+  var CUR = null;
+  function render(p){
+    var f = profile(p), w = parseWhen(p.when), jitter = hash(p.name) % 4;
+    var at = stamp(w, (p.past ? 14 : 27) + jitter);
+    var h = '<div class="vzn-card"><div class="vzn-card-top"><span class="vzn-who">' + esc(p.who) + '</span>';
+    if (p.video) {
+      h += '<span class="vzn-when">AI notes · ' + esc(at) + '</span></div><p class="vzn-warn">AI can make mistakes. Review and edit as needed.</p><div class="vzn-notes">';
+      sections(p, f).forEach(function(s){ h += '<h4>' + esc(s.h) + '</h4><ul>' + s.b.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>'; });
+    } else {
+      h += '<span class="vzn-when">' + esc(stamp(w, (p.past ? 20 : 33) + jitter)) + '</span></div><div class="vzn-notes" style="margin-top:6px"><ul>';
+      typed(p, f).forEach(function(b){ if (b) h += '<li>' + esc(b) + '</li>'; });
+      h += '</ul>';
+    }
+    return h + '</div><p class="vzn-msg" id="vznMsg" hidden></p></div>';
+  }
+  function open(p){
+    CUR = p;
+    document.getElementById('vznName').textContent = p.name;
+    document.getElementById('vznBody').innerHTML = render(p);
+    document.getElementById('vznBody').scrollTop = 0;
+    document.getElementById('vznDl').style.display = p.video ? '' : 'none';
+    menu(false);
+    document.getElementById('vznModal').classList.add('open');
+  }
+  function close(){ menu(false); document.getElementById('vznModal').classList.remove('open'); CUR = null; }
+  function menu(show){
+    var m = document.getElementById('vznDlMenu'); if (!m) return;
+    m.hidden = show === undefined ? !m.hidden : !show;
+  }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && document.getElementById('vznModal').classList.contains('open')) close(); });
+
+  /* ---------- downloads, laid out like the live app's PDFs ---------- */
+  var LIB = { pdf: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', zip: 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js' };
+  function load(src){ return new Promise(function(res, rej){ var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+  function need(zip){
+    var w = [];
+    if (!(window.jspdf && window.jspdf.jsPDF)) w.push(load(LIB.pdf));
+    if (zip && !window.JSZip) w.push(load(LIB.zip));
+    return Promise.all(w);
+  }
+  function writer(doc){
+    var M = 15, W = doc.internal.pageSize.getWidth() - M * 2, H = doc.internal.pageSize.getHeight() - M, y = 20;
+    return function(text, size, bold, after, indent){
+      doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size);
+      var lh = doc.getLineHeight() / doc.internal.scaleFactor, x = M + (indent || 0);
+      doc.splitTextToSize(text, W - (indent || 0)).forEach(function(line){ if (y + lh > H) { doc.addPage(); y = 20; } doc.text(line, x, y); y += lh; });
+      y += after || 0;
+    };
+  }
+  function fbWord(o){ return { yes: 'Yes', maybe: 'Maybe', no: 'No' }[o] || 'Not set'; }
+  function notesPdf(p){
+    var f = profile(p), doc = new window.jspdf.jsPDF('p', 'mm', 'letter'), put = writer(doc);
+    put(p.name, 20, true, 3);
+    put('Desired job: ' + p.job, 11); put('Desired location: ' + p.loc, 11); put('Interview time: ' + p.when, 11);
+    put('Interviewers: ' + p.who, 11); put('Feedback: ' + fbWord(p.outcome), 11, false, 6);
+    put('AI notes', 14, true, 1); put('AI can make mistakes.', 9, false, 2);
+    var S = sections(p, f);
+    S.forEach(function(s){ put(s.h, 11, true, 1); s.b.forEach(function(b){ put('•  ' + b, 11, false, 0.5, 3); }); put(' ', 4); });
+    put('Transcript', 14, true, 2);
+    put('Interview on ' + p.when, 11, true, 1);
+    S.forEach(function(s){ if (!s.a) return; put(p.who + ': ' + (/[.?]$/.test(s.h) ? s.h : 'Let’s talk about ' + s.h.charAt(0).toLowerCase() + s.h.slice(1) + '.'), 10, false, 1); put(f.first + ': ' + s.a, 10, false, 3); });
+    return doc;
+  }
+  function resumePdf(p){
+    var f = profile(p), doc = new window.jspdf.jsPDF('p', 'mm', 'letter'), put = writer(doc);
+    put(p.name, 20, true, 2);
+    put(p.job + '  ·  ' + p.loc, 11, false, 1);
+    put(f.email + '  ·  ' + f.phone, 10, false, 6);
+    put('Work experience', 14, true, 2);
+    put(f.title + ', ' + f.co + ' (' + f.since + ' – Present)', 11, true, 1);
+    (f.hunter ? ['Finds and closes new business accounts across ' + f.area + ' and nearby cities.', 'Finished last year at ' + f.quota + '% of quota.', 'Builds a pipeline from ' + f.src[0] + ' and ' + f.src[1] + '.']
+              : ['Manages about ' + f.accts + ' small business accounts.', 'Grew the book about ' + f.grow + '% last year through added lines and internet.', 'Finished last year at ' + f.quota + '% of quota.'])
+      .forEach(function(b){ put('•  ' + b, 11, false, 0.5, 3); });
+    put(' ', 4);
+    put(f.prevTitle + ', ' + f.prev + ' (' + (f.since - 2) + ' – ' + f.since + ')', 11, true, 1);
+    ['Handled inbound sales and service for small business customers.', 'Ranked in the top ' + Math.max(2, f.rank) + ' of ' + f.team + ' representatives.']
+      .forEach(function(b){ put('•  ' + b, 11, false, 0.5, 3); });
+    put(' ', 4);
+    put('Education', 14, true, 2);
+    put(f.degree + ', ' + f.school + ' (' + f.grad + ')', 11, false, 6);
+    put('Skills', 14, true, 2);
+    put(['B2B sales', f.hunter ? 'Prospecting' : 'Account management', 'Salesforce', 'Negotiation', f.hunter ? 'Territory planning' : 'Renewals'].join('  ·  '), 11);
+    return doc;
+  }
+  function base(p){ return p.name.replace(/[\\\/:*?"<>|\s]+/g, '_').replace(/^_+|_+$/g, '') || 'candidate'; }
+  function save(blob, name){
+    if (window.VZN && typeof window.VZN._save === 'function') return window.VZN._save(blob, name);
+    var u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(u); a.remove(); }, 1000);
+  }
+  function download(kind){
+    var p = CUR; if (!p) return;
+    menu(false);
+    var btn = document.getElementById('vznDlBtn'), msg = document.getElementById('vznMsg');
+    if (msg) msg.hidden = true;
+    btn.disabled = true;
+    return need(kind === 'zip').then(function(){
+      if (kind === 'notes') return save(notesPdf(p).output('blob'), base(p) + '_notes.pdf');
+      if (kind === 'resume') return save(resumePdf(p).output('blob'), base(p) + '_resume.pdf');
+      var z = new window.JSZip();
+      z.file(base(p) + '_resume.pdf', resumePdf(p).output('arraybuffer'));
+      z.file(base(p) + '_notes.pdf', notesPdf(p).output('arraybuffer'));
+      return z.generateAsync({ type: 'blob' }).then(function(b){ return save(b, base(p) + '_resume_and_notes.zip'); });
+    }).catch(function(){
+      if (msg) { msg.textContent = 'Couldn’t download, please try again.'; msg.hidden = false; }
+    }).then(function(){ btn.disabled = false; });
+  }
+
+  /* ---------- the links: "AI notes" for video interviews, "Notes" for in-person and phone ---------- */
+  function rows(){
+    if (PAGE === 'lobby') return [].slice.call(document.querySelectorAll('.notes-link')).map(function(b){ return b.closest('tr'); }).filter(Boolean);
+    return [].slice.call(document.querySelectorAll('#ivPastActive tbody tr, #reportBody tr.report-row'));
+  }
+  function relabel(){
+    rows().forEach(function(tr){
+      var c = cells(tr), cell = c.notes; if (!cell) return;
+      if (outcomeOf(tr, c) === 'noshow') { if (!cell.querySelector('.vzn-dash')) cell.innerHTML = '<span class="vzn-dash">—</span>'; return; }
+      var btn = cell.querySelector('button'); if (!btn) return;
+      var mode = isVideo(tr, c) ? 'ai' : 'typed';
+      if (btn.getAttribute('data-vzn') === mode) return;
+      btn.setAttribute('data-vzn', mode);
+      btn.setAttribute('onclick', 'VZN.fromRow(this)');
+      btn.removeAttribute('data-notes');
+      var svg = btn.querySelector('svg');
+      btn.textContent = '';
+      if (svg) btn.appendChild(svg);
+      btn.appendChild(document.createTextNode(mode === 'ai' ? ' AI notes' : ' Notes'));
+    });
+  }
+  var T = null;
+  function soon(){ clearTimeout(T); T = setTimeout(relabel, 30); }
+
+  window.VZN = { open: open, close: close, menu: menu, download: download, fromRow: function(btn){ open(rowData(btn)); }, relabel: relabel, _data: rowData };
+  /* the page's own notes boxes now open this one */
+  if (PAGE === 'lobby') window.openNotesModal = function(name, btn){ open(rowData(btn)); };
+  else window.ivOpenNotesModal = function(name, btn){ open(rowData(btn)); };
+
+  function start(){
+    relabel();
+    var hosts = PAGE === 'lobby' ? ['interviewedLive'] : ['ivPastActive', 'reportBody'];
+    hosts.forEach(function(id){ var el = document.getElementById(id); if (el && window.MutationObserver) new MutationObserver(soon).observe(el, { childList: true, subtree: true }); });
+    if (PAGE === 'lobby' && typeof window.setLobbyMode === 'function') {
+      var slm = window.setLobbyMode; window.setLobbyMode = function(){ var r = slm.apply(this, arguments); soon(); return r; };
+    }
+    if (PAGE === 'dashboard') {
+      ['showEventReport', 'switchReportEvent'].forEach(function(fn){
+        var orig = window[fn]; if (typeof orig !== 'function') return;
+        window[fn] = function(key){ if (key) window.VZREPORTKEY = key; var r = orig.apply(this, arguments); soon(); return r; };
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(start, 0); }); else setTimeout(start, 0);
 })();
 </script>
 
