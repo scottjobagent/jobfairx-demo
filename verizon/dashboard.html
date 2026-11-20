@@ -9065,4 +9065,21 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 })();
 </script>
+
+<script id="verizon-demo-messages-open">
+/* Scott, November 20, 2026 (Loom "Filter Messages by Events and Jobs", "Green light"): clicking Messages opens the
+   first conversation in the list instead of the "Select a conversation" screen; a conversation already open stays open */
+(function(){
+  var orig = window.showView;
+  if (typeof orig !== 'function') return;
+  window.showView = function(view){
+    var r = orig.apply(this, arguments);
+    if (view === 'messaging') {
+      var shown = [].filter.call(document.querySelectorAll('#view-messaging .msg-thread'), function(x){ return x.offsetParent !== null; });
+      if (shown.length && !shown.some(function(x){ return x.classList.contains('active'); })) shown[0].click();
+    }
+    return r;
+  };
+})();
+</script>
 </body></html>
