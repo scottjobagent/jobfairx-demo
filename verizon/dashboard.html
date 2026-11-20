@@ -8156,4 +8156,39 @@ document.addEventListener('click', function(e){
   });
 })();
 </script>
+
+<style id="verizon-demo-top-switch">
+.topbar-left{display:flex;align-items:center}
+.dev-toggle-corner.vz-top{position:static;width:auto;padding:0;margin:0 0 0 16px;background:none;border:0;border-radius:0;opacity:1;display:inline-flex;align-items:center;font-family:inherit}
+.lobby-topbar-inner>.dev-toggle-corner.vz-top{margin-right:auto}
+.dev-toggle-corner.vz-top .dev-toggle-switch{display:flex;flex-direction:row;gap:2px;background:#f3f2ef;border:1px solid #d4d2d0;border-radius:8px;padding:2px}
+.dev-toggle-corner.vz-top .dev-toggle-btn{font-size:12px;line-height:16px;padding:4px 10px;min-width:30px;border-radius:6px;color:#595959;background:transparent}
+.dev-toggle-corner.vz-top .dev-toggle-btn.active{background:#0044B3;color:#fff}
+</style>
+<script id="verizon-demo-top-switch-move">
+(function(){
+  function move(){
+    var tog = document.querySelector('.dev-toggle-corner');
+    var logo = document.querySelector('.topbar-logo, .lobby-topbar-logo');
+    if (!tog || !logo || tog.classList.contains('vz-top')) return;
+    tog.classList.add('vz-top');
+    logo.parentNode.insertBefore(tog, logo.nextSibling);
+    /* the lobby's own code un-highlights both letters after a switch; light the one picked */
+    [].forEach.call(tog.querySelectorAll('.dev-toggle-btn'), function(b){
+      b.addEventListener('click', function(){
+        [].forEach.call(tog.querySelectorAll('.dev-toggle-btn'), function(x){ x.classList.toggle('active', x === b); });
+      });
+    });
+    /* on opening, light the letter for the state the page is in */
+    setTimeout(function(){
+      var btns = tog.querySelectorAll('.dev-toggle-btn');
+      if (!btns.length || [].some.call(btns, function(x){ return x.classList.contains('active'); })) return;
+      var m = (typeof currentLobbyMode !== 'undefined') ? currentLobbyMode : 'active';
+      if (m === 'active') btns[0].classList.add('active');
+      else if ((m === 'live' || m === 'live-empty') && btns[1]) btns[1].classList.add('active');
+    }, 200);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', move); else move();
+})();
+</script>
 </body></html>
