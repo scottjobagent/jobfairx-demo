@@ -3510,6 +3510,8 @@ document.addEventListener('DOMContentLoaded', function(){
     if (how === 'person') {
       var c = document.getElementById('imAddrCity'), s = document.getElementById('imAddrState');
       if (c && !c.value) c.value = 'Chicago'; if (s && !s.value) s.value = 'IL';
+      /* Scott, November 20, 2026: the same How to attend words the Chicago lobby shows */
+      var at = document.getElementById('imAttend'); if (at && !at.value) at.value = 'Visitor parking is available on site. Bring your ticket to the front desk for validation, and ask for Talent Acquisition.';
     }
     ['autoAcceptToggle', 'aiNotesToggle'].forEach(function(id){
       var el = document.getElementById(id);

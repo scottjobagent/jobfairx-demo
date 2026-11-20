@@ -6255,17 +6255,15 @@ a.jm-cp-num:hover { color:#0044B3; }
   </div>
 </div>
 
-<!-- Parking & arrival — shows the employer what their candidates were sent -->
+<!-- How to attend — shows the employer what their candidates were sent -->
 <div class="jm-ov" id="jmAddrOv">
   <div class="end-iv-modal">
     <div class="end-iv-header">
-      <h3>Interview address</h3>
+      <h3>How to attend</h3>
       <button class="end-iv-close" onclick="JFXM.closeAddr()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="jm-body">
-      <p><b>Verizon Chicago office</b><br>Pasadena, CA</p>
-      <p><b>Parking</b><br>Visitor parking is available on site. Bring your ticket to the front desk for validation.</p>
-      <p><b>Arrival</b><br>Check in at the front desk and ask for Talent Acquisition.</p>
+      <p>Visitor parking is available on site. Bring your ticket to the front desk for validation, and ask for Talent Acquisition.</p>
       <p style="color:#767676;font-size:13px">These details are included in every candidate's interview confirmation.</p>
     </div>
     <div class="end-iv-actions">
@@ -6370,7 +6368,7 @@ a.jm-cp-num:hover { color:#0044B3; }
     el.className = 'jm-line';
     var body;
     if (m === 'phone') body = '<span>You call each candidate at their scheduled time</span>';
-    else if (m === 'person') body = '<span>Verizon Chicago office, Chicago, IL</span><a onclick="JFXM.addr()">Parking &amp; arrival</a>' +
+    else if (m === 'person') body = '<span>Verizon Chicago office, Chicago, IL</span><a onclick="JFXM.addr()">How to attend</a>' +
       /* check-in: on the day the employer is here */
       '<a onclick="JFXM.qr()">Check-in QR code</a>';
     else if (VURL) {
