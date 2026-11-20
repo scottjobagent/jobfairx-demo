@@ -1126,6 +1126,8 @@ document.addEventListener('DOMContentLoaded', function(){
 }
 .sample-tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:10px;background:#f3f2f1;color:#595959;font-size:11px;font-weight:600;letter-spacing:.02em;vertical-align:middle}
 </style>
+
+<style id="verizon-demo-no-candidates-page">#iarow-candidates,#nav-candidates,a.nav-item[href="dashboard.html?view=candidates"]{display:none!important}</style>
 </head>
 <body>
 
@@ -7518,7 +7520,7 @@ document.addEventListener('click', function(e){
 });
 /* Generic ?view= deep link (candidates, interviews, messaging, analytics, events) */
 (function(){
-  var m = window.location.search.match(/[?&]view=(events|interviews|messaging|candidates|analytics)\b/);
+  var m = window.location.search.match(/[?&]view=(events|interviews|messaging|analytics)\b/);
   if (!m) return;
   var v = m[1], tries = 0;
   (function go(){
