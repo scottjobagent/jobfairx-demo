@@ -646,7 +646,7 @@ body.vz-settings-incomplete .vz-settings-badge{display:inline-flex!important}
 <script id="verizon-demo-capacity">
 /* Scott, November 20, 2026 ("Yes, match them", Pro package): each event's slots hold the interviews its
    lobby and the dashboard show, with one interviewer for every interview at the busiest time. */
-window.VZCAP = {"losangeles":{"b":[11,10,6,7,8,8,7,3],"v":11},"chicago":{"b":[7,6,6,6,5,4,4,2],"v":7},"newyork":{"b":[8,6,6,6,6,4,4,2],"v":8}};
+window.VZCAP = {"vz":{"b":[14,14,6,9,12,12,12,5],"v":14},"losangeles":{"b":[11,10,6,7,8,8,7,3],"v":11},"chicago":{"b":[7,6,6,6,5,4,4,2],"v":7},"newyork":{"b":[8,6,6,6,6,4,4,2],"v":8}};
 </script>
 </head>
 <body>
@@ -1677,7 +1677,7 @@ var AM_LEAD = "Before your interview, finish your application here: ";
 /* Candidates who already requested an interview for this event's jobs in the last 4 weeks.
    The run-for-existing-candidates prompt only shows when this is above zero — on a brand
    new event the answer is always none, so we don't ask. */
-var AM_EXISTING = { losangeles: [14, 5], chicago: [9, 3], newyork: [6, 2], boston: [0, 0] };
+var AM_EXISTING = { losangeles: [14, 5], chicago: [9, 3], newyork: [6, 2], boston: [0, 0], vz: [0, 0] };
 var AM_JOBS = [];
 var AM_TPL = [
   { n: "Message new candidates",     m: "Hi {CANDIDATE_FIRSTNAME},\n\nThanks for requesting an interview for the {JOB_TITLE} role at {COMPANY}. We’re reviewing requests now and will be in touch very soon.\n\nRegards,\n{RECRUITER_NAME}" },
@@ -2778,7 +2778,8 @@ var EVENT_META = {
   losangeles:  { name: 'Los Angeles, CA Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM PST', jobs: true,  interview: true  },
   chicago:   { name: 'Chicago, IL Hiring Event',  date: 'January 19, 2027 &middot; 11:00 AM – 3:00 PM CST', jobs: true,  interview: true  },
   newyork: { name: 'New York City, NY Hiring Event', date: 'January 20, 2027 &middot; 11:00 AM – 3:00 PM EST',    jobs: true,  interview: true },
-  boston: { name: 'Boston, MA Hiring Event',  date: 'January 21, 2027 &middot; 11:00 AM – 3:00 PM EST',  jobs: true, interview: false }
+  boston: { name: 'Boston, MA Hiring Event',  date: 'January 21, 2027 &middot; 11:00 AM – 3:00 PM EST',  jobs: true, interview: false },
+  vz: { name: 'Verizon Business Sales Career Event', date: 'January 22, 2027 &middot; 11:00 AM – 3:00 PM EST', jobs: true, interview: true }
 };
 
 function getEventKey() {
@@ -3263,9 +3264,9 @@ if (document.readyState !== 'loading') renderSlots();
 (function () {
   function $(q, r) { return (r || document).querySelector(q); }
   function $$(q, r) { return [].slice.call((r || document).querySelectorAll(q)); }
-  var EVENTS = { losangeles: 'Los Angeles, CA Hiring Event', chicago: 'Chicago, IL Hiring Event', newyork: 'New York City, NY Hiring Event', boston: 'Boston, MA Hiring Event' };
+  var EVENTS = { losangeles: 'Los Angeles, CA Hiring Event', chicago: 'Chicago, IL Hiring Event', newyork: 'New York City, NY Hiring Event', boston: 'Boston, MA Hiring Event', vz: 'Verizon Business Sales Career Event' };
   var NAMES = { 'demo@jobfairx.com': 'Demo', 'demo1@jobfairx.com': 'Demo 1', 'demo2@jobfairx.com': 'Demo 2', 'demo3@jobfairx.com': 'Demo 3', 'demo4@jobfairx.com': 'Demo 4', 'demo5@jobfairx.com': 'Demo 5', 'demo6@jobfairx.com': 'Demo 6', 'demo7@jobfairx.com': 'Demo 7', 'demo8@jobfairx.com': 'Demo 8', 'demo9@jobfairx.com': 'Demo 9', 'demo10@jobfairx.com': 'Demo 10' };
-  var SEED = { losangeles: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com', 'demo8@jobfairx.com', 'demo9@jobfairx.com', 'demo10@jobfairx.com'], chicago: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com'], newyork: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com'] };   /* Scott, November 20, 2026: one interviewer per interview at the busiest time */
+  var SEED = { vz: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com', 'demo8@jobfairx.com', 'demo9@jobfairx.com', 'demo10@jobfairx.com', 'demo11@jobfairx.com', 'demo12@jobfairx.com', 'demo13@jobfairx.com'], losangeles: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com', 'demo8@jobfairx.com', 'demo9@jobfairx.com', 'demo10@jobfairx.com'], chicago: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com'], newyork: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com'] };   /* Scott, November 20, 2026: one interviewer per interview at the busiest time */
   var LINE = 'Panel interviews let more than one interviewer join the same interview. With this on, all the interviewers above join every interview on this event. You can still change the interviewers on any single interview from its row.';
   function eventKey() { return (typeof getEventKey === 'function') ? getEventKey() : 'losangeles'; }
   function eventName() { return EVENTS[eventKey()] || eventKey(); }
@@ -3547,6 +3548,37 @@ document.addEventListener('DOMContentLoaded', function(){
   var box = document.getElementById('interviewerEmailBox');
   if (box && window.MutationObserver) new MutationObserver(function(){ if (typeof renderSlots === 'function') renderSlots(); }).observe(box, { childList: true });
   if (typeof renderSlots === 'function') renderSlots();
+});
+</script>
+
+<style id="verizon-demo-private-edit-css">
+/* Scott, November 20, 2026: the private Verizon event is priced per event, so no package lines */
+body.vz-private #editPackageMeta, body.vz-private #seatPkgName, body.vz-private #seatIndicator .is-seat-sep{display:none!important}
+</style>
+<script id="verizon-demo-private-edit">
+/* Scott, November 20, 2026 (Loom "Verizon Private Hiring Event Example", "Career Event") */
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var key = (typeof getEventKey === 'function') ? getEventKey() : '';
+    if (key !== 'vz') return;
+    document.body.classList.add('vz-private');
+    var cards = document.querySelectorAll('#editJobsWrap .job-card');
+    if (cards.length >= 2) {
+      var add = function(id, title, summary){
+        var c = cards[1].cloneNode(true);
+        c.setAttribute('data-job-id', id);
+        c.querySelector('.job-name').textContent = title;
+        c.querySelector('.job-desc').textContent = summary;
+        var b = c.querySelector('.edit-btn'); if (b) b.setAttribute('onclick', "openJobEditor('" + id + "')");
+        var last = document.querySelectorAll('#editJobsWrap .job-card'); last = last[last.length - 1];
+        last.parentNode.insertBefore(c, last.nextSibling);
+      };
+      add('ae', 'Business Sales Account Executive', 'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.');
+      add('sae', 'Senior Business Sales Account Executive', 'Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.');
+    }
+    if (typeof recomputeEditPackageUsage === 'function') recomputeEditPackageUsage();
+    if (typeof updateSeatCounter === 'function') updateSeatCounter();
+  } catch (e) { if (window.console) console.error('private event edit page', e); }
 });
 </script>
 </body>
