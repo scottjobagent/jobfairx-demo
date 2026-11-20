@@ -1316,15 +1316,15 @@ document.addEventListener('DOMContentLoaded', function(){
             </td>
             <td>
               <div class="setup-summary">
-                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('losangeles')">2 interviewers<span class="iv-count-tiptext">Includes account owner. Doesn't count toward interviewer seats.</span></a>
+                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('losangeles')">11 interviewers<span class="iv-count-tiptext">Includes account owner. Doesn't count toward interviewer seats.</span></a>
               </div>
-              <div class="cell-col-count">2 of 5 interviewers</div>
+              <div class="cell-col-count">Unlimited interviewers</div>
             </td>
             <td>
               <a class="cell-job" style="display:block;" onclick="window.open('share-preview.html?event=losangeles&amp;job=am','_blank')">Account Manager, SMB Business Sales</a>
               <a class="cell-job" style="display:block;" onclick="window.open('share-preview.html?event=losangeles&amp;job=sam','_blank')">Senior Account Manager, Business Sales</a>
               <a class="cell-job" style="display:block;" onclick="window.open('share-preview.html?event=losangeles&amp;job=sae','_blank')">Senior Business Sales Account Executive</a>
-              <div class="cell-col-count">3 of 3 jobs</div>
+              <div class="cell-col-count">3 of 6 jobs</div>
             </td>
             <td class="cell-candidates">
               <div class="cand-pending" onclick="window.open('lobby.html?tab=notyet','_blank')">6 to review</div>
@@ -1355,14 +1355,14 @@ document.addEventListener('DOMContentLoaded', function(){
             </td>
             <td>
               <div class="setup-summary">
-                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings()">4 interviewers</a>
+                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('chicago')">7 interviewers</a>
               </div>
-              <div class="cell-col-count">4 of 5 interviewers</div>
+              <div class="cell-col-count">Unlimited interviewers</div>
             </td>
             <td>
               <a class="cell-job" onclick="window.open('share-preview.html?event=chicago&amp;job=am','_blank')">Account Manager, SMB Business Sales</a>
               <a class="cell-job" onclick="window.open('share-preview.html?event=chicago&amp;job=sam','_blank')">Senior Account Manager, Business Sales</a>
-              <div class="cell-col-count">2 of 3 jobs</div>
+              <div class="cell-col-count">2 of 6 jobs</div>
             </td>
             <td class="cell-candidates">
               <div class="cand-pending">4 to review</div>
@@ -1393,14 +1393,14 @@ document.addEventListener('DOMContentLoaded', function(){
             </td>
             <td>
               <div class="setup-summary">
-                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings()">5 interviewers</a>
+                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('newyork')">8 interviewers</a>
               </div>
-              <div class="cell-col-count">5 of 5 interviewers</div>
+              <div class="cell-col-count">Unlimited interviewers</div>
             </td>
             <td>
               <a class="cell-job" onclick="window.open('share-preview.html?event=newyork&amp;job=am','_blank')">Account Manager, SMB Business Sales</a>
               <a class="cell-job" onclick="window.open('share-preview.html?event=newyork&amp;job=ae','_blank')">Business Sales Account Executive</a>
-              <div class="cell-col-count">2 of 3 jobs</div>
+              <div class="cell-col-count">2 of 6 jobs</div>
             </td>
             <td class="cell-candidates">
               <div class="cand-pending">5 to review</div>
@@ -4359,16 +4359,19 @@ function openInterviewSettings(ctx) {
   var tagsInput = modal.querySelector('.email-tags-input');
   var packageDiv = document.getElementById('ivPackageText');
   if (tagsInput) { tagsInput.querySelectorAll('.email-tag').forEach(function(el) { el.remove(); }); }
-  if (ctx === 'losangeles') {
+  var vzTeam = (window.VZ_TEAM || {})[ctx];
+  if (vzTeam) {
     if (ownerCb) ownerCb.checked = true;
     if (tagsInput) {
-      var pill = document.createElement('span');
-      pill.className = 'email-tag';
-      pill.innerHTML = 'demo1@jobfairx.com <button class="remove-tag" onclick="this.parentElement.remove()">&times;</button>';
-      var inp = tagsInput.querySelector('input');
-      if (inp) tagsInput.insertBefore(pill, inp); else tagsInput.appendChild(pill);
+      vzTeam.slice(1).forEach(function (e) {
+        var pill = document.createElement('span');
+        pill.className = 'email-tag';
+        pill.innerHTML = e + ' <button class="remove-tag" onclick="this.parentElement.remove()">&times;</button>';
+        var inp = tagsInput.querySelector('input');
+        if (inp) tagsInput.insertBefore(pill, inp); else tagsInput.appendChild(pill);
+      });
     }
-    if (packageDiv) packageDiv.innerHTML = 'Growth package <span style="color:#d4d2d0;">&middot;</span> 1 of 5 interviewer seats used';
+    if (packageDiv) packageDiv.innerHTML = 'Pro package <span style="color:#d4d2d0;">&middot;</span> ' + vzTeam.length + ' interviewers added';
   } else {
     if (ownerCb) ownerCb.checked = false;
     if (packageDiv) packageDiv.innerHTML = 'Growth package <span style="color:#d4d2d0;">&middot;</span> 0 of 5 interviewer seats used';
@@ -5315,7 +5318,7 @@ function updateIvDashTabCounts() {
     var updateBtn = document.querySelector("#interviewSettingsModal .modal-btn-blue");
     if (updateBtn) {
       updateBtn.addEventListener("click", function() {
-        if (window._modalContext !== "newyork") return;
+        if (window._modalContext !== "newyork" || window.VZ_TEAM) return;
         var modal = document.getElementById("interviewSettingsModal");
         var ownerCb = document.getElementById("ownerInterviewCheckbox");
         var pills = modal.querySelectorAll(".email-tag").length;
@@ -8536,5 +8539,23 @@ document.addEventListener('click', function(e){
   window.showEventReport = function(key){ if (typeof origShow === 'function') origShow(key); vzReport(key); };
   window.switchReportEvent = function(key){ vzReport(key); };
 })();
+</script>
+
+<script id="verizon-demo-team">
+/* Scott, November 20, 2026 (Pro package): each set-up event's interviewers, the owner first */
+window.VZ_TEAM = {"losangeles": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com", "demo7@jobfairx.com", "demo8@jobfairx.com", "demo9@jobfairx.com", "demo10@jobfairx.com"], "chicago": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com"], "newyork": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com", "demo7@jobfairx.com"]};
+document.addEventListener('DOMContentLoaded', function(){
+  var btn = document.querySelector('#interviewSettingsModal .modal-btn-blue');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    var ctx = window._modalContext, row = document.querySelector('tr[data-dash-event="' + ctx + '-event"]');
+    if (!row || !VZ_TEAM[ctx]) return;
+    var modal = document.getElementById('interviewSettingsModal'), cb = document.getElementById('ownerInterviewCheckbox');
+    var box = modal.querySelector('.email-tags-input');   /* the interviewers box, not the update emails below it */
+    var n = (box ? box.querySelectorAll('.email-tag').length : 0) + (cb && cb.checked ? 1 : 0);
+    var a = row.querySelector('.iv-count-tip');
+    if (a && a.firstChild && a.firstChild.nodeType === 3) a.firstChild.nodeValue = n + (n === 1 ? ' interviewer' : ' interviewers');
+  });
+});
 </script>
 </body></html>

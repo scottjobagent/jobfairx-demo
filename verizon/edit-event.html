@@ -642,6 +642,12 @@ body.vz-settings-incomplete .vz-settings-badge{display:inline-flex!important}
 .vz-resume-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .vz-resume-row .toggle-label{font-size:16px;color:#2d2d2d}
 </style>
+
+<script id="verizon-demo-capacity">
+/* Scott, November 20, 2026 ("Yes, match them", Pro package): each event's slots hold the interviews its
+   lobby and the dashboard show, with one interviewer for every interview at the busiest time. */
+window.VZCAP = {"losangeles":{"b":[11,10,6,7,8,8,7,3],"v":11},"chicago":{"b":[7,6,6,6,5,4,4,2],"v":7},"newyork":{"b":[8,6,6,6,6,4,4,2],"v":8}};
+</script>
 </head>
 <body>
 
@@ -1569,7 +1575,7 @@ function renderSlots() {
   document.getElementById('slotWarnZero').hidden = total > 0;
   var peak = Math.max.apply(null, SLOT_VALS);
   var ws = document.getElementById('slotWarnStaff');
-  ws.hidden = (total === 0 || peak < 4);
+  ws.hidden = (total === 0 || peak < 4 || (typeof getInterviewerCount === 'function' && getInterviewerCount() >= peak));
   ws.innerHTML = 'Your busiest slot takes <b>' + peak + '</b> interviews at once. Plan on <b>' + peak + '</b> interviewers signed in at that time, or lower the number on that slot.';
 
   var sum = document.getElementById('interviewDetailsSummary');
@@ -1631,7 +1637,11 @@ function slotUndoApply() {
 // capacity and no bookings; complete means the seeded event.
 function slotApplySetup(interviewOk) {
   if (typeof slotSetStep === 'function') slotSetStep(30, true);   /* the seeded events run 30-minute slots */
-  if (interviewOk) {
+  var vzc = interviewOk && window.VZCAP && VZCAP[(typeof getEventKey === 'function') ? getEventKey() : ''];
+  if (vzc) {
+    SLOT_BOOKED = vzc.b.slice();
+    SLOT_VALS   = vzc.b.map(function () { return vzc.v; });
+  } else if (interviewOk) {
     SLOT_BOOKED = [0, 2, 3, 1, 0, 0, 0, 0];
     SLOT_VALS   = [3, 4, 4, 4, 3, 3, 0, 0];
   } else {
@@ -1639,7 +1649,7 @@ function slotApplySetup(interviewOk) {
     SLOT_VALS   = [0, 0, 0, 0, 0, 0, 0, 0];
   }
   var el = document.getElementById('slotBulkVal');
-  if (el) el.value = interviewOk ? 3 : 0;
+  if (el) el.value = vzc ? vzc.v : (interviewOk ? 3 : 0);
   SLOT_UNDO = null;
   slotShowUndo(false);
   renderSlots();
@@ -2692,7 +2702,7 @@ document.addEventListener('keydown', function(e) {
 /* ═══ Package usage display ═══ */
 var PACKAGE_LIMITS = { starter: 1, growth: 3, pro: 6 };
 var PACKAGE_NAMES  = { starter: 'Starter', growth: 'Growth', pro: 'Pro' };
-var currentPackage = 'growth';
+var currentPackage = (/[?&]event=boston\b/i.test(location.search)) ? 'growth' : 'pro';   /* Scott, November 20, 2026: Pro */
 
 function setPackagePreview(pkg) {
   if (!PACKAGE_LIMITS[pkg]) return;
@@ -3253,8 +3263,8 @@ if (document.readyState !== 'loading') renderSlots();
   function $(q, r) { return (r || document).querySelector(q); }
   function $$(q, r) { return [].slice.call((r || document).querySelectorAll(q)); }
   var EVENTS = { losangeles: 'Los Angeles, CA Hiring Event', chicago: 'Chicago, IL Hiring Event', newyork: 'New York City, NY Hiring Event', boston: 'Boston, MA Hiring Event' };
-  var NAMES = { 'demo@jobfairx.com': 'Demo', 'demo1@jobfairx.com': 'Demo 1' };
-  var SEED = { losangeles: ['demo@jobfairx.com', 'demo1@jobfairx.com'], chicago: ['demo@jobfairx.com', 'demo1@jobfairx.com'], newyork: ['demo@jobfairx.com', 'demo1@jobfairx.com'] };
+  var NAMES = { 'demo@jobfairx.com': 'Demo', 'demo1@jobfairx.com': 'Demo 1', 'demo2@jobfairx.com': 'Demo 2', 'demo3@jobfairx.com': 'Demo 3', 'demo4@jobfairx.com': 'Demo 4', 'demo5@jobfairx.com': 'Demo 5', 'demo6@jobfairx.com': 'Demo 6', 'demo7@jobfairx.com': 'Demo 7', 'demo8@jobfairx.com': 'Demo 8', 'demo9@jobfairx.com': 'Demo 9', 'demo10@jobfairx.com': 'Demo 10' };
+  var SEED = { losangeles: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com', 'demo8@jobfairx.com', 'demo9@jobfairx.com', 'demo10@jobfairx.com'], chicago: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com'], newyork: ['demo@jobfairx.com', 'demo1@jobfairx.com', 'demo2@jobfairx.com', 'demo3@jobfairx.com', 'demo4@jobfairx.com', 'demo5@jobfairx.com', 'demo6@jobfairx.com', 'demo7@jobfairx.com'] };   /* Scott, November 20, 2026: one interviewer per interview at the busiest time */
   var LINE = 'Panel interviews let more than one interviewer join the same interview. With this on, all the interviewers above join every interview on this event. You can still change the interviewers on any single interview from its row.';
   function eventKey() { return (typeof getEventKey === 'function') ? getEventKey() : 'losangeles'; }
   function eventName() { return EVENTS[eventKey()] || eventKey(); }
@@ -3521,6 +3531,15 @@ document.addEventListener('DOMContentLoaded', function(){
     if (typeof renderSlots === 'function') renderSlots();
     if (window.JL && JL.render) JL.render();
   } catch (e) { if (window.console) console.error('verizon edit page', e); }
+});
+</script>
+
+<script id="verizon-demo-capacity-watch">
+/* the interviewer reminder under the slots follows the interviewer list */
+document.addEventListener('DOMContentLoaded', function(){
+  var box = document.getElementById('interviewerEmailBox');
+  if (box && window.MutationObserver) new MutationObserver(function(){ if (typeof renderSlots === 'function') renderSlots(); }).observe(box, { childList: true });
+  if (typeof renderSlots === 'function') renderSlots();
 });
 </script>
 </body>

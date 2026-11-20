@@ -4459,7 +4459,8 @@ function updatePrepStates() {
        the verb changes — the same rule the other two rows use, where an
        outstanding task gets an action verb and a finished one gets "View". */
     var intTitle = document.querySelector('#prepInterviewers' + n + ' .prep-title');
-    intDesc.textContent = PREP_PLAN + ' \u00b7 ' + prepInterviewerCount + ' of ' + prepSeatLimit +
+    intDesc.textContent = prepSeatLimit === Infinity ? PREP_PLAN + ' package \u00b7 ' + prepInterviewerCount + ' interviewer' + (prepInterviewerCount !== 1 ? 's' : '') + ' added.' :
+      PREP_PLAN + ' \u00b7 ' + prepInterviewerCount + ' of ' + prepSeatLimit +
       ' interviewer seat' + (prepSeatLimit !== 1 ? 's' : '') + ' used.';
     if (prepInterviewerCount >= prepSeatLimit) {
       if (intTitle) intTitle.textContent = 'Interviewers for this event';
@@ -4586,7 +4587,7 @@ function updateTmSeatCount() {
   var count = getTmChipCount();
   var indicator = document.getElementById('tmSeatIndicator');
   var limitMsg = document.getElementById('tmSeatLimit');
-  indicator.textContent = PREP_PLAN + ' · ' + count + ' of ' + tmSeatLimit + ' interviewer seat' + (tmSeatLimit !== 1 ? 's' : '') + ' used';
+  indicator.textContent = tmSeatLimit === Infinity ? PREP_PLAN + ' package · ' + count + ' interviewer' + (count !== 1 ? 's' : '') + ' added' : PREP_PLAN + ' · ' + count + ' of ' + tmSeatLimit + ' interviewer seat' + (tmSeatLimit !== 1 ? 's' : '') + ' used';
   if (count >= tmSeatLimit) {
     limitMsg.classList.add('show');
   } else {
@@ -7976,6 +7977,37 @@ a.jm-cp-num:hover { color:#0044B3; }
     if (typeof orig === 'function') window.setLobbyMode = function(){ var r = orig.apply(this, arguments); recount(); return r; };
     recount(); setTimeout(recount, 150); setTimeout(recount, 400);
   });
+})();
+</script>
+
+<script id="verizon-demo-lobby-team">
+/* Scott, November 20, 2026 (Pro package): the event's own interviewers in the lobby's Interview settings */
+(function(){
+  var UP = {"video": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com", "demo7@jobfairx.com", "demo8@jobfairx.com", "demo9@jobfairx.com", "demo10@jobfairx.com"], "review": 6}, "person": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com"], "review": 4}, "phone": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com", "demo5@jobfairx.com", "demo6@jobfairx.com", "demo7@jobfairx.com"], "review": 5}}, PAST = {"bos-1218": {"plan": "Growth", "pro": false, "team": ["demo@jobfairx.com", "demo1@jobfairx.com"], "review": 0}, "ny-1216": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com"], "review": 0}, "chi-1215": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com"], "review": 0}, "la-1210": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com"], "review": 0}, "chi-1204": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com"], "review": 0}, "bos-1202": {"plan": "Growth", "pro": false, "team": ["demo@jobfairx.com", "demo1@jobfairx.com"], "review": 0}, "ny-1124": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com"], "review": 0}, "la-1123": {"plan": "Pro", "pro": true, "team": ["demo@jobfairx.com", "demo1@jobfairx.com", "demo2@jobfairx.com", "demo3@jobfairx.com", "demo4@jobfairx.com"], "review": 0}};
+  var q = new URLSearchParams(location.search), past = PAST[q.get('past') || ''];
+  var ev = past || UP[q.get('method') || 'video'] || UP.video;
+  PREP_PLAN = ev.plan; prepSeatLimit = ev.pro ? Infinity : 5; tmSeatLimit = prepSeatLimit;
+  prepInterviewerCount = ev.team.length; prepCandidateCount = ev.review;
+  function seed(){
+    var box = document.getElementById('tmInterviewerBox'); if (!box) return;
+    var input = box.querySelector('.tm-email-box-input');
+    [].slice.call(box.querySelectorAll('.tm-email-chip')).forEach(function(c){ c.parentNode.removeChild(c); });
+    ev.team.forEach(function(e){
+      var c = document.createElement('span'); c.className = 'tm-email-chip';
+      c.innerHTML = e + ' <button class="tm-email-chip-x" onclick="removeTmChip(this)" title="Remove">&times;</button>';
+      box.insertBefore(c, input);
+    });
+    /* one update email, as the dashboard and the Edit page have it */
+    var ub = document.getElementById('tmUpdatesBox');
+    if (ub && !ub.querySelector('.tm-email-chip')) {
+      var u = document.createElement('span'); u.className = 'tm-email-chip';
+      u.innerHTML = ev.team[0] + ' <button class="tm-email-chip-x" onclick="this.parentElement.remove()" title="Remove">&times;</button>';
+      ub.insertBefore(u, ub.querySelector('.tm-email-box-input'));
+    }
+    if (typeof updateTmSeatCount === 'function') updateTmSeatCount();
+    if (typeof updatePrepStates === 'function') updatePrepStates();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', seed); else seed();
 })();
 </script>
 
