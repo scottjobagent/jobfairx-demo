@@ -1219,6 +1219,11 @@ document.addEventListener('DOMContentLoaded', function(){
 .vzn-msg{margin:10px 0 0;font-size:13px;color:#991b1b}
 .vzn-dash{color:#767676}
 </style>
+
+<style id="verizon-demo-video-lobby">html.vz-video-lobby .away-cta-card .status-card-illustration{display:none!important}</style>
+<script>(function(){ var m = (location.search.match(/[?&]method=([a-z]+)/) || [])[1];
+  try { if (!m) m = sessionStorage.getItem('jfxMethod'); } catch (e) {}
+  if (!m || m === 'video') document.documentElement.classList.add('vz-video-lobby'); })();</script>
 </head>
 <body>
 
