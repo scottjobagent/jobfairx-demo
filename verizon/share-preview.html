@@ -4,7 +4,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request your interview - JobFairX</title>
+<title>Interview with Verizon</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -118,33 +118,94 @@ a { color: inherit; text-decoration: none; }
 </style>
 
 <style id="verizon-demo-no-dev-controls">.pkg-dev,.job-dev,.dev-toggle,.state-dev{display:none!important}</style>
+
+<style id="verizon-brand">
+
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:#fff;color:#000;font-size:15px}
+.vz-wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.vz-top{background:#fff;border-bottom:1px solid #d8dada}
+.vz-top .vz-wrap{height:72px;display:flex;align-items:center;justify-content:space-between}
+.vz-word{font-size:31px;font-weight:800;letter-spacing:-.045em;color:#ee001e;line-height:1}
+.vz-pow{font-size:13px;color:#6f7171}
+.vz-pow b{color:#000;font-weight:700}
+.vz-pill{display:inline-block;border-radius:999px;padding:12px 24px;font-size:15px;font-weight:700;line-height:1;cursor:pointer;border:0;font-family:inherit}
+.vz-pill.red{background:#ee001e;color:#fff}
+.vz-pill.black{background:#000;color:#fff}
+.vz-kicker{font-size:15px;font-weight:700;padding-left:10px;border-left:3px solid #ee001e;line-height:1.1;margin-bottom:14px}
+h1.vz-h1{font-size:44px;line-height:1.05;font-weight:800;letter-spacing:-.03em;margin:0}
+.vz-facts{display:flex;flex-wrap:wrap;gap:10px 40px;margin-top:22px;font-size:15px}
+.vz-facts b{font-weight:700;margin-right:8px}
+.vz-foot{border-top:1px solid #d8dada;margin-top:56px}
+.vz-foot .vz-wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:22px;padding-bottom:26px;font-size:13px;color:#6f7171}
+.vz-foot b{color:#000}
+@media (max-width:900px){
+  h1.vz-h1{font-size:32px}
+  .vz-top .vz-wrap{height:60px}
+  .vz-word{font-size:26px}
+  .vz-pow{display:none}
+  .vz-facts{gap:8px 24px}
+}
+
+/* the page's own parts, restyled */
+.page{margin:32px auto 0;max-width:1100px;gap:32px}
+.left-card{border:0;border-radius:0;padding:0;background:none}
+.left-card .event-title,.left-card .event-sub{display:none}
+.vz-roles-h{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.jobs-divider{margin:14px 0 0;background:#000;height:2px}
+.job-row{padding:20px 0;border-bottom:1px solid #d8dada}
+.job-row:hover{background:none}
+.job-row.selected{background:none}
+.job-title,.job-row.selected .job-title{color:#000;font-size:18px;font-weight:800;letter-spacing:-.01em;text-decoration:none;display:inline-block;margin-bottom:6px}
+.job-row.selected .job-title{border-bottom:3px solid #ee001e}
+.job-meta{color:#333;font-size:15px}
+.job-body{color:#333;font-size:15px;line-height:1.6}
+.job-chev{color:#000}
+.right-card{background:#f9efe3;border:0;border-top:4px solid #ee001e;border-radius:0;padding:28px}
+.sch-title{font-size:24px;font-weight:800;letter-spacing:-.02em;color:#000}
+.sch-select-label,.sch-job-label,.sch-date,.sch-time{color:#000}
+.sch-method,.sch-tz,.sch-remaining,.sch-tz-inline{color:#333}
+.sch-divider{background:#d9cdbd}
+.sch-job-select{border-radius:4px;border-color:#000;font-size:14px;padding-right:38px;text-overflow:ellipsis}
+.sch-job-select:focus{border-color:#000}
+.sch-slots{border-color:#d9cdbd;border-radius:4px;background:#fff}
+.sch-slot{border-bottom-color:#eadfd2}
+.sch-slot.selected{background:#fff;box-shadow:inset 4px 0 0 #000}
+.sch-slot.selected .sch-radio{border-color:#000}
+.sch-slot.selected .sch-radio::after{background:#000}
+.sch-btn{border-radius:999px;background:#000;font-size:16px}
+.sch-btn:hover:not(:disabled){background:#333}
+.sch-btn:disabled{background:#b9b3aa}
+@media (max-width:900px){
+  .page{margin-top:24px;gap:28px}
+}
+/* Option A: heading, date line, link to all cities */
+.vz-head{padding:44px 0 8px}
+.vz-kline{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.vz-other{font-size:15px;color:#000;text-decoration:underline;text-underline-offset:3px}
+.vz-jump{display:none}
+@media (max-width:900px){.vz-jump{display:block;text-align:center;margin-top:22px;padding:17px 24px;font-size:16px}}
+/* the whole request box shows, button included, on any screen height */
+.right-card{max-height:none;overflow:visible;position:static}
+.sch-slots{max-height:none}
+</style>
 </head>
 <body>
 
-<!-- Public JobFairX header -->
-<div class="util-bar">
-  Are you an employer hiring? <a href="#">Learn more about our hiring events →</a>
-</div>
-<nav class="site-nav">
-  <div class="site-nav-inner">
-    <a href="#" class="site-logo">JobFairX</a>
-    <div class="site-links">
-      <a href="#">Upcoming Job Fairs</a>
-      <a href="#">Search Jobs</a>
-      <a href="#">FAQ's</a>
-    </div>
-    <div class="site-right">
-      <a href="#" class="sign-in">Sign In</a>
-      <a href="#" class="site-cta">Job Seeker Registration</a>
-    </div>
-  </div>
-</nav>
+
+<header class="vz-top"><div class="vz-wrap"><span class="vz-word">verizon</span><span class="vz-pow">Hiring events powered by <b>JobFairX</b></span></div></header>
+
+<section class="vz-head"><div class="vz-wrap">
+  <div class="vz-kline"><div class="vz-kicker">Hiring event</div><a class="vz-other" href="all-cities.html">Not in <span id="vzOtherCity">Los Angeles</span>? See all cities</a></div>
+  <h1 class="vz-h1">Business Sales interviews in <span id="vzCity">Los Angeles</span></h1>
+  <div class="vz-facts"><span><b>Date:</b><span id="vzDate">Tuesday, January 19, 2027</span></span><span><b>Time:</b><span id="vzTime">11:00 AM - 3:00 PM PST</span></span><span><b>Format:</b><span id="vzFormat">Video interview</span></span></div>
+  <a class="vz-pill black vz-jump" href="#schContent">Request your interview</a>
+</div></section>
 
 <div class="page">
 
   <!-- Left: event + jobs list -->
   <div class="left-card">
-    <div class="event-title" id="eventTitle">Los Angeles Job Fair</div>
+    <div class="vz-roles-h">Open roles</div><div class="event-title" id="eventTitle">Los Angeles Job Fair</div>
     <div class="event-sub" id="eventSub">Los Angeles, CA · Verizon</div>
     <div class="jobs-divider"></div>
     <div id="jobsList"></div>
@@ -197,6 +258,9 @@ a { color: inherit; text-decoration: none; }
 
 </div>
 
+
+<footer class="vz-foot"><div class="vz-wrap"><span></span><span>Sample page prepared for Verizon. Not a live event.</span></div></footer>
+
 <!-- Dev toggle -->
 <div class="dev-toggle">
   <span class="dev-toggle-label">Dev</span>
@@ -207,11 +271,332 @@ a { color: inherit; text-decoration: none; }
 <script>
 /* ---------- Event data ---------- */
 var EVENTS = {
+  atlanta: {
+    title: 'Atlanta Job Fair',
+    sub: 'Atlanta, GA · Verizon',
+    city: 'Atlanta',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Atlanta, GA',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'ae',
+        title: 'Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Atlanta, GA',
+        desc: [
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  boston: {
+    title: 'Boston Job Fair',
+    sub: 'Boston, MA · Verizon',
+    city: 'Boston',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Boston, MA',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  chicago: {
+    title: 'Chicago Job Fair',
+    sub: 'Chicago, IL · Verizon',
+    city: 'Chicago',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'In-person interview',
+    method: 'This will be an in-person interview at the Verizon Chicago office',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Chicago, IL',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sam',
+        title: 'Senior Account Manager, Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Chicago, IL',
+        desc: [
+          'Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.',
+          'Requirements: experience managing business accounts; a record of meeting sales goals.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  dallas: {
+    title: 'Dallas Job Fair',
+    sub: 'Dallas, TX · Verizon',
+    city: 'Dallas',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Dallas, TX',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sam',
+        title: 'Senior Account Manager, Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Dallas, TX',
+        desc: [
+          'Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.',
+          'Requirements: experience managing business accounts; a record of meeting sales goals.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  denver: {
+    title: 'Denver Job Fair',
+    sub: 'Denver, CO · Verizon',
+    city: 'Denver',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Mountain Time (MST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Denver, CO',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'ae',
+        title: 'Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Denver, CO',
+        desc: [
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  detroit: {
+    title: 'Detroit Job Fair',
+    sub: 'Detroit, MI · Verizon',
+    city: 'Detroit',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Detroit, MI',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  houston: {
+    title: 'Houston Job Fair',
+    sub: 'Houston, TX · Verizon',
+    city: 'Houston',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Houston, TX',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'ae',
+        title: 'Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Houston, TX',
+        desc: [
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  huntsville: {
+    title: 'Huntsville Job Fair',
+    sub: 'Huntsville, AL · Verizon',
+    city: 'Huntsville',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Huntsville, AL',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  kansascity: {
+    title: 'Kansas City Job Fair',
+    sub: 'Kansas City, MO · Verizon',
+    city: 'Kansas City',
+    date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Kansas City, MO',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
   losangeles: {
     title: 'Los Angeles Job Fair',
     sub: 'Los Angeles, CA · Verizon',
+    city: 'Los Angeles',
     date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
     tz: 'Pacific Time (PST)',
+    format: 'Video interview',
     method: 'This will be a video interview on JobFairX',
     jobs: [
       {
@@ -261,19 +646,22 @@ var EVENTS = {
       }
     ]
   },
-  chicago: {
-    title: 'Chicago Job Fair',
-    sub: 'Chicago, IL · Verizon',
-    date: 'Tuesday, January 19, 2027',
+  memphis: {
+    title: 'Memphis Job Fair',
+    sub: 'Memphis, TN · Verizon',
+    city: 'Memphis',
+    date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
     tz: 'Central Time (CST)',
-    method: 'This will be an in-person interview at the Verizon Chicago office',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
     jobs: [
       {
         id: 'am',
         title: 'Account Manager, SMB Business Sales',
         company: 'Verizon',
         pay: 'Base pay plus commission, Full-time',
-        location: 'Chicago, IL',
+        location: 'Memphis, TN',
         desc: [
           'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
           'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
@@ -284,14 +672,68 @@ var EVENTS = {
         ]
       },
       {
-        id: 'sam',
-        title: 'Senior Account Manager, Business Sales',
+        id: 'ae',
+        title: 'Business Sales Account Executive',
         company: 'Verizon',
         pay: 'Base pay plus commission, Full-time',
-        location: 'Chicago, IL',
+        location: 'Memphis, TN',
         desc: [
-          'Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.',
-          'Requirements: experience managing business accounts; a record of meeting sales goals.'
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  miami: {
+    title: 'Miami Job Fair',
+    sub: 'Miami, FL · Verizon',
+    city: 'Miami',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Miami, FL',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  minneapolis: {
+    title: 'Minneapolis Job Fair',
+    sub: 'Minneapolis, MN · Verizon',
+    city: 'Minneapolis',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Central Time (CST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Minneapolis, MN',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
         ],
         slots: [
           { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
@@ -303,8 +745,11 @@ var EVENTS = {
   newyork: {
     title: 'New York City Job Fair',
     sub: 'New York City, NY · Verizon',
+    city: 'New York City',
     date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
     tz: 'Eastern Time (EST)',
+    format: 'Phone interview',
     method: 'This will be a phone interview. The interviewer calls you.',
     jobs: [
       {
@@ -339,11 +784,14 @@ var EVENTS = {
       }
     ]
   },
-  boston: {
-    title: 'Boston Job Fair',
-    sub: 'Boston, MA · Verizon',
+  orlando: {
+    title: 'Orlando Job Fair',
+    sub: 'Orlando, FL · Verizon',
+    city: 'Orlando',
     date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
     tz: 'Eastern Time (EST)',
+    format: 'Video interview',
     method: 'This will be a video interview on JobFairX',
     jobs: [
       {
@@ -351,7 +799,187 @@ var EVENTS = {
         title: 'Account Manager, SMB Business Sales',
         company: 'Verizon',
         pay: 'Base pay plus commission, Full-time',
-        location: 'Boston, MA',
+        location: 'Orlando, FL',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  phoenix: {
+    title: 'Phoenix Job Fair',
+    sub: 'Phoenix, AZ · Verizon',
+    city: 'Phoenix',
+    date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Mountain Time (MST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Phoenix, AZ',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sam',
+        title: 'Senior Account Manager, Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Phoenix, AZ',
+        desc: [
+          'Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.',
+          'Requirements: experience managing business accounts; a record of meeting sales goals.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  sandiego: {
+    title: 'San Diego Job Fair',
+    sub: 'San Diego, CA · Verizon',
+    city: 'San Diego',
+    date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Pacific Time (PST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'San Diego, CA',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sae',
+        title: 'Senior Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'San Diego, CA',
+        desc: [
+          'Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.',
+          'Requirements: several years of outside sales experience; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  sanfrancisco: {
+    title: 'San Francisco Job Fair',
+    sub: 'San Francisco, CA · Verizon',
+    city: 'San Francisco',
+    date: 'Tuesday, January 19, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Pacific Time (PST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'San Francisco, CA',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'ae',
+        title: 'Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'San Francisco, CA',
+        desc: [
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  seattle: {
+    title: 'Seattle Job Fair',
+    sub: 'Seattle, WA · Verizon',
+    city: 'Seattle',
+    date: 'Thursday, January 21, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Pacific Time (PST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Seattle, WA',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
+  },
+  washingtondc: {
+    title: 'Washington, DC Job Fair',
+    sub: 'Washington, DC · Verizon',
+    city: 'Washington, DC',
+    date: 'Wednesday, January 20, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Washington, DC',
         desc: [
           'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
           'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
@@ -364,6 +992,30 @@ var EVENTS = {
     ]
   }
 };
+
+/* ---------- Verizon page top: follows the event ---------- */
+var VZ_ICONS = {
+  person: '<path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  phone: '<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/>'
+};
+function vzTop() {
+  var e = currentEvent;
+  if (!e) return;
+  var tz = e.tz.split(' ').slice(-1)[0].replace(/[()]/g, '');
+  function set(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  set('vzCity', e.city);
+  set('vzOtherCity', e.city);
+  set('vzDate', e.date);
+  set('vzTime', e.hours + ' ' + tz);
+  set('vzFormat', e.format);
+  document.title = 'Interview with Verizon - ' + e.city;
+  var svg = document.querySelector('.sch-method svg');
+  if (svg) {
+    if (!svg.getAttribute('data-video')) svg.setAttribute('data-video', svg.innerHTML);
+    var f = e.format.toLowerCase();
+    svg.innerHTML = f.indexOf('in-person') === 0 ? VZ_ICONS.person : (f.indexOf('phone') === 0 ? VZ_ICONS.phone : svg.getAttribute('data-video'));
+  }
+}
 
 /* ---------- State ---------- */
 var selectedJobId = null;
@@ -386,9 +1038,9 @@ function loadEvent(key, preSelectJobId) {
   if (!EVENTS[key]) return;
   currentEvent = EVENTS[key];
   var how = document.getElementById('schMethodText'); if (how && currentEvent.method) how.textContent = currentEvent.method;
+  vzTop();
   selectedJobId = null;
   selectedSlotIdx = null;
-  document.title = currentEvent.title + ' - JobFairX';
   document.getElementById('eventTitle').textContent = currentEvent.title;
   document.getElementById('eventSub').textContent = currentEvent.sub;
   document.getElementById('schDate').textContent = currentEvent.date;
@@ -407,6 +1059,7 @@ function loadEvent(key, preSelectJobId) {
   var matchingJob = preSelectJobId
     ? currentEvent.jobs.find(function(j) { return j.id === preSelectJobId; })
     : null;
+  matchingJob = matchingJob || currentEvent.jobs[0];
   var jobToOpen = null;
   if (matchingJob) {
     selectJob(matchingJob.id);
@@ -445,11 +1098,11 @@ function renderJobPicker() {
     field.innerHTML =
       '<div class="sch-job-label">Job</div>' +
       '<div class="sch-job-static">' + j.title + '</div>' +
-      '<div class="sch-job-static-sub">' + j.company + ' · ' + j.location + '</div>';
+      '<div class="sch-job-static-sub">' + j.location + '</div>';
   } else {
     var opts = '<option value="">Please select a job...</option>';
     currentEvent.jobs.forEach(function(j) {
-      opts += '<option value="' + j.id + '">' + j.title + ' — ' + j.company + '</option>';
+      opts += '<option value="' + j.id + '">' + j.title + '</option>';
     });
     field.innerHTML =
       '<label class="sch-job-label" for="schJobSelect">Job title <span class="req">*</span></label>' +
@@ -491,7 +1144,7 @@ function renderJobs() {
       '<div class="job-head">' +
         '<div class="job-head-main">' +
           '<div class="job-title">' + job.title + '</div>' +
-          '<div class="job-meta">' + job.company + '</div>' +
+          
           '<div class="job-meta">' + job.pay + '</div>' +
           '<div class="job-meta">' + job.location + '</div>' +
         '</div>' +
