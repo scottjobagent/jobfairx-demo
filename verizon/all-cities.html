@@ -43,6 +43,8 @@ h1.vz-h1{font-size:44px;line-height:1.05;font-weight:800;letter-spacing:-.03em;m
 .vz-row .f{color:#333}
 .vz-row .go{text-decoration:underline;text-underline-offset:3px}
 .vz-none{display:none;padding:22px 0;font-size:16px;color:#333}
+.vz-back{display:inline-block;margin-bottom:22px;font-size:15px;color:#000;text-decoration:underline;text-underline-offset:3px}
+.vz-back[hidden]{display:none}
 @media (max-width:900px){
   .vz-row{grid-template-columns:1fr auto;gap:2px 16px;padding:14px 0}
   .vz-row .c{grid-column:1}
@@ -56,6 +58,7 @@ h1.vz-h1{font-size:44px;line-height:1.05;font-weight:800;letter-spacing:-.03em;m
 <header class="vz-top"><div class="vz-wrap"><span class="vz-word">verizon</span><span class="vz-pow">Hiring events powered by <b>JobFairX</b></span></div></header>
 
 <section class="vz-head"><div class="vz-wrap">
+  <a class="vz-back" id="vzBack" href="share-preview.html" hidden>&larr; Back to <span id="vzBackCity"></span></a>
   <div class="vz-kicker">Business Sales hiring events</div>
   <h1 class="vz-h1">Find the event in your city</h1>
   <div class="vz-find"><input id="vzFind" type="text" placeholder="Type a city or state" aria-label="Type a city or state" oninput="vzFilter()" autocomplete="off"><span class="vz-count" id="vzCount">20 cities</span></div>
@@ -94,6 +97,18 @@ function vzFilter(){
   document.getElementById('vzCount').textContent = n + (n === 1 ? ' city' : ' cities');
   document.getElementById('vzNone').style.display = n ? 'none' : 'block';
 }
+/* back link: only when the list was opened from a city page ("Not in ...? See all cities") */
+(function () {
+  var CITIES = {"atlanta":{"city":"Atlanta","jobs":["am","ae"]},"boston":{"city":"Boston","jobs":["am"]},"chicago":{"city":"Chicago","jobs":["am","sam"]},"dallas":{"city":"Dallas","jobs":["am","sam"]},"denver":{"city":"Denver","jobs":["am","ae"]},"detroit":{"city":"Detroit","jobs":["am"]},"houston":{"city":"Houston","jobs":["am","ae"]},"huntsville":{"city":"Huntsville","jobs":["am"]},"kansascity":{"city":"Kansas City","jobs":["am"]},"losangeles":{"city":"Los Angeles","jobs":["am","sam","sae"]},"memphis":{"city":"Memphis","jobs":["am","ae"]},"miami":{"city":"Miami","jobs":["am"]},"minneapolis":{"city":"Minneapolis","jobs":["am"]},"newyork":{"city":"New York City","jobs":["am","ae"]},"orlando":{"city":"Orlando","jobs":["am"]},"phoenix":{"city":"Phoenix","jobs":["am","sam"]},"sandiego":{"city":"San Diego","jobs":["am","sae"]},"sanfrancisco":{"city":"San Francisco","jobs":["am","ae"]},"seattle":{"city":"Seattle","jobs":["am"]},"washingtondc":{"city":"Washington, DC","jobs":["am"]}};
+  var p = new URLSearchParams(location.search);
+  var from = (p.get('from') || '').toLowerCase(), job = (p.get('job') || '').toLowerCase();
+  var c = CITIES.hasOwnProperty(from) ? CITIES[from] : null;
+  if (!c) return;
+  var a = document.getElementById('vzBack');
+  a.setAttribute('href', 'share-preview.html?event=' + from + (c.jobs.indexOf(job) !== -1 ? '&job=' + job : ''));
+  document.getElementById('vzBackCity').textContent = c.city;
+  a.hidden = false;
+})();
 </script>
 </body>
 </html>

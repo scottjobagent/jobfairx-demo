@@ -998,9 +998,24 @@ var VZ_ICONS = {
   person: '<path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
   phone: '<path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/>'
 };
-function vzTop() {
+/* "See all cities" tells the list where the candidate was (city + open job), so the list can link back */
+var VZ_KEY = null;
+function vzListHref(withJob) {
+  if (!VZ_KEY) return 'all-cities.html';
+  return 'all-cities.html?from=' + encodeURIComponent(VZ_KEY) + (withJob && selectedJobId ? '&job=' + encodeURIComponent(selectedJobId) : '');
+}
+['click', 'auxclick'].forEach(function (type) {
+  document.addEventListener(type, function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest('.vz-other') : null;
+    if (a) a.setAttribute('href', vzListHref(true));
+  }, true);
+});
+function vzTop(key) {
   var e = currentEvent;
   if (!e) return;
+  if (key) VZ_KEY = key;
+  var link = document.querySelector('.vz-other');
+  if (link) link.setAttribute('href', vzListHref(false));
   var tz = e.tz.split(' ').slice(-1)[0].replace(/[()]/g, '');
   function set(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
   set('vzCity', e.city);
@@ -1038,7 +1053,7 @@ function loadEvent(key, preSelectJobId) {
   if (!EVENTS[key]) return;
   currentEvent = EVENTS[key];
   var how = document.getElementById('schMethodText'); if (how && currentEvent.method) how.textContent = currentEvent.method;
-  vzTop();
+  vzTop(key);
   selectedJobId = null;
   selectedSlotIdx = null;
   document.getElementById('eventTitle').textContent = currentEvent.title;
