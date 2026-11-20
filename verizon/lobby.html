@@ -94,6 +94,12 @@ body { font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
 .status-card-text h3 { font-size: 24px; font-weight: 700; color: #2d2d2d; margin-bottom: 6px; }
 .status-card-text p { font-size: 16px; font-weight: 400; color: #595959; line-height: 1.5; }
 .status-card-illustration { flex-shrink: 0; width: 140px; height: 100px; }
+/* check-in (30 Sep 2026, option 4A; Verizon demo November 20, 2026): the card that shows until the first candidate checks in */
+.chk-card { margin-bottom: 16px; }
+.chk-card .status-card-text { max-width: 640px; }
+.chk-card-btn { margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 22px; background: #0044B3; color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; }
+.chk-card-btn:hover { background: #003a99; }
+.chk-card-btn svg { width: 18px; height: 18px; }
 
 /* Collapsible candidate review section */
 .review-section { background: #fff; border-radius: 16px; padding: 24px 28px; border: 1px solid #b0aeab; }
@@ -6364,7 +6370,9 @@ a.jm-cp-num:hover { color:#0044B3; }
     el.className = 'jm-line';
     var body;
     if (m === 'phone') body = '<span>You call each candidate at their scheduled time</span>';
-    else if (m === 'person') body = '<span>Verizon Chicago office, Chicago, IL</span><a onclick="JFXM.addr()">Parking &amp; arrival</a>';
+    else if (m === 'person') body = '<span>Verizon Chicago office, Chicago, IL</span><a onclick="JFXM.addr()">Parking &amp; arrival</a>' +
+      /* check-in: on the day the employer is here */
+      '<a onclick="JFXM.qr()">Check-in QR code</a>';
     else if (VURL) {
       /* Event day is when the employer needs the link, so this is where it
          lives — not on the dashboard. */
@@ -6564,6 +6572,9 @@ a.jm-cp-num:hover { color:#0044B3; }
   /* ═══ Public API ═══ */
   var CP = null;
   window.JFXM = {
+    /* check-in: opens the sign in a new tab */
+    qr: function () { window.open('checkin-qr.html?event=chicago', '_blank'); },
+    chkLand: function (a) { chkLand(a); },
     meetUrl: function () { return VURL; },
     copyMeet: function (btn) {
       try { navigator.clipboard.writeText(VURL); } catch (e) {}
@@ -6854,6 +6865,131 @@ a.jm-cp-num:hover { color:#0044B3; }
 
   function fbCell(rating) { return fbpMarkup(rating); }
 
+  /* ═══ check-in: In-person QR check-in (Scott, 29 Sep 2026; Verizon demo, November 20, 2026) ═══
+     The candidate checks in on their own phone. Here they land on the single
+     Waiting to interview list with status Checked in and a wait that starts at
+     zero.
+
+     The candidate's page writes to localStorage under jfxCheckins. In the real
+     build this is a server push. */
+  var CHK_KEY = 'jfxCheckins';
+  function chkRead() { try { return JSON.parse(localStorage.getItem(CHK_KEY) || '{}') || {}; } catch (e) { return {}; } }
+  function chkRows() {
+    /* land in whichever live list is showing. "Live empty" is the state
+       an in-person day starts in, and a check-in made then must be seen. */
+    var host = null;
+    ['waitingLive', 'waitingLiveEmpty'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.style.display !== 'none' && !host) host = el;
+    });
+    host = host || document.getElementById('waitingLive');
+    var wait = host && host.querySelectorAll('.live-panel-section')[0];
+    return wait ? wait.querySelector('tbody') : null;
+  }
+  function chkFindUpcoming(name) {
+    var rows = document.querySelectorAll('#notyetLive tbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      var d = rows[i].querySelector('td div');
+      if (d && d.textContent.trim() === name) return rows[i];
+    }
+    return null;
+  }
+  function chkBumpSection(tr, delta) {
+    var sec = tr.closest('.live-panel-section');
+    var t = sec && sec.querySelector('.live-section-title');
+    if (t) t.textContent = t.textContent.replace(/\((\d+)\)/, function(_, n) { return '(' + Math.max(0, parseInt(n, 10) + delta) + ')'; });
+  }
+  function chkLand(announce) {
+    if (m !== 'person') return;
+    var host = chkRows();
+    if (!host) return;
+    var recs = chkRead(), arrived = [];
+    /* someone undid their check-in: take them back off the list */
+    [].slice.call(host.querySelectorAll('tr[data-checkin]')).forEach(function(tr) {
+      if (recs[tr.getAttribute('data-checkin')]) return;
+      tr.parentNode.removeChild(tr);
+      bumpTab('Waiting to interview', -1);
+      bumpTab('Not yet interviewed', 1);
+    });
+    Object.keys(recs).forEach(function(key) {
+      var r = recs[key];
+      if (!r || !r.name || host.querySelector('tr[data-checkin="' + key + '"]')) return;
+      var ph = host.querySelector('td[colspan]');
+      if (ph && ph.parentNode) ph.parentNode.remove();
+      var up = chkFindUpcoming(r.name);
+      if (up) { chkBumpSection(up, -1); up.parentNode.removeChild(up); }
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-method', 'person');
+      tr.setAttribute('data-checkin', key);
+      tr.innerHTML =
+        '<td><div>' + esc(r.name) + '</div><div class="review-actions"><a onclick="openResumeModal(this)" style="cursor:pointer">View resume</a> ' +
+          '<a onclick="openMsgModal(this)" style="cursor:pointer">Message</a></div></td>' +
+        '<td>' + esc(r.job || '') + '</td><td>' + esc(r.loc || '') + '</td>' +
+        '<td>' + esc(r.slot || '') + '</td><td>0 minutes</td>' +
+        '<td><span class="status-badge waiting">Checked in</span></td>';
+      tr.appendChild(rowActions(tr));
+      /* Appended, not prepended: the list runs longest wait first and this
+         person's wait has just started. */
+      host.appendChild(tr);
+      bumpTab('Waiting to interview', 1);
+      bumpTab('Not yet interviewed', -1);
+      arrived.push(r.name);
+    });
+    if (announce && arrived.length) toast(arrived.join(', ') + ' checked in.');
+    chkCard();
+  }
+  /* The card above the list (Scott, 30 Sep 2026, option 4A): "No one has checked in yet",
+     one sentence and the Check-in QR code button. It goes away at the first check-in. */
+  var CHK_QR_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M20 20h1M17 17v.01"/></svg>';
+  var CHK_ILLO = '<svg class="status-card-illustration" viewBox="0 0 140 100" fill="none" aria-hidden="true">' +
+    '<rect x="38" y="8" width="64" height="84" rx="6" fill="#fff" stroke="#b0aeab" stroke-width="1.5"/>' +
+    '<g fill="#2d2d2d"><rect x="48" y="18" width="16" height="16" rx="2"/><rect x="76" y="18" width="16" height="16" rx="2"/><rect x="48" y="46" width="16" height="16" rx="2"/>' +
+    '<rect x="76" y="46" width="6" height="6"/><rect x="86" y="46" width="6" height="6"/><rect x="76" y="56" width="6" height="6"/><rect x="86" y="56" width="6" height="6"/></g>' +
+    '<rect x="48" y="72" width="44" height="4" rx="2" fill="#b0aeab"/><rect x="56" y="80" width="28" height="4" rx="2" fill="#d4d2d0"/>' +
+    '<rect x="52" y="22" width="8" height="8" fill="#fff"/><rect x="80" y="22" width="8" height="8" fill="#fff"/><rect x="52" y="50" width="8" height="8" fill="#fff"/></svg>';
+  function chkHostRows(host) {
+    var sec = host.querySelector('.live-panel-section'), body = sec && sec.querySelector('tbody');
+    return body ? [].slice.call(body.querySelectorAll('tr')).filter(function(tr) { return !tr.querySelector('td[colspan]'); }).length : 0;
+  }
+  function chkCard() {
+    ['waitingLive', 'waitingLiveEmpty'].forEach(function(id) {
+      var host = document.getElementById(id), sec = host && host.querySelector('.live-panel-section');
+      if (!sec) return;
+      var card = host.querySelector('.chk-card');
+      var want = (m === 'person') && !Object.keys(chkRead()).length && !chkHostRows(host);
+      if (want && !card) {
+        card = document.createElement('div');
+        card.className = 'status-card chk-card';
+        card.innerHTML = '<div class="status-card-text"><h3>No one has checked in yet</h3>' +
+          '<p>Print the check-in QR code and put it at the door. Candidates scan it to check in, and they appear here.</p>' +
+          '<button type="button" class="chk-card-btn" onclick="JFXM.qr()">' + CHK_QR_SVG + 'Check-in QR code</button></div>' + CHK_ILLO;
+        host.insertBefore(card, sec);
+      } else if (!want && card) {
+        card.parentNode.removeChild(card);
+      }
+      /* the in-person list fills by check-in, so its empty line says so */
+      if (m === 'person') {
+        var ph = sec.querySelector('td[colspan]');
+        if (ph) ph.textContent = 'Candidates appear here when they check in.';
+      }
+    });
+  }
+  window.addEventListener('storage', function(e) { if (!e.key || e.key === CHK_KEY) chkLand(true); });
+  /* Switching the lobby's state redraws the tabs from fixed numbers, so put the
+     people who checked in back into the counts afterwards. */
+  var chkOrigMode = window.setLobbyMode;
+  if (typeof chkOrigMode === 'function') {
+    window.setLobbyMode = function(mode) {
+      var r = chkOrigMode.apply(this, arguments);
+      var host = chkRows();
+      var k = host ? host.querySelectorAll('tr[data-checkin]').length : 0;
+      if (k && mode === 'live') { bumpTab('Waiting to interview', k); bumpTab('Not yet interviewed', -k); }
+      chkCard();
+      return r;
+    };
+  }
+
+
   /* Interviewed keeps the small notes modal — a quick edit after the fact
      does not need the resume beside it. */
   function moveToInterviewed(name, rating) {
@@ -6971,6 +7107,8 @@ a.jm-cp-num:hover { color:#0044B3; }
     notesColumn();
     fixEndModal();
     wireEndFlow();
+    chkLand(false); /* check-in: pick up check-ins made before this page opened */
+    chkCard(); /* check-in: the card that shows until the first check-in */
   }
 
   document.addEventListener('click', function(e) {
@@ -7695,6 +7833,7 @@ a.jm-cp-num:hover { color:#0044B3; }
       try {
         if (mode === 'live') { var b = pick('.dev-toggle-btn', /^L$/); if (b) b.click(); }
         else if (mode === 'event-ended' && typeof setLobbyMode === 'function') setLobbyMode('event-ended');
+        else if (mode === 'live-empty' && typeof setLobbyMode === 'function') setLobbyMode('live-empty');
         if (tab === 'waiting') { var t = pick('button.tab', /waiting to interview/i); if (t) t.click(); }
       } catch (e) {}
       run(); setTimeout(run, 300);

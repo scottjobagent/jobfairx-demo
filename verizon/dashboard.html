@@ -7833,6 +7833,15 @@ document.addEventListener('click', function(e){
         : (k === 'person' && EVENT_ADDR[_ek]) ? EVENT_ADDR[_ek]
         : SUB[k];
       cell.parentNode.insertBefore(sub, cell.nextSibling);
+      /* check-in (Scott, 30 Sep 2026, option 1B; Verizon demo November 20, 2026): an upcoming
+         in-person event gets its sign here, under Go to lobby. Video and phone rows have nothing to print. */
+      if (k === 'person' && tr.classList.contains('upcoming') && !tr.querySelector('.cell-qr')) {
+        var qk = (tr.getAttribute('data-dash-event') || 'chicago').split('-')[0];
+        var qw = document.createElement('div');
+        qw.innerHTML = '<a class="cell-lobby cell-qr" style="margin-top:6px" onclick="window.open(\'checkin-qr.html?event=' + qk + '\',\'_blank\')">Check-in QR code</a>';
+        var qa = tr.querySelector('.cell-lobby');
+        if (qa) qa.parentNode.insertBefore(qw, qa.nextSibling);
+      }
       /* Carry the method through to the lobby, which opens in a new tab. */
       tr.querySelectorAll('a, button').forEach(function(el) {
         var h = el.getAttribute('onclick') || '';
