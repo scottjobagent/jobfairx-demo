@@ -1330,6 +1330,45 @@ document.addEventListener('DOMContentLoaded', function(){
           </tr>
         </thead>
         <tbody>
+          <tr class="ev-row upcoming" data-event="vz" data-dash-event="vz-event">
+            <td>
+              <div class="actions-cell">
+                <button class="action-pencil" title="Edit" data-action="edit" onclick="handleEventAction(this, 'edit-event.html?event=vz')"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.293 2.293a2.828 2.828 0 114 4l-11 11a1 1 0 01-.39.242l-4.5 1.5a.75.75 0 01-.942-.942l1.5-4.5a1 1 0 01.242-.39l11.09-11.09z"></path></svg></button>
+                <button class="action-dots" onclick="toggleMenu(this)"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18" cy="12" r="2"></circle></svg></button>
+                <div class="action-menu">
+                  <button class="action-menu-item" data-action="edit" onclick="handleEventAction(this, 'edit-event.html?event=vz')">Edit</button>
+                  <button class="action-menu-item" onclick="window.location.href='lobby.html?method=video&amp;event=vz'">Go to lobby</button>
+                </div>
+              </div>
+              <div class="cell-setup-complete" style="margin-top:8px;"><span class="setup-complete-dot"></span> Setup complete</div>
+            </td>
+            <td>
+              <span class="cell-event-name">Verizon Business Sales Career Event</span>
+              <div class="cell-event-date"><span class="date-part">January 22, 2027</span> <span class="time-part">· 11:00 AM - 3:00 PM ET</span></div>
+            </td>
+            <td>
+              <div class="cell-location">Video interviews</div>
+              <a class="cell-lobby" onclick="window.location.href='lobby.html?method=video&amp;event=vz'">Go to lobby</a>
+            </td>
+            <td>
+              <div class="setup-summary">
+                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('vz')">14 interviewers<span class="iv-count-tiptext">Includes account owner. Doesn't count toward interviewer seats.</span></a>
+              </div>
+              <div class="cell-col-count">Unlimited interviewers</div>
+            </td>
+            <td>
+              <span class="cell-job" style="display:block;cursor:default;">Account Manager, SMB Business Sales</span>
+              <span class="cell-job" style="display:block;cursor:default;">Senior Account Manager, Business Sales</span>
+              <span class="cell-job" style="display:block;cursor:default;">Business Sales Account Executive</span>
+              <span class="cell-job" style="display:block;cursor:default;">Senior Business Sales Account Executive</span>
+
+            </td>
+            <td class="cell-candidates">
+              <div class="cand-pending" onclick="window.open('lobby.html?method=video&amp;event=vz&amp;tab=notyet','_blank')">8 to review</div>
+              <div class="cand-upcoming">84 upcoming</div>
+              <a onclick="window.open('lobby.html?method=video&amp;event=vz&amp;tab=notyet','_blank')" style="cursor:pointer;">Manage candidates</a>
+            </td>
+          </tr>
           <tr class="ev-row upcoming" data-event="losangeles" data-dash-event="losangeles-event">
             <td>
               <div class="actions-cell">
@@ -1479,45 +1518,6 @@ document.addEventListener('DOMContentLoaded', function(){
               <div class="cand-zero">0 to review</div>
               <div class="cand-upcoming">0 upcoming</div>
               <a onclick="window.open('edit-event.html?event=boston','_blank')" style="cursor:pointer;">Manage candidates</a>
-            </td>
-          </tr>
-          <tr class="ev-row upcoming" data-event="vz" data-dash-event="vz-event">
-            <td>
-              <div class="actions-cell">
-                <button class="action-pencil" title="Edit" data-action="edit" onclick="handleEventAction(this, 'edit-event.html?event=vz')"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.293 2.293a2.828 2.828 0 114 4l-11 11a1 1 0 01-.39.242l-4.5 1.5a.75.75 0 01-.942-.942l1.5-4.5a1 1 0 01.242-.39l11.09-11.09z"></path></svg></button>
-                <button class="action-dots" onclick="toggleMenu(this)"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="18" cy="12" r="2"></circle></svg></button>
-                <div class="action-menu">
-                  <button class="action-menu-item" data-action="edit" onclick="handleEventAction(this, 'edit-event.html?event=vz')">Edit</button>
-                  <button class="action-menu-item" onclick="window.location.href='lobby.html?method=video&amp;event=vz'">Go to lobby</button>
-                </div>
-              </div>
-              <div class="cell-setup-complete" style="margin-top:8px;"><span class="setup-complete-dot"></span> Setup complete</div>
-            </td>
-            <td>
-              <span class="cell-event-name">Verizon Business Sales Career Event</span>
-              <div class="cell-event-date"><span class="date-part">January 22, 2027</span> <span class="time-part">· 11:00 AM - 3:00 PM ET</span></div>
-            </td>
-            <td>
-              <div class="cell-location">Video interviews</div>
-              <a class="cell-lobby" onclick="window.location.href='lobby.html?method=video&amp;event=vz'">Go to lobby</a>
-            </td>
-            <td>
-              <div class="setup-summary">
-                <a class="iv-count-tip" style="color:#0044B3;cursor:pointer;text-decoration:none;font-size:14px;font-weight:400;" onclick="openInterviewSettings('vz')">14 interviewers<span class="iv-count-tiptext">Includes account owner. Doesn't count toward interviewer seats.</span></a>
-              </div>
-              <div class="cell-col-count">Unlimited interviewers</div>
-            </td>
-            <td>
-              <span class="cell-job" style="display:block;cursor:default;">Account Manager, SMB Business Sales</span>
-              <span class="cell-job" style="display:block;cursor:default;">Senior Account Manager, Business Sales</span>
-              <span class="cell-job" style="display:block;cursor:default;">Business Sales Account Executive</span>
-              <span class="cell-job" style="display:block;cursor:default;">Senior Business Sales Account Executive</span>
-
-            </td>
-            <td class="cell-candidates">
-              <div class="cand-pending" onclick="window.open('lobby.html?method=video&amp;event=vz&amp;tab=notyet','_blank')">8 to review</div>
-              <div class="cand-upcoming">84 upcoming</div>
-              <a onclick="window.open('lobby.html?method=video&amp;event=vz&amp;tab=notyet','_blank')" style="cursor:pointer;">Manage candidates</a>
             </td>
           </tr>
         </tbody>
