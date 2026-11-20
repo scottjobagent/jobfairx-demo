@@ -990,6 +990,79 @@ var EVENTS = {
         ]
       }
     ]
+  },
+  vz: {
+    title: 'Verizon Business Sales Career Event',
+    sub: 'Nationwide · Verizon',
+    city: 'Nationwide',
+    date: 'Friday, January 22, 2027',
+    hours: '11:00 AM - 3:00 PM',
+    tz: 'Eastern Time (EST)',
+    format: 'Video interview',
+    method: 'This will be a video interview on JobFairX',
+    private: true,
+    jobs: [
+      {
+        id: 'am',
+        title: 'Account Manager, SMB Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Nationwide',
+        desc: [
+          'Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.',
+          'Requirements: 1 year or more of sales experience; a valid driver\'s license; travel within your territory about half the time.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sam',
+        title: 'Senior Account Manager, Business Sales',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Nationwide',
+        desc: [
+          'Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.',
+          'Requirements: experience managing business accounts; a record of meeting sales goals.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'ae',
+        title: 'Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Nationwide',
+        desc: [
+          'Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.',
+          'Requirements: 4 years or more of experience in outside sales; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      },
+      {
+        id: 'sae',
+        title: 'Senior Business Sales Account Executive',
+        company: 'Verizon',
+        pay: 'Base pay plus commission, Full-time',
+        location: 'Nationwide',
+        desc: [
+          'Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.',
+          'Requirements: several years of outside sales experience; strong prospecting and negotiating skills.'
+        ],
+        slots: [
+          { time: '11:00 AM', remaining: 1 }, { time: '11:30 AM', remaining: 2 }, { time: '12:00 PM', remaining: 1 }, { time: '12:30 PM', remaining: 0 },
+          { time: '1:00 PM',  remaining: 1 }, { time: '1:30 PM',  remaining: 1 }, { time: '2:00 PM',  remaining: 2 }, { time: '2:30 PM',  remaining: 1 }
+        ]
+      }
+    ]
   }
 };
 
@@ -1286,5 +1359,31 @@ function vzClashAt(time) {
 init();
 </script>
 
+
+<script id="verizon-demo-private-share">
+/* Scott, November 20, 2026: the private Verizon event has its own candidate page; its top names the event,
+   and it has no "See all cities" link (it is Verizon's own event, not a city job fair) */
+(function(){
+  var base = window.vzTop;
+  if (typeof base !== 'function') return;
+  window.vzTop = function(key){
+    var r = base.apply(this, arguments);
+    var e = window.currentEvent;
+    var h1 = document.querySelector('h1.vz-h1'), other = document.querySelector('.vz-other'), kick = document.querySelector('.vz-kicker');
+    if (e && e.private) {
+      if (h1) { if (!h1.getAttribute('data-city')) h1.setAttribute('data-city', h1.innerHTML); h1.textContent = e.title; }
+      if (other) other.style.display = 'none';
+      if (kick) kick.textContent = 'Career event';
+      document.title = e.title;
+    } else {
+      if (h1 && h1.getAttribute('data-city')) h1.innerHTML = h1.getAttribute('data-city');
+      if (other) other.style.display = '';
+      if (kick) kick.textContent = 'Hiring event';
+    }
+    return r;
+  };
+  if (window.currentEvent) window.vzTop();   /* the page loaded its event before this ran */
+})();
+</script>
 </body>
 </html>
