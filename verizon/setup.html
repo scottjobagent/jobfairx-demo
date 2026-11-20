@@ -541,6 +541,8 @@ body.collapsed .progress-bar-track { left: 60px; }
 .jfx-toast-close { flex-shrink: 0; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: #767676; font-size: 18px; border-radius: 6px; transition: background 0.15s; margin: -4px -4px 0 0; }
 .jfx-toast-close:hover { background: #f3f2ef; color: #2d2d2d; }
 </style>
+
+<style id="verizon-demo-no-dev-controls">.pkg-dev,.job-dev,.dev-toggle,.state-dev{display:none!important}</style>
 </head>
 <body>
 
@@ -643,29 +645,29 @@ body.collapsed .progress-bar-track { left: 60px; }
         <div class="pj-item" onclick="selectPreviousJob(this)">
           <svg class="pj-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <div class="pj-item-info">
-            <div class="pj-item-title">Registered Nurse</div>
-            <div class="pj-item-meta">Dallas, TX 75201 &middot; March 15th, 2026</div>
+            <div class="pj-item-title">Account Manager, SMB Business Sales</div>
+            <div class="pj-item-meta">Los Angeles, CA 90017 &middot; January 5th, 2027</div>
           </div>
         </div>
         <div class="pj-item" onclick="selectPreviousJob(this)">
           <svg class="pj-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <div class="pj-item-info">
-            <div class="pj-item-title">Medical Assistant</div>
-            <div class="pj-item-meta">Houston, TX 77001 &middot; February 28th, 2026</div>
+            <div class="pj-item-title">Senior Account Manager, Business Sales</div>
+            <div class="pj-item-meta">Irvine, CA 92618 &middot; January 5th, 2027</div>
           </div>
         </div>
         <div class="pj-item" onclick="selectPreviousJob(this)">
           <svg class="pj-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <div class="pj-item-info">
-            <div class="pj-item-title">CNA - Certified Nursing Assistant</div>
-            <div class="pj-item-meta">Austin, TX 78701 &middot; January 10th, 2026</div>
+            <div class="pj-item-title">Business Sales Account Executive</div>
+            <div class="pj-item-meta">New York, NY 10001 &middot; January 6th, 2027</div>
           </div>
         </div>
         <div class="pj-item" onclick="selectPreviousJob(this)">
           <svg class="pj-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <div class="pj-item-info">
-            <div class="pj-item-title">Home Health Aide</div>
-            <div class="pj-item-meta">San Antonio, TX 78201 &middot; December 5th, 2025</div>
+            <div class="pj-item-title">Senior Business Sales Account Executive</div>
+            <div class="pj-item-meta">Los Angeles, CA 90017 &middot; January 6th, 2027</div>
           </div>
         </div>
       </div>
@@ -682,16 +684,16 @@ body.collapsed .progress-bar-track { left: 60px; }
       <label class="form-label">Job title <span class="required">*</span></label>
       <input type="text" class="form-input" id="jobTitle" placeholder="" autocomplete="off" onfocus="showJobTitleSuggestions()" oninput="filterJobTitleSuggestions()">
       <div class="jt-suggestions" id="jobTitleSuggestions">
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Registered Nurse</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Certified Nursing Assistant</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Physical Therapist</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Patient Care Technician</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Charge Nurse</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Lab Technician</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Nurse Manager</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Pharmacy Technician</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Respiratory Therapist</div>
-        <div class="jt-suggestion" onclick="selectJobTitle(this)">Patient Coordinator</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Account Manager, SMB Business Sales</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Senior Account Manager, Business Sales</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Business Sales Account Executive</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Senior Business Sales Account Executive</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Business Sales Account Manager</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Public Sector Account Manager</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Inside Sales Representative</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Sales Development Representative</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Retail Sales Specialist</div>
+              <div class="jt-suggestion" onclick="selectJobTitle(this)">Sales Operations Coordinator</div>
       </div>
       <div class="field-error" id="jobTitleError"><svg viewBox="0 0 24 24" fill="#991b1b"><circle cx="12" cy="12" r="10"/><path d="M12 8v4" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16" r="1" fill="#fff"/></svg>Add a job title.</div>
     </div>
@@ -844,9 +846,9 @@ body.collapsed .progress-bar-track { left: 60px; }
 
     <!-- Pay -->
     <div class="pay-section" id="step2PayBlock">
-      <div class="pay-title">Pay <span class="required">*</span></div>
+      <div class="pay-title">Pay</div>
       <div class="field-error" id="payError" style="display:none;">Please enter pay information.</div>
-      <div class="pay-subtitle">Review the pay we estimated for your job and adjust as needed. Check your local minimum wage. <span class="info-icon">i</span></div>
+      <div class="pay-subtitle">Enter the pay range for this job, or leave it blank to show &ldquo;Base pay plus commission&rdquo;. <span class="info-icon">i</span></div>
       <!-- Range row: Show pay by | Minimum | to | Maximum | Rate -->
       <div class="pay-row" id="payRowRange">
         <div class="pay-field auto">
@@ -880,7 +882,7 @@ body.collapsed .progress-bar-track { left: 60px; }
           <div class="pay-field-label">Minimum</div>
           <div class="pay-input-wrap">
             <span class="pay-input-prefix">$</span>
-            <input type="text" class="pay-input" value="22.63">
+            <input type="text" class="pay-input" value="" placeholder="0">
           </div>
         </div>
         <div class="pay-to">to</div>
@@ -888,7 +890,7 @@ body.collapsed .progress-bar-track { left: 60px; }
           <div class="pay-field-label">Maximum</div>
           <div class="pay-input-wrap">
             <span class="pay-input-prefix">$</span>
-            <input type="text" class="pay-input" value="27.25">
+            <input type="text" class="pay-input" value="" placeholder="0">
           </div>
         </div>
         <div class="pay-field auto">
@@ -957,7 +959,7 @@ body.collapsed .progress-bar-track { left: 60px; }
           <div class="pay-field-label" id="paySingleLabel">Amount</div>
           <div class="pay-input-wrap">
             <span class="pay-input-prefix">$</span>
-            <input type="text" class="pay-input" value="22.63">
+            <input type="text" class="pay-input" value="" placeholder="0">
           </div>
         </div>
         <div class="pay-field auto">
@@ -1079,14 +1081,17 @@ body.collapsed .progress-bar-track { left: 60px; }
           </div>
         </div>
         <div class="rte-editor" id="jobDescEditor" contenteditable="true">
-          <p><strong>Job Summary</strong></p>
-          <p>Join our compassionate care team as a Certified Nursing Assistant, where your patient-focused mindset will help deliver exceptional care. In this energetic role, you will serve as a brand ambassador, helping customers find the perfect products while providing exceptional service. Your proactive approach and product knowledge will contribute to a lively store environment that encourages growth, teamwork, and success. This paid position offers an exciting opportunity to develop your retail skills and advance within a vibrant company committed to supporting its employees.</p>
-          <p><strong>Duties</strong></p>
-          <p>Greet customers warmly and assist them in locating products through engaging conversations and product demonstrations</p>
-          <p>Operate the Point of Sale (POS) system accurately for transactions, including cash handling and credit card processing</p>
-          <p>Upsell complementary products to enhance customer satisfaction and increase sales volume</p>
-          <p>Maintain well-organized merchandising displays and ensure shelves are stocked with fresh inventory</p>
-          <p>Conduct product demos to educate customers about features and benefits, encouraging informed purchasing decisions</p>
+<p><strong>Job Summary</strong></p>
+<p>Sell Verizon's business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.</p>
+<p><strong>Duties</strong></p>
+<p>Prospect for new small business customers in the field and by phone</p>
+<p>Meet owners, learn how they work and recommend the right products</p>
+<p>Keep your pipeline and customer records up to date</p>
+<p>Work with support teams so each new customer is set up well</p>
+<p><strong>Requirements</strong></p>
+<p>1 year or more of sales experience</p>
+<p>A valid driver's license</p>
+<p>Travel within your territory about half the time</p>
         </div>
       </div>
 
@@ -1156,7 +1161,7 @@ body.collapsed .progress-bar-track { left: 60px; }
       <table class="review-table">
         <tr class="review-row locked">
           <td>Job title</td>
-          <td id="reviewJobTitle">Certified Nursing Assistant</td>
+          <td id="reviewJobTitle">Account Manager, SMB Business Sales</td>
           <td><span class="review-lock" title="Use Back to change"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span></td>
         </tr>
         <tr class="review-row locked">
@@ -1171,7 +1176,7 @@ body.collapsed .progress-bar-track { left: 60px; }
         </tr>
         <tr class="review-row">
           <td>Pay</td>
-          <td id="reviewPay">$22.63 - $27.25 per hour</td>
+          <td id="reviewPay">Base pay plus commission</td>
           <td><button class="review-edit-btn" onclick="openReviewEditModal('pay')" title="Edit"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td>
         </tr>
         <tr class="review-row">
@@ -1236,20 +1241,20 @@ body.collapsed .progress-bar-track { left: 60px; }
       <div class="jd-subtitle">Here's a look at your selected job(s):</div>
       <div class="pkg-meta" id="jdPackageMeta">Growth package<span class="pkg-sep">&middot;</span>0 of 3 jobs added</div>
 
-      <!-- Job 1: Medical Assistant (hardcoded) -->
+      <!-- Job 1: Senior Account Manager, Business Sales (hardcoded) -->
       <div class="jd-job-entry" id="step5Job1">
         <div class="jd-job-row">
           <div class="jd-job-info">
-            <div class="jd-job-title"><a href="#" style="color: #0044B3; text-decoration: none;">Medical Assistant <svg style="width:18px;height:18px;vertical-align:middle;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="#0044B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
+            <div class="jd-job-title"><a href="#" style="color: #0044B3; text-decoration: none;">Senior Account Manager, Business Sales <svg style="width:18px;height:18px;vertical-align:middle;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="#0044B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
             <div class="jd-job-meta">
               Full time<br>
-              $104,039.24 - $125,294.57 a year
+              Base pay plus commission
             </div>
           </div>
-          <button class="jd-remove-btn" onclick="confirmRemoveJob('step5Job1', 'Medical Assistant')">Remove job</button>
+          <button class="jd-remove-btn" onclick="confirmRemoveJob('step5Job1', 'Senior Account Manager, Business Sales')">Remove job</button>
         </div>
         <div class="jd-desc-title">Job Summary</div>
-        <div class="jd-desc-text" id="step5Desc1">We are seeking a dynamic and innovative Medical Assistant to join our vibrant tech team! In this role, you will be at the forefront of creating engaging, responsive, and user-friendly web interfaces that elevate our digital...</div>
+        <div class="jd-desc-text" id="step5Desc1">Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.</div>
         <button class="jd-read-more" onclick="var d=document.getElementById('step5Desc1');d.classList.toggle('expanded');this.textContent=d.classList.contains('expanded')?'Read less':'Read more'">Read more</button>
       </div>
 
@@ -1259,14 +1264,14 @@ body.collapsed .progress-bar-track { left: 60px; }
       <div class="jd-job-entry" id="step5Job2">
       <div class="jd-job-row">
         <div class="jd-job-info">
-          <div class="jd-job-title" id="step5JobTitle"><a href="#" style="color: #0044B3; text-decoration: none;">Certified Nursing Assistant <svg style="width:18px;height:18px;vertical-align:middle;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="#0044B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
+          <div class="jd-job-title" id="step5JobTitle"><a href="#" style="color: #0044B3; text-decoration: none;">Account Manager, SMB Business Sales <svg style="width:18px;height:18px;vertical-align:middle;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="#0044B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
           <div class="jd-job-meta" id="step5JobMeta">
             Full time<br>
-            $22.63 - $27.25 an hour<br>
-            Dallas, TX 75201
+            Base pay plus commission<br>
+            Los Angeles, CA 90017
           </div>
         </div>
-        <button class="jd-remove-btn" onclick="confirmRemoveJob('step5Job2', 'Certified Nursing Assistant')">Remove job</button>
+        <button class="jd-remove-btn" onclick="confirmRemoveJob('step5Job2', 'Account Manager, SMB Business Sales')">Remove job</button>
       </div>
 
       <div class="jd-desc-title">Job Summary</div>
@@ -1749,8 +1754,8 @@ body.collapsed .progress-bar-track { left: 60px; }
         </div>
         <div class="rv-section-body">
           <ul class="rv-list" id="rvScreeningList">
-            <li>Medical Assistant - No screening added</li>
-            <li>Certified Nursing Assistant - No screening added</li>
+            <li>Senior Account Manager, Business Sales - No screening added</li>
+            <li>Account Manager, SMB Business Sales - No screening added</li>
           </ul>
         </div>
       </div>
@@ -2088,8 +2093,8 @@ function updateRvmPreview() {
   var role = document.getElementById('rvmRole').value || '[Your Role]';
   var showLink = document.getElementById('rvmLinkYes').checked;
   var linkUrl = document.getElementById('rvmLinkUrl').value || 'jobfairx.com/jobs';
-  var companyName = 'American States Utility Services, Inc';
-  var jobTitle = 'Associate Project Engineer';
+  var companyName = 'Verizon';
+  var jobTitle = 'Account Manager, SMB Business Sales';
 
   var html = '<p>Thank you for expressing interest in the ' + jobTitle + ' position.</p>';
   html += '<p>My name is ' + name + ', and I\'m a ' + role + ' at ' + companyName + '</p>';
@@ -2185,7 +2190,7 @@ function populateReview() {
     var inputs = rangeRow.querySelectorAll('.pay-input');
     var rateLabel = document.getElementById('rateLabel');
     if (inputs.length >= 2 && inputs[0].value && inputs[1].value) {
-      payText = '$' + inputs[0].value + ' - $' + inputs[1].value + ' ' + (rateLabel ? rateLabel.textContent : '');
+      payText = (inputs[0].value && inputs[1].value) ? ('$' + inputs[0].value + ' - $' + inputs[1].value + ' ' + (rateLabel ? rateLabel.textContent : '')) : 'Base pay plus commission';
     }
   } else if (singleRow && !singleRow.classList.contains('hidden')) {
     var input = singleRow.querySelector('.pay-input');
@@ -2193,7 +2198,7 @@ function populateReview() {
     var payByLabel2 = document.getElementById('payByLabel2');
     if (input && input.value) {
       var prefix = payByLabel2 ? payByLabel2.textContent : '';
-      payText = '$' + input.value + ' ' + (rateLabel2 ? rateLabel2.textContent : '') + (prefix !== 'Exact amount' ? ' (' + prefix.toLowerCase() + ')' : '');
+      payText = input.value ? ('$' + input.value + ' ' + (rateLabel2 ? rateLabel2.textContent : '') + (prefix !== 'Exact amount' ? ' (' + prefix.toLowerCase() + ')' : '')) : 'Base pay plus commission';
     }
   }
   document.getElementById('reviewPay').textContent = payText;
@@ -2243,7 +2248,7 @@ function toggleReviewDesc() {
 function populateStep4Review() {
   // Job title
   var title = document.getElementById('jobTitle');
-  var titleText = title && title.value.trim() ? title.value : 'Certified Nursing Assistant';
+  var titleText = title && title.value.trim() ? title.value : 'Account Manager, SMB Business Sales';
   document.getElementById('step5JobTitle').innerHTML = '<a href="#" style="color: #0044B3; text-decoration: none;">' + titleText + ' <svg style="width:18px;height:18px;vertical-align:middle;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="#0044B3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>';
 
   // Build meta: job type, pay, location
@@ -2260,13 +2265,13 @@ function populateStep4Review() {
     var inputs = rangeRow.querySelectorAll('.pay-input');
     var rateLabel = document.getElementById('rateLabel');
     if (inputs.length >= 2 && inputs[0].value && inputs[1].value) {
-      payText = '$' + inputs[0].value + ' - $' + inputs[1].value + ' ' + (rateLabel ? rateLabel.textContent.replace('per ', 'an ') : '');
+      payText = (inputs[0].value && inputs[1].value) ? ('$' + inputs[0].value + ' - $' + inputs[1].value + ' ' + (rateLabel ? rateLabel.textContent.replace('per ', 'an ') : '')) : 'Base pay plus commission';
     }
   } else if (singleRow && !singleRow.classList.contains('hidden')) {
     var input = singleRow.querySelector('.pay-input');
     var rateLabel2 = document.getElementById('rateLabel2');
     if (input && input.value) {
-      payText = '$' + input.value + ' ' + (rateLabel2 ? rateLabel2.textContent.replace('per ', 'an ') : '');
+      payText = input.value ? ('$' + input.value + ' ' + (rateLabel2 ? rateLabel2.textContent.replace('per ', 'an ') : '')) : 'Base pay plus commission';
     }
   }
 
@@ -2658,45 +2663,45 @@ function selectPostType(type, el) {
 
 // Template data for each previous job
 var templateData = {
-  'Registered Nurse': {
-    location: 'Dallas, TX 75201',
-    locationType: 'In person',
-    jobType: ['Full-time'],
-    benefits: ['Health insurance', 'Paid time off', 'Dental insurance', '401(k)', 'Vision insurance'],
-    shift: ['Day shift', 'Night shift'],
-    schedule: ['3×12', 'Rotating weekends'],
-    payMin: '32.50', payMax: '45.00', rate: 'per hour',
-    description: '<p><strong>Job Summary</strong></p><p>We are seeking a compassionate and skilled Registered Nurse to join our healthcare team. You will provide direct patient care, coordinate treatment plans, and collaborate with physicians and other healthcare professionals to deliver exceptional patient outcomes.</p><p><strong>Duties</strong></p><p>Assess patient health conditions through physical exams and medical history review</p><p>Administer medications, injections, and IV fluids as prescribed by physicians</p><p>Monitor vital signs and document patient progress in electronic health records</p><p>Educate patients and families about treatment plans, medications, and post-discharge care</p><p>Collaborate with interdisciplinary team members to develop individualized care plans</p>'
-  },
-  'Medical Assistant': {
-    location: 'Houston, TX 77001',
-    locationType: 'In person',
-    jobType: ['Full-time'],
-    benefits: ['Health insurance', 'Paid time off', '401(k)'],
-    shift: ['Day shift'],
-    schedule: ['Monday to Friday'],
-    payMin: '18.00', payMax: '24.50', rate: 'per hour',
-    description: '<p><strong>Job Summary</strong></p><p>We are looking for a detail-oriented Medical Assistant to support our clinical team. You will handle both administrative and clinical tasks, ensuring smooth daily operations and excellent patient experiences.</p><p><strong>Duties</strong></p><p>Greet patients and prepare them for examinations by taking vital signs and medical histories</p><p>Assist physicians during exams and minor procedures</p><p>Schedule appointments, manage referrals, and handle insurance verifications</p><p>Maintain clean and organized examination rooms and restock supplies</p>'
-  },
-  'CNA - Certified Nursing Assistant': {
-    location: 'Austin, TX 78701',
-    locationType: 'In person',
-    jobType: ['Part-time'],
-    benefits: ['Health insurance', 'Paid time off', 'Flexible schedule'],
-    shift: ['Day shift'],
-    schedule: ['3×12'],
-    payMin: '16.00', payMax: '21.00', rate: 'per hour',
-    description: '<p><strong>Job Summary</strong></p><p>We are hiring a Certified Nursing Assistant to provide hands-on care and support to patients in our facility. You will work closely with nurses and other healthcare professionals to ensure patient comfort and well-being.</p><p><strong>Duties</strong></p><p>Assist patients with daily living activities including bathing, dressing, and feeding</p><p>Monitor and record vital signs and report changes to nursing staff</p><p>Help patients with mobility, transfers, and range-of-motion exercises</p><p>Maintain clean and safe patient environments</p>'
-  },
-  'Home Health Aide': {
-    location: 'San Antonio, TX 78201',
+  'Account Manager, SMB Business Sales': {
+    location: 'Los Angeles, CA 90017',
     locationType: 'On the road',
     jobType: ['Full-time'],
-    benefits: ['Health insurance', 'Paid time off', 'Flexible schedule'],
+    benefits: ['Health insurance', 'Dental insurance', 'Vision insurance', '401(k)', 'Paid time off'],
     shift: ['Day shift'],
     schedule: ['Monday to Friday'],
-    payMin: '14.50', payMax: '19.00', rate: 'per hour',
-    description: '<p><strong>Job Summary</strong></p><p>We are seeking a caring Home Health Aide to provide in-home support to patients who need assistance with daily activities. You will travel to patient homes and deliver personalized care with compassion and professionalism.</p><p><strong>Duties</strong></p><p>Assist clients with personal care including bathing, grooming, and dressing</p><p>Help with light housekeeping, meal preparation, and medication reminders</p><p>Provide companionship and emotional support to clients</p><p>Document care activities and report concerns to supervising nurse</p>'
+    payMin: '', payMax: '', rate: 'per year',
+    description: '<p><strong>Job Summary</strong></p><p>Sell Verizon\'s business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.</p><p><strong>Duties</strong></p><p>Prospect for new small business customers in the field and by phone</p><p>Meet owners, learn how they work and recommend the right products</p><p>Keep your pipeline and customer records up to date</p><p>Work with support teams so each new customer is set up well</p><p><strong>Requirements</strong></p><p>1 year or more of sales experience</p><p>A valid driver\'s license</p><p>Travel within your territory about half the time</p>'
+  },
+  'Senior Account Manager, Business Sales': {
+    location: 'Irvine, CA 92618',
+    locationType: 'On the road',
+    jobType: ['Full-time'],
+    benefits: ['Health insurance', 'Dental insurance', 'Vision insurance', '401(k)', 'Paid time off'],
+    shift: ['Day shift'],
+    schedule: ['Monday to Friday'],
+    payMin: '', payMax: '', rate: 'per year',
+    description: '<p><strong>Job Summary</strong></p><p>Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.</p><p><strong>Duties</strong></p><p>Hold regular reviews with each account</p><p>Renew and extend contracts</p><p>Find new opportunities inside the accounts you manage</p><p><strong>Requirements</strong></p><p>Experience managing business accounts</p><p>A record of meeting sales goals</p>'
+  },
+  'Business Sales Account Executive': {
+    location: 'New York, NY 10001',
+    locationType: 'On the road',
+    jobType: ['Full-time'],
+    benefits: ['Health insurance', 'Dental insurance', 'Vision insurance', '401(k)', 'Paid time off'],
+    shift: ['Day shift'],
+    schedule: ['Monday to Friday'],
+    payMin: '', payMax: '', rate: 'per year',
+    description: '<p><strong>Job Summary</strong></p><p>Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.</p><p><strong>Duties</strong></p><p>Build a pipeline of new business customers</p><p>Lead meetings, proposals and negotiations</p><p>Hand new customers to the account team</p><p><strong>Requirements</strong></p><p>4 years or more of experience in outside sales</p><p>Strong prospecting and negotiating skills</p>'
+  },
+  'Senior Business Sales Account Executive': {
+    location: 'Los Angeles, CA 90017',
+    locationType: 'On the road',
+    jobType: ['Full-time'],
+    benefits: ['Health insurance', 'Dental insurance', 'Vision insurance', '401(k)', 'Paid time off'],
+    shift: ['Day shift'],
+    schedule: ['Monday to Friday'],
+    payMin: '', payMax: '', rate: 'per year',
+    description: '<p><strong>Job Summary</strong></p><p>Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.</p><p><strong>Duties</strong></p><p>Open and develop larger accounts</p><p>Lead proposals with specialists from several teams</p><p>Coach newer account executives</p><p><strong>Requirements</strong></p><p>Several years of outside sales experience</p><p>Strong prospecting and negotiating skills</p>'
   }
 };
 
@@ -2891,7 +2896,7 @@ function validateStep2() {
     });
   }
 
-  if (!payValid) {
+  if (false && !payValid) {   /* demo: pay boxes may stay empty */
     valid = false;
     if (payError) payError.style.display = 'flex';
     if (!firstError) firstError = document.querySelector('.pay-section');
@@ -2925,9 +2930,9 @@ function populateStep6Review() {
   // Build job list from step 5 data
   var jobs = [];
   // Hardcoded first job
-  jobs.push({ name: 'Medical Assistant', hasScreening: false, question: null });
+  jobs.push({ name: 'Senior Account Manager, Business Sales', hasScreening: false, question: null });
   // Dynamic job from form
-  var jobTitle = document.getElementById('jobTitle').value.trim() || 'Certified Nursing Assistant';
+  var jobTitle = document.getElementById('jobTitle').value.trim() || 'Account Manager, SMB Business Sales';
   jobs.push({ name: jobTitle, hasScreening: false, question: null });
 
   // Preserve existing screening data if jobs haven't changed
@@ -3293,9 +3298,10 @@ document.addEventListener('DOMContentLoaded', function() {
  * length, and the step 4 terminal CTA change.
  */
 var ADD_JOB_EVENTS = {
-  dallas:  { name: 'Dallas Healthcare Hiring Event',  pkg: 'Growth',  limit: 3, used: 1 },
-  chicago: { name: 'Chicago Healthcare Hiring Event', pkg: 'Growth',  limit: 3, used: 0 },
-  atlanta: { name: 'Atlanta Diversity Hiring Event',  pkg: 'Growth',  limit: 3, used: 0 }
+  losangeles:  { name: 'Los Angeles, CA Hiring Event',  pkg: 'Growth',  limit: 3, used: 2 },
+  chicago:   { name: 'Chicago, IL Hiring Event', pkg: 'Growth',  limit: 3, used: 2 },
+  newyork: { name: 'New York City, NY Hiring Event', pkg: 'Growth',  limit: 3, used: 0 },
+  boston: { name: 'Boston, MA Hiring Event',  pkg: 'Growth',  limit: 3, used: 0 }
 };
 var IS_ADD_JOB_MODE = false;
 var ADD_JOB_EVENT = null;
@@ -3303,8 +3309,8 @@ var ADD_JOB_EVENT = null;
 function applyAddJobModeIfNeeded() {
   var params = new URLSearchParams(window.location.search);
   if ((params.get('mode') || '').toLowerCase() !== 'add-job') return;
-  var key = (params.get('event') || 'dallas').toLowerCase();
-  if (!ADD_JOB_EVENTS[key]) key = 'dallas';
+  var key = (params.get('event') || 'losangeles').toLowerCase();
+  if (!ADD_JOB_EVENTS[key]) key = 'losangeles';
   IS_ADD_JOB_MODE = true;
   ADD_JOB_EVENT = ADD_JOB_EVENTS[key];
 
@@ -3357,7 +3363,7 @@ function saveAndCloseAddJob() {
   // Fallback if window.close is blocked (e.g., tab wasn't opened via window.open)
   setTimeout(function() {
     if (!window.closed) {
-      window.location.href = 'edit-event.html?event=' + (new URLSearchParams(window.location.search).get('event') || 'dallas');
+      window.location.href = 'edit-event.html?event=' + (new URLSearchParams(window.location.search).get('event') || 'losangeles');
     }
   }, 150);
 }
@@ -3378,10 +3384,10 @@ function submitSetupAndClose() {
 /* ═══ Step 4: Review Interview Details ═══ */
 function populateStep7Review() {
   // Job titles
-  var jobTitle = document.getElementById('jobTitle') ? document.getElementById('jobTitle').value.trim() : 'Certified Nursing Assistant';
-  jobTitle = jobTitle || 'Certified Nursing Assistant';
+  var jobTitle = document.getElementById('jobTitle') ? document.getElementById('jobTitle').value.trim() : 'Account Manager, SMB Business Sales';
+  jobTitle = jobTitle || 'Account Manager, SMB Business Sales';
   var rvJobName1 = document.getElementById('rvJobName1');
-  if (rvJobName1) rvJobName1.textContent = 'Medical Assistant';
+  if (rvJobName1) rvJobName1.textContent = 'Senior Account Manager, Business Sales';
   var rvJobName2 = document.getElementById('rvJobName2');
   if (rvJobName2) rvJobName2.textContent = jobTitle;
   var rvJobTitleItem2 = document.getElementById('rvJobTitleItem2');
@@ -3440,7 +3446,7 @@ function populateStep7Review() {
     });
   } else {
     var li1 = document.createElement('li');
-    li1.textContent = 'Medical Assistant - No screening added';
+    li1.textContent = 'Senior Account Manager, Business Sales - No screening added';
     screeningList.appendChild(li1);
     var li2 = document.createElement('li');
     li2.textContent = jobTitle + ' - No screening added';
@@ -3788,7 +3794,7 @@ function populateStep7Review() {
       <div class="fb-followup-card">
         <div class="fb-followup-text">
           <div class="fb-followup-title">Quality of candidates you met?</div>
-          <div class="fb-followup-desc">Fit, relevance, and engagement of the applicants</div>
+          <div class="fb-followup-desc">Fit, relevance, and engagement of the candidates</div>
         </div>
         <div class="fb-chip-row">
           <button type="button" class="fb-chip" data-group="candidates" data-value="great" onclick="selectFollowup(this)">&#128077; Great</button>

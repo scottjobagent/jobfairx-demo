@@ -125,6 +125,8 @@ body { font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
 .modal-textarea { width: 100%; min-height: 260px; padding: 14px 16px; font-size: 15px; font-family: inherit; color: #2d2d2d; border: 2px solid #a8a8a8; border-radius: 10px; outline: none; resize: vertical; line-height: 1.6; background: #fff; transition: border-color 0.15s; }
 .modal-textarea:focus { border-color: #0044B3; box-shadow: 0 0 0 2px rgba(0,68,179,0.15); }
 </style>
+
+<style id="verizon-demo-no-dev-controls">.pkg-dev,.job-dev,.dev-toggle,.state-dev{display:none!important}</style>
 </head>
 <body>
 
@@ -422,81 +424,72 @@ var PLUS_SVG  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 
 /* ---------- Seed data (mirrors dashboard) ---------- */
 var JOBS = {
-  ma: {
-    event: 'dallas',
-    eventName: 'Dallas Healthcare Hiring Event',
-    title: 'Medical Assistant',
-    location: 'Dallas, TX \u00b7 In person',
+  am: {
+    event: 'losangeles',
+    eventName: 'Los Angeles, CA Hiring Event',
+    title: 'Account Manager, SMB Business Sales',
+    location: 'Los Angeles, CA · On the road',
     jobType: 'Full-time',
-    pay: '$38,000 \u2013 $48,000 / year',
+    pay: '',
     benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k), Paid time off',
     shift: 'Day shift',
     schedule: 'Monday to Friday',
-    desc: "Join our growing clinic as a Medical Assistant supporting physicians and nurses in delivering excellent patient care. You will handle clinical and administrative duties including patient intake, vitals, scheduling, and electronic health records.\n\nResponsibilities:\n\u2022 Patient intake and vitals\n\u2022 Assist physicians with exams\n\u2022 Maintain accurate EHR records\n\u2022 Schedule follow-up appointments\n\nRequirements:\n\u2022 Medical Assistant certification\n\u2022 1+ year of clinical experience preferred\n\u2022 Strong organizational and communication skills"
+    desc: "Sell Verizon's business products to small businesses with 1 to 19 employees in your territory: internet, phone, security and cloud tools. You find new customers, win them, and help the customers you have get more from what they use.\n\nResponsibilities:\n• Prospect for new small business customers in the field and by phone\n• Meet owners, learn how they work and recommend the right products\n• Keep your pipeline and customer records up to date\n• Work with support teams so each new customer is set up well\n\nRequirements:\n• 1 year or more of sales experience\n• A valid driver's license\n• Travel within your territory about half the time"
   },
-  rn: {
-    event: 'dallas',
-    eventName: 'Dallas Healthcare Hiring Event',
-    title: 'Registered Nurse',
-    location: 'Dallas, TX \u00b7 In person',
+  sam: {
+    event: 'losangeles',
+    eventName: 'Los Angeles, CA Hiring Event',
+    title: 'Senior Account Manager, Business Sales',
+    location: 'Los Angeles, CA · On the road',
     jobType: 'Full-time',
-    pay: '$55,000 \u2013 $72,000 / year',
+    pay: '',
     benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k), Paid time off',
     shift: 'Day shift',
-    schedule: 'Rotating weekends',
-    desc: "We are seeking a compassionate and skilled Registered Nurse to join our healthcare team. The ideal candidate will provide high-quality patient care in a fast-paced environment and collaborate with a multidisciplinary team to ensure the best outcomes for every patient.\n\nResponsibilities:\n\u2022 Assess patient conditions and develop nursing care plans\n\u2022 Administer medications and treatments per physician orders\n\u2022 Monitor patient progress and document observations\n\u2022 Educate patients and families on health management\n\nRequirements:\n\u2022 Active RN license in Texas\n\u2022 BLS certification\n\u2022 Minimum 1 year of clinical experience preferred"
+    schedule: 'Monday to Friday',
+    desc: "Manage and grow a set of business accounts in your territory. You renew contracts, spot new needs and bring in the right Verizon products for each customer.\n\nResponsibilities:\n• Hold regular reviews with each account\n• Renew and extend contracts\n• Find new opportunities inside the accounts you manage\n\nRequirements:\n• Experience managing business accounts\n• A record of meeting sales goals"
   },
-  se: {
-    event: 'chicago',
-    eventName: 'Chicago Technology Hiring Event',
-    title: 'Software Engineer',
-    location: 'Chicago, IL \u00b7 Hybrid',
+  sae: {
+    event: 'losangeles',
+    eventName: 'Los Angeles, CA Hiring Event',
+    title: 'Senior Business Sales Account Executive',
+    location: 'Los Angeles, CA · On the road',
     jobType: 'Full-time',
-    pay: '$115,000 \u2013 $145,000 / year',
-    benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k) matching, Paid time off',
+    pay: '',
+    benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k), Paid time off',
     shift: 'Day shift',
     schedule: 'Monday to Friday',
-    desc: "Join our growing engineering team to build and scale our core platform. You'll work with modern technologies, collaborate across product and design, and contribute to system architecture decisions.\n\nResponsibilities:\n\u2022 Design, build, and maintain high-quality, scalable services\n\u2022 Write clean, well-tested, maintainable code\n\u2022 Participate in code reviews and architectural discussions\n\u2022 Partner with PM and design on new features\n\nRequirements:\n\u2022 3+ years of professional software engineering experience\n\u2022 Strong fundamentals in data structures and algorithms\n\u2022 Experience with modern web frameworks"
+    desc: "Win new business customers in your territory and lead larger sales from the first meeting to a signed contract.\n\nResponsibilities:\n• Open and develop larger accounts\n• Lead proposals with specialists from several teams\n• Coach newer account executives\n\nRequirements:\n• Several years of outside sales experience\n• Strong prospecting and negotiating skills"
   },
-  devops: {
-    event: 'chicago',
-    eventName: 'Chicago Technology Hiring Event',
-    title: 'DevOps Engineer',
-    location: 'Chicago, IL \u00b7 Hybrid',
+  ae: {
+    event: 'newyork',
+    eventName: 'New York City, NY Hiring Event',
+    title: 'Business Sales Account Executive',
+    location: 'New York, NY · On the road',
     jobType: 'Full-time',
-    pay: '$125,000 \u2013 $155,000 / year',
-    benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k) matching, Paid time off',
+    pay: '',
+    benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k), Paid time off',
     shift: 'Day shift',
     schedule: 'Monday to Friday',
-    desc: "We're looking for a DevOps Engineer to own our infrastructure and deployment pipelines. You'll work closely with engineering to build reliable, observable, and secure systems.\n\nResponsibilities:\n\u2022 Maintain and improve CI/CD pipelines\n\u2022 Manage cloud infrastructure (AWS)\n\u2022 Monitor system health and respond to incidents\n\u2022 Drive infrastructure-as-code adoption\n\nRequirements:\n\u2022 3+ years of DevOps or SRE experience\n\u2022 Strong Linux and scripting skills\n\u2022 Experience with Kubernetes, Terraform, and AWS"
-  },
-  ux: {
-    event: 'chicago',
-    eventName: 'Chicago Technology Hiring Event',
-    title: 'UX Designer',
-    location: 'Chicago, IL \u00b7 Hybrid',
-    jobType: 'Full-time',
-    pay: '$95,000 \u2013 $125,000 / year',
-    benefits: 'Health insurance, Dental insurance, Vision insurance, 401(k) matching, Paid time off',
-    shift: 'Day shift',
-    schedule: 'Monday to Friday',
-    desc: "We're hiring a UX Designer to shape the experience of our product end-to-end. You'll partner with PM and engineering to research, prototype, and ship thoughtful user experiences.\n\nResponsibilities:\n\u2022 Lead design for complex product areas\n\u2022 Conduct user research and usability testing\n\u2022 Prototype and iterate quickly\n\u2022 Contribute to and evolve the design system\n\nRequirements:\n\u2022 3+ years of product design experience\n\u2022 Strong portfolio demonstrating end-to-end product work\n\u2022 Experience with Figma"
+    desc: "Win new business customers in your territory through outside sales: prospecting, meeting decision makers and negotiating agreements.\n\nResponsibilities:\n• Build a pipeline of new business customers\n• Lead meetings, proposals and negotiations\n• Hand new customers to the account team\n\nRequirements:\n• 4 years or more of experience in outside sales\n• Strong prospecting and negotiating skills"
   }
 };
 
 var DESC_LIMIT = 260;
-var state = { jobId: 'rn', data: null, original: null, dirty: false };
+var state = { jobId: 'am', data: null, original: null, dirty: false };
 
 /* ---------- Bootstrap ---------- */
 function getJobIdFromUrl() {
   var p = new URLSearchParams(window.location.search);
   var j = (p.get('job') || '').toLowerCase();
-  return JOBS[j] ? j : 'rn';
+  return JOBS[j] ? j : 'am';
 }
 
 function loadJob(jobId) {
-  if (!JOBS[jobId]) jobId = 'rn';
+  if (!JOBS[jobId]) jobId = 'am';
   state.jobId = jobId;
+  (function(){ var ev = (new URLSearchParams(window.location.search).get('event') || '').toLowerCase();
+    var E = { losangeles: ['Los Angeles, CA Hiring Event', 'Los Angeles, CA'], chicago: ['Chicago, IL Hiring Event', 'Chicago, IL'], newyork: ['New York City, NY Hiring Event', 'New York, NY'] };
+    if (E[ev]) JOBS[jobId] = Object.assign({}, JOBS[jobId], { event: ev, eventName: E[ev][0], location: E[ev][1] + ' · On the road' }); })();
   state.data = Object.assign({}, JOBS[jobId]);
   state.original = Object.assign({}, JOBS[jobId]);
   state.dirty = false;
@@ -827,7 +820,7 @@ function saveAll() {
   try { window.close(); } catch (e) {}
   setTimeout(function() {
     if (!window.closed) {
-      var eventKey = state.data ? state.data.event : 'dallas';
+      var eventKey = state.data ? state.data.event : 'losangeles';
       window.location.href = 'edit-event.html?event=' + eventKey;
     }
   }, 150);
