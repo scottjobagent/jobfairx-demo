@@ -1140,6 +1140,40 @@ document.addEventListener('DOMContentLoaded', function(){
 .anx-tip .r{display:flex;align-items:center;gap:8px}
 .anx-tip .r i{display:inline-block;width:12px;height:3px;border-radius:2px;flex:0 0 12px}
 .anx-tip .r b{margin-left:auto;padding-left:18px;font-weight:700}
+/* Scott, November 20, 2026 (Option 1): an Events box beside Date range; tick whole cities or single events.
+   The old one-event menu over the Events table is hidden. */
+#anxEvSel{display:none!important}
+.vz-evwrap{margin-right:12px}
+.vz-evbtn{min-width:250px}
+.vz-evbtn .val{max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.anx-pop.vz-pop{padding:0;width:400px}
+.vz-pop[hidden]{display:none}
+.vz-search{display:flex;align-items:center;gap:8px;height:40px;border:1px solid #767676;border-radius:8px;padding:0 10px;margin:16px 16px 0}
+.vz-search svg{flex:none}
+.vz-search:focus-within{border-color:#0044B3;box-shadow:0 0 0 1px #0044B3}
+.anx-pop .vz-search input{border:0;height:36px;padding:0;width:100%;outline:none;font-size:14px;background:transparent}
+.vz-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 16px 8px;font-size:13px;color:#595959}
+.vz-link{background:none;border:0;padding:0;margin-left:16px;font:inherit;font-size:13px;font-weight:700;color:#0044B3;cursor:pointer}
+.vz-list{max-height:336px;overflow:auto;border-top:1px solid #EBEBEB;border-bottom:1px solid #EBEBEB}
+.vz-row{display:flex;align-items:center;gap:12px;padding:9px 16px;font-size:14px;line-height:20px;color:#2d2d2d;box-sizing:border-box}
+.vz-cityrow{padding:0 16px}
+.vz-cityrow:hover,.vz-evrow:hover{background:#F7F7F5}
+.vz-cx{display:flex;align-items:center;gap:12px;flex:1;min-width:0;background:none;border:0;padding:9px 0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.vz-cname{font-weight:700}
+.vz-cn{color:#595959;margin-left:auto}
+.vz-chev{flex:none;transition:transform .15s}
+.vz-city.open .vz-chev{transform:rotate(180deg)}
+.vz-evs{display:none}
+.vz-city.open .vz-evs{display:block}
+.vz-evrow{width:100%;background:none;border:0;font:inherit;text-align:left;cursor:pointer;padding-left:46px}
+.vz-cb{flex:none;width:18px;height:18px;padding:0;border:1.5px solid #767676;border-radius:4px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;background:#fff;cursor:pointer}
+.vz-cb.on,.vz-cb.part{background:#0044B3;border-color:#0044B3}
+.vz-cb.on::after{content:"";width:9px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(-45deg)}
+.vz-cb.part::after{content:"";width:8px;height:2px;background:#fff}
+.vz-none{padding:16px;font-size:14px;color:#595959}
+.anx-popfoot.vz-foot{align-items:center;margin:0;padding:12px 16px}
+.vz-count{margin-right:auto;font-size:14px;color:#2d2d2d}
+.vz-foot .anx-bapply:disabled{background:#B7B7B7;cursor:default}
 </style>
 <style>#anxGran{display:none!important}</style>
 
@@ -6054,7 +6088,7 @@ table.anx-cal button.end{background:#2d2d2d;color:#fff;border-radius:6px}
 .anx-dev code{background:#fff3cd;border-radius:4px;padding:1px 5px;font-size:13px}
 #view-analytics .an-card h3{margin:0}
 </style>
-<template id="anxViewTpl"><div class="view" id="view-analytics"><div class="rn-head" id="rnHead"><div class="l"><div class="rn-h1row"><div style="display:flex;align-items:center;gap:16px;"><h1>Interviews</h1><span class="pgt"><span class="pgt-g"><span class="pgt-sw"><button type="button" class="pgt-btn on" id="anxTgD" onclick="ANLX.mode(0)">Data</button><button type="button" class="pgt-btn" id="anxTgE" onclick="ANLX.mode(1)">Empty</button><button type="button" class="pgt-btn" id="anxTgN" onclick="ANLX.mode(2)">Dev note</button></span></span></span></div></div><p class="rn-sub">See how your interviews and hiring events are performing</p></div><div class="r"><div class="anx-r"><div class="anx-drwrap"><button type="button" class="anx-drbtn" id="anxDrBtn"><span><span class="lab">Date range</span><span class="val" id="anxDrVal">01/01/2027 &ndash; 02/19/2027</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button><div class="anx-pop" id="anxPop" hidden><div class="fl">Set date range to</div><select id="anxPreset"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="6m">Last 6 months</option><option value="ytd" selected>This year</option><option value="custom">Custom</option></select><div class="anx-hint">Use format MM/DD/YYYY</div><div class="anx-two"><div><div class="fl">Start date</div><input id="anxInA" type="date" min="2027-01-01" max="2027-06-30" value="2027-01-01" aria-label="Start date"></div><div class="to">to</div><div><div class="fl">End date</div><input id="anxInB" type="date" min="2027-01-01" max="2027-06-30" value="2027-06-30" aria-label="End date"></div></div><div class="anx-my"><div><div class="fl">Month</div><select id="anxCalM"></select></div><div><div class="fl">Year</div><select id="anxCalY"><option selected>2027</option></select></div></div><div id="anxCalWrap"></div><div class="anx-popfoot"><button type="button" class="anx-bcancel" id="anxBCancel">Cancel</button><button type="button" class="anx-bapply" id="anxBApply">Apply</button></div></div></div></div></div></div><div class="an-page"><div class="anx-dev" id="anxDev" hidden><h4>Developer note</h4><b>Date range is page-level.</b> It scopes the four cards, the chart and the Events table together. Granularity is chart-level and changes no card. An event appears in the table when its event date falls inside the range; day-level series are clipped to the range.<br><br><b>Future dates are disabled.</b> Analytics is retrospective &mdash; upcoming events belong on the Events page.<br><br><b>Open question:</b> how far back do we retain analytics? Indeed states 25 months in their picker. We need a number, printed in the popover the same way.<br><br><b>We do not track hires.</b> The outcome measure is the recruiter's own rating &mdash; Yes / Maybe / No &mdash; recorded after the interview. Every completed interview carries exactly one rating, so <code>yes + maybe + no = completed</code> in every scope.<br><br>Both metrics render identically: 2.5px line, 3.5px joint dots, shared axis. Metric A is <code>#0044b3</code> (the same blue as every button in the app), metric B is <code>#b8730f</code>. No bars &mdash; weight never encodes meaning, only colour does.<br><br>The y-axis is derived from the data, never fixed. Step size is the smallest of <code>1, 2, 3, 4, 5, 10, 15, 20, 25, 50</code> that keeps the axis to about four gridlines; the top is the peak of both series rounded up to that step. <b>Never fractional</b> &mdash; Indeed's own chart draws 0.25 / 0.5 / 0.75 on low-volume days, which is meaningless for whole interviews. With no data the axis falls back to 0&ndash;4 with no lines.<br><br><b>Event day</b> buckets by half hour across 11:00 AM &ndash; 3:00 PM and includes only interviews still held on the event date. On a single event it is that event's day; on All events the events stack on a shared 11:00&ndash;3:00 axis, so the shape is the typical event day. <b>Day / Week / Month</b> bucket by calendar date and include every interview, rescheduled ones included, on the date it was actually held.</div><div class="an-kpis" id="anxKpis"></div><div class="an-card full"><div class="anx-crow"><div><h3>Interviews over time</h3><div class="sub" id="anxChartSub" style="margin:2px 0 0"></div></div><div class="anx-gran" id="anxGran"><button type="button" data-g="eventday">Event day</button><button type="button" data-g="day">Day</button><button type="button" data-g="week" class="on">Week</button><button type="button" data-g="month">Month</button></div></div><div class="anx-metricrow" style="margin-top:14px"><span class="anx-mpick"><span class="sw" style="background:#0044b3"></span><select id="anxMA"></select></span><span class="anx-vs">vs.</span><span class="anx-mpick"><span class="sw" style="background:#b8730f"></span><select id="anxMB"></select></span></div><div id="anxChart"></div><div class="anx-legend" id="anxLegend"></div><div class="anx-foot" id="anxFoot"></div></div><div class="an-card full"><div class="anx-crow"><div class="anx-tf"><h3>Events</h3><select class="anx-ssel" id="anxEvSel"></select></div></div><div style="overflow-x:auto;margin-top:12px"><table class="an-tbl" id="anxTable"></table></div><div class="anx-foot">Rescheduled counts interviews that moved off the event day. They are inside Scheduled, not added to it &mdash; so Scheduled still equals Completed plus Missed.</div></div></div></div></template>
+<template id="anxViewTpl"><div class="view" id="view-analytics"><div class="rn-head" id="rnHead"><div class="l"><div class="rn-h1row"><div style="display:flex;align-items:center;gap:16px;"><h1>Interviews</h1><span class="pgt"><span class="pgt-g"><span class="pgt-sw"><button type="button" class="pgt-btn on" id="anxTgD" onclick="ANLX.mode(0)">Data</button><button type="button" class="pgt-btn" id="anxTgE" onclick="ANLX.mode(1)">Empty</button><button type="button" class="pgt-btn" id="anxTgN" onclick="ANLX.mode(2)">Dev note</button></span></span></span></div></div><p class="rn-sub">See how your interviews and hiring events are performing</p></div><div class="r"><div class="anx-r"><div class="anx-drwrap vz-evwrap"><button type="button" class="anx-drbtn vz-evbtn" id="vzEvBtn" aria-haspopup="true" aria-expanded="false"><span><span class="lab">Events</span><span class="val" id="vzEvVal">All events</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg></button><div class="anx-pop vz-pop" id="vzEvPop" hidden><div class="vz-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#595959" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><input id="vzEvQ" type="search" placeholder="Search a city, state or date" aria-label="Search a city, state or date" autocomplete="off"></div><div class="vz-meta"><span id="vzEvMeta"></span><span><button type="button" class="vz-link" id="vzEvAll">Select all</button><button type="button" class="vz-link" id="vzEvNone">Clear</button></span></div><div class="vz-list" id="vzEvList"></div><div class="anx-popfoot vz-foot"><span class="vz-count" id="vzEvCount"></span><button type="button" class="anx-bcancel" id="vzEvCancel">Cancel</button><button type="button" class="anx-bapply" id="vzEvApply">Apply</button></div></div></div><div class="anx-drwrap"><button type="button" class="anx-drbtn" id="anxDrBtn"><span><span class="lab">Date range</span><span class="val" id="anxDrVal">01/01/2027 &ndash; 02/19/2027</span></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button><div class="anx-pop" id="anxPop" hidden><div class="fl">Set date range to</div><select id="anxPreset"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="6m">Last 6 months</option><option value="ytd" selected>This year</option><option value="custom">Custom</option></select><div class="anx-hint">Use format MM/DD/YYYY</div><div class="anx-two"><div><div class="fl">Start date</div><input id="anxInA" type="date" min="2027-01-01" max="2027-06-30" value="2027-01-01" aria-label="Start date"></div><div class="to">to</div><div><div class="fl">End date</div><input id="anxInB" type="date" min="2027-01-01" max="2027-06-30" value="2027-06-30" aria-label="End date"></div></div><div class="anx-my"><div><div class="fl">Month</div><select id="anxCalM"></select></div><div><div class="fl">Year</div><select id="anxCalY"><option selected>2027</option></select></div></div><div id="anxCalWrap"></div><div class="anx-popfoot"><button type="button" class="anx-bcancel" id="anxBCancel">Cancel</button><button type="button" class="anx-bapply" id="anxBApply">Apply</button></div></div></div></div></div></div><div class="an-page"><div class="anx-dev" id="anxDev" hidden><h4>Developer note</h4><b>Date range is page-level.</b> It scopes the four cards, the chart and the Events table together. Granularity is chart-level and changes no card. An event appears in the table when its event date falls inside the range; day-level series are clipped to the range.<br><br><b>Future dates are disabled.</b> Analytics is retrospective &mdash; upcoming events belong on the Events page.<br><br><b>Open question:</b> how far back do we retain analytics? Indeed states 25 months in their picker. We need a number, printed in the popover the same way.<br><br><b>We do not track hires.</b> The outcome measure is the recruiter's own rating &mdash; Yes / Maybe / No &mdash; recorded after the interview. Every completed interview carries exactly one rating, so <code>yes + maybe + no = completed</code> in every scope.<br><br>Both metrics render identically: 2.5px line, 3.5px joint dots, shared axis. Metric A is <code>#0044b3</code> (the same blue as every button in the app), metric B is <code>#b8730f</code>. No bars &mdash; weight never encodes meaning, only colour does.<br><br>The y-axis is derived from the data, never fixed. Step size is the smallest of <code>1, 2, 3, 4, 5, 10, 15, 20, 25, 50</code> that keeps the axis to about four gridlines; the top is the peak of both series rounded up to that step. <b>Never fractional</b> &mdash; Indeed's own chart draws 0.25 / 0.5 / 0.75 on low-volume days, which is meaningless for whole interviews. With no data the axis falls back to 0&ndash;4 with no lines.<br><br><b>Event day</b> buckets by half hour across 11:00 AM &ndash; 3:00 PM and includes only interviews still held on the event date. On a single event it is that event's day; on All events the events stack on a shared 11:00&ndash;3:00 axis, so the shape is the typical event day. <b>Day / Week / Month</b> bucket by calendar date and include every interview, rescheduled ones included, on the date it was actually held.</div><div class="an-kpis" id="anxKpis"></div><div class="an-card full"><div class="anx-crow"><div><h3>Interviews over time</h3><div class="sub" id="anxChartSub" style="margin:2px 0 0"></div></div><div class="anx-gran" id="anxGran"><button type="button" data-g="eventday">Event day</button><button type="button" data-g="day">Day</button><button type="button" data-g="week" class="on">Week</button><button type="button" data-g="month">Month</button></div></div><div class="anx-metricrow" style="margin-top:14px"><span class="anx-mpick"><span class="sw" style="background:#0044b3"></span><select id="anxMA"></select></span><span class="anx-vs">vs.</span><span class="anx-mpick"><span class="sw" style="background:#b8730f"></span><select id="anxMB"></select></span></div><div id="anxChart"></div><div class="anx-legend" id="anxLegend"></div><div class="anx-foot" id="anxFoot"></div></div><div class="an-card full"><div class="anx-crow"><div class="anx-tf"><h3>Events</h3><select class="anx-ssel" id="anxEvSel"></select></div></div><div style="overflow-x:auto;margin-top:12px"><table class="an-tbl" id="anxTable"></table></div><div class="anx-foot">Rescheduled counts interviews that moved off the event day. They are inside Scheduled, not added to it &mdash; so Scheduled still equals Completed plus Missed.</div></div></div></div></template>
 <script>
 var ANLX=(function(){
 var MODE=0;
@@ -6080,7 +6114,7 @@ function presetRange(p){
  if(p==="mtd"){var lm=ymd(LAST);return [MONTHS[lm.m].base,LAST];}
  return [0,LAST];}
 function scopeIdx(){var s=$("anxEvSel");if(!s)return -1;return s.value==="all"?-1:parseInt(s.value,10);}
-function eventsInScope(){if(MODE===1)return [];var s=scopeIdx();return (s<0?EV.map(function(_,i){return i;}):[s]).filter(function(i){return EV[i].evIdx>=ST.A&&EV[i].evIdx<=ST.B;});}
+function eventsInScope(){if(MODE===1)return [];var s=scopeIdx();return EV.map(function(_,i){return i;}).filter(function(i){return vzPicked(i);}).filter(function(i){return EV[i].evIdx>=ST.A&&EV[i].evIdx<=ST.B;});}
 function baseDay(id){var a=[],i;for(i=0;i<=LAST;i++)a.push(0);
  eventsInScope().forEach(function(k){EV[k].day[id].forEach(function(v,j){var p=EV[k].offset+j;if(p>=0&&p<=LAST)a[p]+=v;});});return a;}
 function tot(id,i){var s=0;EV[i].day[id].forEach(function(v,j){var k=EV[i].offset+j;if(k>=ST.A&&k<=ST.B)s+=v;});return s;}
@@ -6181,7 +6215,7 @@ function render(){
  if(B&&B.length)leg+='<span><i style="background:#b8730f"></i>'+lbl(idB)+"</span>";
  $("anxLegend").innerHTML=leg;
  var s=scopeIdx(),inR=eventsInScope();
- var who=s<0?"All events":EV[s].name;
+ var who=vzWho();
  var rng=longRange(ST.A,ST.B);
  var subs={eventday:(s<0?"All events combined":who)+" · event day only · 11:00 AM – 3:00 PM",day:who+" · by day · "+rng,week:who+" · by week · "+rng,month:who+" · by month · "+rng};
  $("anxChartSub").textContent=subs[gran];
@@ -6248,7 +6282,7 @@ function wire(){
  a.onchange=b.onchange=render;
  [].forEach.call(document.querySelectorAll("#anxGran button"),function(btn){
   btn.onclick=function(){[].forEach.call(document.querySelectorAll("#anxGran button"),function(x){x.classList.remove("on");});btn.classList.add("on");render();};});
- $("anxDrBtn").onclick=function(ev){ev.stopPropagation();var p=$("anxPop");if(p.hidden)openPop();else p.hidden=true;};
+ $("anxDrBtn").onclick=function(ev){ev.stopPropagation();vzEvClose();var p=$("anxPop");if(p.hidden)openPop();else p.hidden=true;};
  $("anxPop").onclick=function(ev){ev.stopPropagation();};
  document.addEventListener("click",function(){var p=$("anxPop");if(p)p.hidden=true;});
  $("anxPreset").onchange=function(){var v=this.value;if(v==="custom")return;var r=presetRange(v);ST.dA=r[0];ST.dB=r[1];var o=ymd(ST.dA);ST.calM=o?o.m:0;$("anxCalM").value=String(ST.calM);syncInputs();renderCal();};
@@ -6257,7 +6291,81 @@ function wire(){
   $("anxPreset").value="custom";};});
  $("anxBCancel").onclick=function(){$("anxPop").hidden=true;};
  $("anxBApply").onclick=function(){if(ST.dB<ST.dA){var t=ST.dA;ST.dA=ST.dB;ST.dB=t;}ST.A=ST.dA;ST.B=ST.dB;$("anxPop").hidden=true;render();};
+ vzEvWire();
 }
+/* Scott, November 20, 2026 (Option 1): Events box beside Date range */
+var VZSEL=null,VZD=null,VZOPEN={},VZQ="";
+var VZSTATE={AL:"Alabama",AZ:"Arizona",CA:"California",CO:"Colorado",DC:"District of Columbia",FL:"Florida",GA:"Georgia",IL:"Illinois",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MO:"Missouri",NY:"New York",TN:"Tennessee",TX:"Texas",WA:"Washington"};
+var VZDAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var VZCHEV='<svg class="vz-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M6 9l6 6 6-6"></path></svg>';
+function vzEsc(s){return String(s).replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];});}
+function vzCity(i){return EV[i].name.replace(/ Hiring Event$/,"");}
+function vzShort(c){return /, DC$/.test(c)?c:c.replace(/, [A-Z]{2}$/,"");}
+function vzDay(i){var d=new Date(2027,0,1+EV[i].evIdx);return VZDAYS[d.getDay()]+", "+EV[i].date;}
+function vzCityText(c){var st=(c.match(/, ([A-Z]{2})$/)||[])[1];return c+" "+(VZSTATE[st]||"");}
+function vzMatch(txt,q){return txt.toLowerCase().indexOf(q)>=0;}
+function vzInRange(){if(MODE===1)return [];var a=[];EV.forEach(function(e,i){if(e.evIdx>=ST.A&&e.evIdx<=ST.B)a.push(i);});return a;}
+function vzHas(S,i){return !S||!!(S.c[vzCity(i)]||S.e[i]);}
+function vzPicked(i){return vzHas(VZSEL,i);}
+function vzGroups(){var g={},order=[];vzInRange().forEach(function(i){var c=vzCity(i);if(!g[c]){g[c]=[];order.push(c);}g[c].push(i);});
+ order.sort();order.forEach(function(c){g[c].sort(function(a,b){return EV[a].evIdx-EV[b].evIdx;});});return {g:g,order:order};}
+function vzCopy(S){var o={c:{},e:{}};if(!S){EV.forEach(function(e,i){o.c[vzCity(i)]=true;});return o;}
+ Object.keys(S.c).forEach(function(k){o.c[k]=true;});Object.keys(S.e).forEach(function(k){o.e[k]=true;});return o;}
+function vzSetCity(D,c,on){delete D.c[c];EV.forEach(function(e,i){if(vzCity(i)===c)delete D.e[i];});if(on)D.c[c]=true;}
+function vzSetEvent(D,i,on,g){var c=vzCity(i),l=g[c]||[];
+ if(on){if(D.c[c])return;D.e[i]=true;if(l.length&&l.every(function(j){return D.e[j];}))vzSetCity(D,c,true);return;}
+ if(D.c[c]){delete D.c[c];l.forEach(function(j){if(j!==i)D.e[j]=true;});}else delete D.e[i];}
+function vzCount(D){return vzInRange().filter(function(i){return vzHas(D,i);}).length;}
+function vzCityState(D,c,g){var l=g[c]||[],n=l.filter(function(i){return vzHas(D,i);}).length;return n===0?"":(n===l.length?"on":"part");}
+function vzLabel(S){if(!S||MODE===1)return "All events";
+ var inr=vzInRange().filter(function(i){return vzHas(S,i);}),cs=[];
+ inr.forEach(function(i){var c=vzCity(i);if(cs.indexOf(c)<0)cs.push(c);});cs.sort();
+ if(!inr.length){var pc=Object.keys(S.c);Object.keys(S.e).forEach(function(k){var c=vzCity(+k);if(pc.indexOf(c)<0)pc.push(c);});pc.sort();
+  return (pc.length<=2?pc.map(vzShort).join(", "):pc.length+" cities")+" · no events in these dates";}
+ return (cs.length<=2?cs.map(vzShort).join(", "):cs.length+" cities")+" · "+inr.length+(inr.length===1?" event":" events");}
+function vzWho(){var l=vzLabel(VZSEL),v=$("vzEvVal");if(v){v.textContent=l;$("vzEvBtn").title=l;}return l;}
+function vzRenderList(){
+ var G=vzGroups(),g=G.g,q=VZQ.trim().toLowerCase(),h="",shown=0,all=vzInRange().length;
+ $("vzEvMeta").textContent=G.order.length+(G.order.length===1?" city":" cities")+" · "+all+(all===1?" event":" events")+" in your dates";
+ G.order.forEach(function(c){
+  var cm=!q||vzMatch(vzCityText(c),q),evs=cm?g[c]:g[c].filter(function(i){return vzMatch(vzDay(i),q);});
+  if(!evs.length)return;shown++;
+  var st=vzCityState(VZD,c,g),open=VZOPEN[c]||(!!q&&!cm);
+  h+='<div class="vz-city'+(open?' open':'')+'" data-c="'+vzEsc(c)+'"><div class="vz-row vz-cityrow">'
+   +'<button type="button" class="vz-cb '+st+'" role="checkbox" aria-checked="'+(st==="on"?"true":st==="part"?"mixed":"false")+'" aria-label="'+vzEsc(c)+'" data-act="city"></button>'
+   +'<button type="button" class="vz-cx" data-act="open" aria-expanded="'+(open?"true":"false")+'"><span class="vz-cname">'+vzEsc(c)+'</span><span class="vz-cn">'
+   +g[c].length+(g[c].length===1?" event":" events")+'</span>'+VZCHEV+'</button></div><div class="vz-evs">';
+  evs.forEach(function(i){var on=vzHas(VZD,i);h+='<button type="button" class="vz-row vz-evrow" role="checkbox" aria-checked="'+on+'" data-act="ev" data-i="'+i+'"><span class="vz-cb'+(on?' on':'')+'"></span><span>'+vzDay(i)+'</span></button>';});
+  h+='</div></div>';});
+ if(!shown)h='<div class="vz-none">'+(all?'No city, state or date matches “'+vzEsc(VZQ.trim())+'”.':'No events in these dates.')+'</div>';
+ $("vzEvList").innerHTML=h;
+ var n=vzCount(VZD);$("vzEvCount").textContent=n?n+(n===1?" event selected":" events selected"):"No events selected";
+ $("vzEvApply").disabled=!n;}
+function vzBulk(on){var G=vzGroups(),q=VZQ.trim().toLowerCase();
+ if(!q){VZD=on?vzCopy(null):{c:{},e:{}};vzRenderList();return;}
+ G.order.forEach(function(c){if(vzMatch(vzCityText(c),q)){vzSetCity(VZD,c,on);return;}
+  G.g[c].forEach(function(i){if(vzMatch(vzDay(i),q))vzSetEvent(VZD,i,on,G.g);});});
+ vzRenderList();}
+function vzEvOpen(){VZD=vzCopy(VZSEL);VZQ="";VZOPEN={};$("vzEvQ").value="";
+ var G=vzGroups();G.order.forEach(function(c){if(vzCityState(VZD,c,G.g)==="part")VZOPEN[c]=true;});
+ vzRenderList();$("vzEvPop").hidden=false;$("vzEvBtn").setAttribute("aria-expanded","true");$("vzEvList").scrollTop=0;}
+function vzEvClose(){var p=$("vzEvPop");if(p&&!p.hidden){p.hidden=true;$("vzEvBtn").setAttribute("aria-expanded","false");}}
+function vzEvWire(){var b=$("vzEvBtn");if(!b)return;
+ b.onclick=function(ev){ev.stopPropagation();$("anxPop").hidden=true;if($("vzEvPop").hidden)vzEvOpen();else vzEvClose();};
+ $("vzEvPop").onclick=function(ev){ev.stopPropagation();};
+ document.addEventListener("click",vzEvClose);
+ document.addEventListener("keydown",function(ev){if(ev.key==="Escape"){vzEvClose();var p=$("anxPop");if(p)p.hidden=true;}});
+ $("vzEvQ").oninput=function(){VZQ=this.value;vzRenderList();};
+ $("vzEvAll").onclick=function(){vzBulk(true);};
+ $("vzEvNone").onclick=function(){vzBulk(false);};
+ $("vzEvCancel").onclick=vzEvClose;
+ $("vzEvApply").onclick=function(){var n=vzCount(VZD);if(!n)return;VZSEL=(n===vzInRange().length)?null:VZD;vzEvClose();render();};
+ $("vzEvList").onclick=function(ev){var t=ev.target.closest("[data-act]");if(!t)return;
+  var G=vzGroups(),box=t.closest(".vz-city"),c=box?box.getAttribute("data-c"):null,act=t.getAttribute("data-act");
+  if(act==="city")vzSetCity(VZD,c,vzCityState(VZD,c,G.g)!=="on");
+  else if(act==="open")VZOPEN[c]=!box.classList.contains("open");
+  else if(act==="ev"){var i=+t.getAttribute("data-i");vzSetEvent(VZD,i,!vzHas(VZD,i),G.g);}
+  vzRenderList();};}
 var wired=false;
 return {set:function(i){if(!wired){wired=true;wire();}set(i);},mode:mode};
 })();
